@@ -1,11 +1,11 @@
 presubmits:
   openshift/gcp-pd-csi-driver-operator:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp
     decorate: true
     decoration_config:
@@ -84,13 +84,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-csi
     decorate: true
     decoration_config:
@@ -169,13 +169,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build08
+    cluster: build13
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -234,7 +234,7 @@ presubmits:
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build08
+    cluster: build13
     context: ci/prow/test
     decorate: true
     decoration_config:
@@ -300,7 +300,7 @@ presubmits:
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build08
+    cluster: build13
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -366,7 +366,7 @@ presubmits:
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build08
+    cluster: build13
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

@@ -2,10 +2,12 @@ presubmits:
   openshift-priv/cloud-provider-azure:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^main$
     - ^main-
-    cluster: build04
+    cluster: build13
     context: ci/prow/e2e-azure-ovn
     decorate: true
     decoration_config:
@@ -25,7 +27,6 @@ presubmits:
     name: pull-ci-openshift-priv-cloud-provider-azure-main-e2e-azure-ovn
     path_alias: github.com/kubernetes-sigs/cloud-provider-azure
     rerun_command: /test e2e-azure-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -97,10 +98,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^main$
     - ^main-
-    cluster: build04
+    cluster: build13
     context: ci/prow/e2e-azure-ovn-upgrade
     decorate: true
     decoration_config:
@@ -120,7 +123,6 @@ presubmits:
     name: pull-ci-openshift-priv-cloud-provider-azure-main-e2e-azure-ovn-upgrade
     path_alias: github.com/kubernetes-sigs/cloud-provider-azure
     rerun_command: /test e2e-azure-ovn-upgrade
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -192,6 +194,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-ovn-upgrade,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^main$
     - ^main-
@@ -216,7 +220,6 @@ presubmits:
     name: pull-ci-openshift-priv-cloud-provider-azure-main-e2e-azurestack-ipi
     path_alias: github.com/kubernetes-sigs/cloud-provider-azure
     rerun_command: /test e2e-azurestack-ipi
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -291,7 +294,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build04
+    cluster: build13
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -359,7 +362,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build04
+    cluster: build13
     context: ci/prow/regression-clusterinfra-azure-ipi-ccm
     decorate: true
     decoration_config:
@@ -455,7 +458,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build04
+    cluster: build13
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -530,7 +533,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build04
+    cluster: build13
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -605,7 +608,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build04
+    cluster: build13
     context: ci/prow/verify-commits
     decorate: true
     decoration_config:
@@ -681,7 +684,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build04
+    cluster: build13
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:
@@ -773,7 +776,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build04
+    cluster: build13
     context: ci/prow/verify-git-history
     decorate: true
     decoration_config:

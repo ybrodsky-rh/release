@@ -1,11 +1,11 @@
 presubmits:
   openshift/sdn:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build05
+    cluster: build10
     context: ci/prow/e2e-aws-live-migration-sdn-ovn
     decorate: true
     decoration_config:
@@ -84,13 +84,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-live-migration-sdn-ovn,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-live-migration-sdn-ovn|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build05
+    cluster: build10
     context: ci/prow/e2e-aws-live-migration-sdn-ovn-rollback
     decorate: true
     decoration_config:
@@ -172,11 +172,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-live-migration-sdn-ovn-rollback,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build05
+    cluster: build10
     context: ci/prow/e2e-aws-sdn
     decorate: true
     decoration_config:
@@ -255,13 +255,15 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-sdn,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-sdn|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^$
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build05
+    cluster: build10
     context: ci/prow/e2e-aws-sdn-multitenant
     decorate: true
     decoration_config:
@@ -340,13 +342,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )(e2e-aws-sdn-multitenant|remaining-required),?($|\s.*)
+    trigger: (?m)^/test( | .* )e2e-aws-sdn-multitenant,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build05
+    cluster: build10
     context: ci/prow/e2e-aws-sdn-serial
     decorate: true
     decoration_config:
@@ -425,13 +427,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-sdn-serial,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-sdn-serial|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build05
+    cluster: build10
     context: ci/prow/e2e-aws-sdn-upgrade
     decorate: true
     decoration_config:
@@ -510,13 +512,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-sdn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-sdn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-sdn
     decorate: true
     decoration_config:
@@ -595,13 +597,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-sdn,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-sdn|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build05
+    cluster: build11
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -660,7 +662,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build05
+    cluster: build11
     context: ci/prow/security
     decorate: true
     decoration_config:
@@ -744,7 +746,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build05
+    cluster: build11
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -810,7 +812,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build05
+    cluster: build11
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -876,7 +878,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build05
+    cluster: build11
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

@@ -179,15 +179,11 @@ aliases:
   - rvanderp3
   - srcarrier
   alibaba-approvers:
-  - kwoodson
   - jcpowermac
-  - fabianofranz
   - rvanderp3
   - mtulio
   alibaba-reviewers:
-  - kwoodson
   - jcpowermac
-  - fabianofranz
   - rvanderp3
   - mtulio
   storage-approvers:
@@ -295,6 +291,14 @@ aliases:
   - mresvanis
   - ybettan
   - yevgeny-shnaidman
+  medik8s-admins:
+  - razo7
+  - mshitrit
+  - weshayutin
+  - mpryc
+  - jmontleon
+  - ugreener
+  - maximunited
   maistra-approvers:
   - jwendell
   - rcernich
@@ -324,14 +328,13 @@ aliases:
   - zmiklank
   - pbajjuri20
   cspi-qe-ocp-lp:
-  - Sau1506mya
   - amp-rh
-  - oharan2
   - shakyav
   - dfrazzette
   - danalanerh
   - sg-rh
   - etirta
+  - chaclark1974
   openstack-k8s-operators-approvers:
   - abays
   - arxcruz
@@ -385,24 +388,21 @@ aliases:
   multiarch-approvers:
   - andymcc
   - Prashanth684
-  - sherine-k
   - tvardema
-  - lwan-wanglin
   - prb112
   - mjturek
   - hamzy
   - keerthanaap
   - v78singh
   - amrutp-redhat
+  - Neha-dot-Yadav
   multiarch-reviewers:
   - andymcc
   - Prashanth684
-  - sherine-k
   - tvardema
   - alkleinrh
   - phani2898
   - veera-damisetti
-  - lwan-wanglin
   - prb112
   - mjturek
   - hamzy
@@ -412,6 +412,7 @@ aliases:
   - chidanandbh
   - phani2898
   - veera-damisetti
+  - Neha-dot-Yadav
   jboss-fuse-approvers:
   - smongiar
   - mcarlett
@@ -535,6 +536,12 @@ aliases:
   - tonyxrmdavidson
   ieng-chaos:
   - etirta
+  - krisnababu
+  - oharan2
+  - Sau1506mya
+  - amiskin94
+  - vvijay-rh
+  - hijoshi-re
   perfscale-ocp-reviewers:
   - afcollins
   - akrzos
@@ -583,3 +590,71 @@ aliases:
   - danmanor
   - eranco74
   - omer-vishlitzky
+  - rgolangh
+  - masayag
+  aro-classic-approvers:
+  - bennerv
+  - hlipsig
+  - tsatam
+  - wanghaoran1988
+  - stevekuznetsov
+  aro-classic-reviewers:
+  - bennerv
+  - cadenmarchese
+  - cloudygreybeard
+  - hawkowl
+  - hlipsig
+  - tsatam
+  - rogbas
+  - sudobrendan
+  - tiguelu
+  - ventifus
+  - wanghaoran1988
+  - stevekuznetsov
+  aro-hcp-sl-approvers:
+  - janboll
+  - mmazur
+  - raelga
+  - roivaz
+  aro-hcp-sl-reviewers:
+  - ashishmax31
+  - avollmer-redhat
+  - hbhushan3
+  - janboll
+  - mmazur
+  - raelga
+  - roivaz
+  - sclarkso
+  - venkateshsredhat
+  - weherdh
+  quay-approvers:
+  - aroyoredhat
+  - cubismod
+  - HammerMeetNail
+  - harishsurf
+  - jbpratt
+  - kleesc
+  - lechuk47
+  - LiZhang19817
+  - Marcusk19
+  - shaonrh
+  - sridipta
+  - sunandadadi
+  splat-approvers:
+  - bshaw7
+  - jcpowermac
+  - mfbonfigli
+  - mtulio
+  - nischawl
+  - rvanderp3
+  - vr4manta
+  - AnnaZivkovic
+  splat-reviewers:
+  - bshaw7
+  - jcpowermac
+  - mfbonfigli
+  - mtulio
+  - nischawl
+  - rvanderp3
+  - vr4manta
+  - AnnaZivkovic

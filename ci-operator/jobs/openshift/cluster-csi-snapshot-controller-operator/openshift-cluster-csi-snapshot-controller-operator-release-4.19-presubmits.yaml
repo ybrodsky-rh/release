@@ -1,7 +1,7 @@
 presubmits:
   openshift/cluster-csi-snapshot-controller-operator:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -83,13 +83,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-gcp-csi
     decorate: true
     decoration_config:
@@ -167,13 +167,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-hypershift-conformance
     decorate: true
     decoration_config:
@@ -254,7 +254,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-hypershift-conformance,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -336,9 +336,9 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -420,9 +420,9 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-vsphere,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-vsphere|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -504,13 +504,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-vsphere-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-vsphere-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build04
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -568,7 +568,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build04
     context: ci/prow/security
     decorate: true
     decoration_config:
@@ -651,7 +651,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build04
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -716,7 +716,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build04
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -781,7 +781,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build04
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

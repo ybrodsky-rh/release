@@ -1,11 +1,11 @@
 presubmits:
   openshift/aws-ebs-csi-driver:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build01
+    cluster: build05
     context: ci/prow/e2e-aws-csi
     decorate: true
     decoration_config:
@@ -84,13 +84,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build01
+    cluster: build05
     context: ci/prow/e2e-aws-csi-extended
     decorate: true
     decoration_config:
@@ -172,11 +172,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-csi-extended,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build01
+    cluster: build05
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -255,13 +255,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build11
+    cluster: build07
     context: ci/prow/e2e-hypershift
     decorate: true
     decoration_config:
@@ -340,13 +340,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-hypershift,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-hypershift|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build11
+    cluster: build07
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -366,7 +366,6 @@ presubmits:
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --report-credentials-file=/etc/report/credentials
         - --target=[images]
-        - --target=[release:latest]
         command:
         - ci-operator
         image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
@@ -405,7 +404,7 @@ presubmits:
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build11
+    cluster: build07
     context: ci/prow/security
     decorate: true
     decoration_config:
@@ -489,7 +488,7 @@ presubmits:
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build11
+    cluster: build07
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -555,7 +554,7 @@ presubmits:
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build11
+    cluster: build07
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -621,7 +620,7 @@ presubmits:
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build11
+    cluster: build07
     context: ci/prow/verify-commits
     decorate: true
     decoration_config:
@@ -687,7 +686,7 @@ presubmits:
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build11
+    cluster: build07
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

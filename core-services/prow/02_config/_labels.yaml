@@ -526,6 +526,37 @@ orgs:
         name: 'rebase/manual'
         target: prs
         addedBy: label
+      - color: ff0000
+        description: Critical CI severity - infrastructure broken or severely impacted
+        name: ci/severity-critical
+        target: prs
+        prowPlugin: label
+        addedBy: label
+      - color: 2ecc71
+        description: Categorizes an issue as related to the Product Reliability Agent.
+        name: reliability
+        target: both
+        prowPlugin: label
+        addedBy: anyone
+  openshift-eng:
+    labels:
+      - color: c3f7c5
+        description: Indicates a PR has been reviewed by automated tools and is ready for human review
+        name: ready-for-human-review
+        target: prs
+        addedBy: label
+      - color: ff0000
+        description: Critical CI severity - infrastructure broken or severely impacted
+        name: ci/severity-critical
+        target: prs
+        prowPlugin: label
+        addedBy: label
+      - color: 2ecc71
+        description: Categorizes an issue as related to the Product Reliability Agent.
+        name: reliability
+        target: both
+        prowPlugin: label
+        addedBy: anyone
   cri-o:
     labels:
       - color: e11d21
@@ -1283,6 +1314,27 @@ repos:
         name: run-integration-tests
         target: prs
         addedBy: label
+  openshift/cloud-network-config-controller:
+    labels:
+      - color: d93f0b
+        description: Indicates the PR may contain AI-generated content that needs careful review
+        name: coderabbit/ai-slop
+        target: prs
+        addedBy: label
+  openshift/cluster-network-operator:
+    labels:
+      - color: d93f0b
+        description: Indicates the PR may contain AI-generated content that needs careful review
+        name: coderabbit/ai-slop
+        target: prs
+        addedBy: label
+  openshift/ovn-kubernetes:
+    labels:
+      - color: d93f0b
+        description: Indicates the PR may contain AI-generated content that needs careful review
+        name: coderabbit/ai-slop
+        target: prs
+        addedBy: label
   rh-ecosystem-edge/recert:
     labels:
       - color: 0ffa16
@@ -1290,10 +1342,3 @@ repos:
         name: allow-automatic-merge
         target: prs
         addedBy: label
-  ViaQ/vector:
-    labels:
-      - color: ffaa00
-        description: Denotes a PR that should be squashed by tide when it merges.
-        name: tide/merge-method-squash
-        target: prs
-        addedBy: humans

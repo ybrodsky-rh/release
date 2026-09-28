@@ -113,20 +113,16 @@ tests:
     cluster_profile: equinix-edge-enablement
     workflow: baremetalds-sno
 - as: e2e-metal-single-node-with-worker-live-iso
-  cron: 50 7 10 */12 *
+  cron: 30 4 15 */6 *
   steps:
     cluster_profile: equinix-edge-enablement
-    env:
-      TEST_FUNC: test_bip_add_worker
-    workflow: baremetalds-sno
-- as: e2e-metal-ipi-bm
+    workflow: baremetalds-sno-with-worker
+- as: e2e-metal-ipi-sdn-ipv4
   capabilities:
   - intranet
   cron: 19 8 6 */12 *
   steps:
     cluster_profile: equinix-ocp-metal
-    env:
-      CLUSTERTYPE: baremetal
     workflow: baremetalds-e2e-sdn-ipv4
 - as: e2e-metal-ipi-ovn-dualstack-local-gateway
   capabilities:
@@ -515,6 +511,8 @@ tests:
   cron: 16 6 9 */12 *
   steps:
     cluster_profile: openshift-org-gcp
+    env:
+      CONTROL_PLANE_NODE_TYPE: e2-custom-6-16384
     workflow: openshift-e2e-gcp-serial
 - as: e2e-azure-upi
   cron: 38 3 6 */12 *

@@ -32,8 +32,11 @@ workflow:
     - Credentials secret: vault-credentials (namespace: vault-kms)
 
     Vault installation uses the following environment variables with default values:
-    - VAULT_VERSION: 2.0.0-ent (Vault Enterprise version)
+    - VAULT_ENTERPRISE_IMAGE: quay.io/openshifttest/vault-enterprise:2.0.0-ent (Vault Enterprise image)
+    - VAULT_CHART_VERSION: 0.28.1 (Vault Helm chart version)
     - VAULT_NAMESPACE: vault-kms (namespace for Vault installation)
+    - VAULT_SECONDARY_NAMESPACE: vault-kms-secondary (secondary Vault namespace)
+    - VAULT_KMS_PLUGIN_IMAGE: quay.io/openshifttest/vault-kube-kms@sha256:222bba6cc71fb7527bac262b67f614152491105c25f3f0a7a19385a5d878123a (KMS plugin image, pinned by digest)
     - VAULT_KMS_KEY_NAME: kms-key (transit encryption key name)
 
     Note: These Vault configuration values are not configurable via cluster-bot.

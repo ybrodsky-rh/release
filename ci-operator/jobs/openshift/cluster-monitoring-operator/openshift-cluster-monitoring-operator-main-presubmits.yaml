@@ -1,11 +1,13 @@
 presubmits:
   openshift/cluster-monitoring-operator:
   - agent: kubernetes
-    always_run: true
+    always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(Documentation/|\.github/|examples/|hack/|test/ext/|test/monitoring/|test/rules/)|(\.md$)|((^|/)OWNERS(_ALIASES)?$)|(^\.gitignore$)|(^\.golangci\.yaml$)|(^\.yamllint$)|(^\.coderabbit\.yaml$)|(^\.dockerignore$)|(^LICENSE$)|(^DCO$)
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-agnostic-operator
     decorate: true
     decoration_config:
@@ -85,11 +87,13 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-agnostic-operator,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(Documentation/|\.github/|examples/|hack/|test/)|(\.md$)|((^|/)OWNERS(_ALIASES)?$)|(^\.gitignore$)|(^\.golangci\.yaml$)|(^\.yamllint$)|(^\.coderabbit\.yaml$)|(^\.dockerignore$)|(^LICENSE$)|(^DCO$)
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -173,7 +177,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-single-node
     decorate: true
     decoration_config:
@@ -254,11 +258,13 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-ovn-single-node,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(Documentation/|\.github/|examples/|hack/|test/)|(\.md$)|((^|/)OWNERS(_ALIASES)?$)|(^\.gitignore$)|(^\.golangci\.yaml$)|(^\.yamllint$)|(^\.coderabbit\.yaml$)|(^\.dockerignore$)|(^LICENSE$)|(^DCO$)
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-techpreview
     decorate: true
     decoration_config:
@@ -338,11 +344,13 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-ovn-techpreview,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(Documentation/|\.github/|examples/|hack/|test/)|(\.md$)|((^|/)OWNERS(_ALIASES)?$)|(^\.gitignore$)|(^\.golangci\.yaml$)|(^\.yamllint$)|(^\.coderabbit\.yaml$)|(^\.dockerignore$)|(^LICENSE$)|(^DCO$)
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -422,11 +430,13 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(Documentation/|\.github/|examples/|hack/|test/)|(\.md$)|((^|/)OWNERS(_ALIASES)?$)|(^\.gitignore$)|(^\.golangci\.yaml$)|(^\.yamllint$)|(^\.coderabbit\.yaml$)|(^\.dockerignore$)|(^LICENSE$)|(^DCO$)
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/e2e-hypershift-conformance
     decorate: true
     decoration_config:
@@ -510,7 +520,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/generate
     decorate: true
     decoration_config:
@@ -571,11 +581,13 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )generate,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(Documentation/|\.github/|examples/|hack/|test/e2e/|test/ext/|test/rules/)|(\.md$)|((^|/)OWNERS(_ALIASES)?$)|(^\.gitignore$)|(^\.golangci\.yaml$)|(^\.yamllint$)|(^\.coderabbit\.yaml$)|(^\.dockerignore$)|(^LICENSE$)|(^DCO$)
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build07
     context: ci/prow/ginkgo-tests
     decorate: true
     decoration_config:
@@ -659,7 +671,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/go-fmt
     decorate: true
     decoration_config:
@@ -724,7 +736,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/golangci-lint
     decorate: true
     decoration_config:
@@ -789,7 +801,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -847,7 +859,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/jsonnet-fmt
     decorate: true
     decoration_config:
@@ -912,7 +924,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/misspell
     decorate: true
     decoration_config:
@@ -977,7 +989,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build07
     context: ci/prow/okd-scos-e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -1063,7 +1075,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/okd-scos-images
     decorate: true
     decoration_config:
@@ -1122,7 +1134,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/rules
     decorate: true
     decoration_config:
@@ -1187,7 +1199,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/shellcheck
     decorate: true
     decoration_config:
@@ -1252,7 +1264,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -1317,7 +1329,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/vendor
     decorate: true
     decoration_config:
@@ -1382,7 +1394,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -1447,7 +1459,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:
@@ -1529,7 +1541,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build11
     context: ci/prow/versions
     decorate: true
     decoration_config:

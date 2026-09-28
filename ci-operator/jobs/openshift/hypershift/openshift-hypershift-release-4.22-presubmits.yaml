@@ -13,7 +13,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -99,7 +98,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: hypershift-aws
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
@@ -175,6 +173,93 @@ presubmits:
     trigger: (?m)^/test( | .* )agentic-qe-aws,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    branches:
+    - ^release-4\.22$
+    - ^release-4\.22-
+    cluster: build05
+    context: ci/prow/e2e-agent-connected-ovn-ipv4-metal-backuprestore
+    decorate: true
+    decoration_config:
+      sparse_checkout_files:
+      - .ci-operator.yaml
+      - Dockerfile
+      - Dockerfile.control-plane
+    labels:
+      capability/intranet: intranet
+      ci-operator.openshift.io/cloud: equinix-ocp-metal
+      ci-operator.openshift.io/cloud-cluster-profile: equinix-ocp-hcp
+      ci.openshift.io/generator: prowgen
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-hypershift-release-4.22-e2e-agent-connected-ovn-ipv4-metal-backuprestore
+    optional: true
+    rerun_command: /test e2e-agent-connected-ovn-ipv4-metal-backuprestore
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/secrets/ci-pull-credentials
+        - --target=e2e-agent-connected-ovn-ipv4-metal-backuprestore
+        command:
+        - ci-operator
+        env:
+        - name: HTTP_SERVER_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
+        imagePullPolicy: Always
+        name: ""
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /secrets/ci-pull-credentials
+          name: ci-pull-credentials
+          readOnly: true
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /secrets/manifest-tool
+          name: manifest-tool-local-pusher
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: ci-pull-credentials
+        secret:
+          secretName: ci-pull-credentials
+      - name: manifest-tool-local-pusher
+        secret:
+          secretName: manifest-tool-local-pusher
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )e2e-agent-connected-ovn-ipv4-metal-backuprestore,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
     annotations:
       pipeline_skip_if_only_changed: (^(\.tekton|\.github|\.claude|docs|examples|enhancements|contrib|\.cursor|test/envtest)/)|(^[A-Z]+\.md$)|((^|/)OWNERS$)|(/overrides\.yaml$)|(^renovate\.json$)|(/\.testcoverage\.yml$)|(^\.gitlint$)|(^\.gitignore$)|(^\.coderabbit\.yaml$)|(^\.dockerignore$)|(^codecov\.yml$)
     branches:
@@ -188,7 +273,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: hypershift-aks
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aks
@@ -276,7 +360,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: hypershift-aks
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aks
@@ -362,7 +445,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: hypershift-aks
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aks
@@ -443,7 +525,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build01
+    cluster: build07
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -451,9 +533,8 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
-      capability/build-tmpfs: build-tmpfs
+      capability/arm64: arm64
       ci-operator.openshift.io/cloud: hypershift-aws
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
       ci.openshift.io/generator: prowgen
@@ -532,7 +613,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build01
+    cluster: build07
     context: ci/prow/e2e-aws-4-21
     decorate: true
     decoration_config:
@@ -540,9 +621,8 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
-      capability/build-tmpfs: build-tmpfs
+      capability/arm64: arm64
       ci-operator.openshift.io/cloud: hypershift-aws
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
       ci.openshift.io/generator: prowgen
@@ -627,7 +707,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: hypershift-aws
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
@@ -714,7 +793,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: hypershift-aws
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
@@ -801,7 +879,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: hypershift-aws
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
@@ -880,7 +957,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build01
+    cluster: build07
     context: ci/prow/e2e-aws-override
     decorate: true
     decoration_config:
@@ -888,9 +965,8 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
-      capability/build-tmpfs: build-tmpfs
+      capability/arm64: arm64
       ci-operator.openshift.io/cloud: hypershift-aws
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
       ci.openshift.io/generator: prowgen
@@ -976,7 +1052,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: hypershift-aws
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
@@ -1057,7 +1132,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build01
+    cluster: build07
     context: ci/prow/e2e-aws-upgrade-hypershift-operator
     decorate: true
     decoration_config:
@@ -1065,9 +1140,8 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
-      capability/build-tmpfs: build-tmpfs
+      capability/arm64: arm64
       ci-operator.openshift.io/cloud: hypershift-aws
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
       ci.openshift.io/generator: prowgen
@@ -1141,6 +1215,179 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-upgrade-hypershift-operator,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: (^(\.tekton|\.github|\.claude|docs|examples|enhancements|contrib|\.cursor|test/envtest)/)|(\.md$)|((^|/)OWNERS$)|(/overrides\.yaml$)|(^renovate\.json$)|(/\.testcoverage\.yml$)|(^\.gitlint$)|(^\.gitignore$)|(^\.coderabbit\.yaml$)|(^\.dockerignore$)|(^codecov\.yml$)|(^(?:[^t/][^/]*|t|t[^e/][^/]*|te|te[^s/][^/]*|tes|tes[^t/][^/]*|test[^/]+)/.*_test\.go$)
+    branches:
+    - ^release-4\.22$
+    - ^release-4\.22-
+    cluster: build08
+    context: ci/prow/e2e-azure-aks-external-oidc
+    decorate: true
+    decoration_config:
+      sparse_checkout_files:
+      - .ci-operator.yaml
+      - Dockerfile
+      - Dockerfile.control-plane
+    labels:
+      ci-operator.openshift.io/cloud: hypershift-aks
+      ci-operator.openshift.io/cloud-cluster-profile: hypershift-aks
+      ci.openshift.io/generator: prowgen
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-hypershift-release-4.22-e2e-azure-aks-external-oidc
+    rerun_command: /test e2e-azure-aks-external-oidc
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/secrets/ci-pull-credentials
+        - --target=e2e-azure-aks-external-oidc
+        command:
+        - ci-operator
+        env:
+        - name: HTTP_SERVER_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
+        imagePullPolicy: Always
+        name: ""
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /secrets/ci-pull-credentials
+          name: ci-pull-credentials
+          readOnly: true
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /secrets/manifest-tool
+          name: manifest-tool-local-pusher
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: ci-pull-credentials
+        secret:
+          secretName: ci-pull-credentials
+      - name: manifest-tool-local-pusher
+        secret:
+          secretName: manifest-tool-local-pusher
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )e2e-azure-aks-external-oidc,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
+    branches:
+    - ^release-4\.22$
+    - ^release-4\.22-
+    cluster: build08
+    context: ci/prow/e2e-azure-aks-external-oidc-techpreview
+    decorate: true
+    decoration_config:
+      sparse_checkout_files:
+      - .ci-operator.yaml
+      - Dockerfile
+      - Dockerfile.control-plane
+    labels:
+      ci-operator.openshift.io/cloud: hypershift-aks
+      ci-operator.openshift.io/cloud-cluster-profile: hypershift-aks
+      ci.openshift.io/generator: prowgen
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-hypershift-release-4.22-e2e-azure-aks-external-oidc-techpreview
+    optional: true
+    rerun_command: /test e2e-azure-aks-external-oidc-techpreview
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/secrets/ci-pull-credentials
+        - --target=e2e-azure-aks-external-oidc-techpreview
+        command:
+        - ci-operator
+        env:
+        - name: HTTP_SERVER_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
+        imagePullPolicy: Always
+        name: ""
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /secrets/ci-pull-credentials
+          name: ci-pull-credentials
+          readOnly: true
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /secrets/manifest-tool
+          name: manifest-tool-local-pusher
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: ci-pull-credentials
+        secret:
+          secretName: ci-pull-credentials
+      - name: manifest-tool-local-pusher
+        secret:
+          secretName: manifest-tool-local-pusher
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )e2e-azure-aks-external-oidc-techpreview,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
@@ -1152,7 +1399,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: hypershift-aks
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aks
@@ -1239,7 +1485,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: azure4
       ci-operator.openshift.io/cloud-cluster-profile: openshift-org-azure
@@ -1328,7 +1573,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: hypershift-azure
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-azure
@@ -1414,7 +1658,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: hypershift-aws
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
@@ -1493,96 +1736,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build01
-    context: ci/prow/e2e-gke
-    decorate: true
-    decoration_config:
-      sparse_checkout_files:
-      - .ci-operator.yaml
-      - Dockerfile
-      - Dockerfile.control-plane
-      - Dockerfile.e2e
-    labels:
-      capability/build-tmpfs: build-tmpfs
-      ci-operator.openshift.io/cloud: hypershift-gcp
-      ci-operator.openshift.io/cloud-cluster-profile: hypershift-gcp
-      ci.openshift.io/generator: prowgen
-      pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-openshift-hypershift-release-4.22-e2e-gke
-    optional: true
-    rerun_command: /test e2e-gke
-    run_if_changed: ^(api/hypershift/v1beta1/gcp.*|hypershift-operator/controllers/.*/gcp.*|control-plane-operator/controllers/.*/gcp.*|cmd/cluster/gcp/.*|cmd/nodepool/gcp/.*)
-    spec:
-      containers:
-      - args:
-        - --gcs-upload-secret=/secrets/gcs/service-account.json
-        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
-        - --lease-server-credentials-file=/etc/boskos/credentials
-        - --report-credentials-file=/etc/report/credentials
-        - --secret-dir=/secrets/ci-pull-credentials
-        - --target=e2e-gke
-        command:
-        - ci-operator
-        env:
-        - name: HTTP_SERVER_IP
-          valueFrom:
-            fieldRef:
-              fieldPath: status.podIP
-        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
-        imagePullPolicy: Always
-        name: ""
-        ports:
-        - containerPort: 8080
-          name: http
-        resources:
-          requests:
-            cpu: 10m
-        volumeMounts:
-        - mountPath: /etc/boskos
-          name: boskos
-          readOnly: true
-        - mountPath: /secrets/ci-pull-credentials
-          name: ci-pull-credentials
-          readOnly: true
-        - mountPath: /secrets/gcs
-          name: gcs-credentials
-          readOnly: true
-        - mountPath: /secrets/manifest-tool
-          name: manifest-tool-local-pusher
-          readOnly: true
-        - mountPath: /etc/pull-secret
-          name: pull-secret
-          readOnly: true
-        - mountPath: /etc/report
-          name: result-aggregator
-          readOnly: true
-      serviceAccountName: ci-operator
-      volumes:
-      - name: boskos
-        secret:
-          items:
-          - key: credentials
-            path: credentials
-          secretName: boskos-credentials
-      - name: ci-pull-credentials
-        secret:
-          secretName: ci-pull-credentials
-      - name: manifest-tool-local-pusher
-        secret:
-          secretName: manifest-tool-local-pusher
-      - name: pull-secret
-        secret:
-          secretName: registry-pull-credentials
-      - name: result-aggregator
-        secret:
-          secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gke,?($|\s.*)
-  - agent: kubernetes
-    always_run: false
-    branches:
-    - ^release-4\.22$
-    - ^release-4\.22-
-    cluster: build03
+    cluster: build07
     context: ci/prow/e2e-kubevirt-aws-ovn
     decorate: true
     decoration_config:
@@ -1590,7 +1744,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
@@ -1671,7 +1824,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build03
+    cluster: build07
     context: ci/prow/e2e-kubevirt-aws-ovn-reduced
     decorate: true
     decoration_config:
@@ -1679,7 +1832,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
@@ -1765,7 +1917,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: azure4
       ci-operator.openshift.io/cloud-cluster-profile: openshift-org-azure
@@ -1844,23 +1995,23 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build08
-    context: ci/prow/e2e-openstack-aws
+    cluster: build05
+    context: ci/prow/e2e-kubevirt-metal-ovn-backuprestore
     decorate: true
     decoration_config:
       sparse_checkout_files:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
-      ci-operator.openshift.io/cloud: hypershift-aws
-      ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
+      capability/intranet: intranet
+      ci-operator.openshift.io/cloud: equinix-ocp-metal
+      ci-operator.openshift.io/cloud-cluster-profile: equinix-ocp-hcp
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-openshift-hypershift-release-4.22-e2e-openstack-aws
+    name: pull-ci-openshift-hypershift-release-4.22-e2e-kubevirt-metal-ovn-backuprestore
     optional: true
-    rerun_command: /test e2e-openstack-aws
+    rerun_command: /test e2e-kubevirt-metal-ovn-backuprestore
     spec:
       containers:
       - args:
@@ -1869,7 +2020,7 @@ presubmits:
         - --lease-server-credentials-file=/etc/boskos/credentials
         - --report-credentials-file=/etc/report/credentials
         - --secret-dir=/secrets/ci-pull-credentials
-        - --target=e2e-openstack-aws
+        - --target=e2e-kubevirt-metal-ovn-backuprestore
         command:
         - ci-operator
         env:
@@ -1925,355 +2076,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-openstack-aws,?($|\s.*)
-  - agent: kubernetes
-    always_run: false
-    branches:
-    - ^release-4\.22$
-    - ^release-4\.22-
-    cluster: build08
-    context: ci/prow/e2e-openstack-aws-conformance
-    decorate: true
-    decoration_config:
-      sparse_checkout_files:
-      - .ci-operator.yaml
-      - Dockerfile
-      - Dockerfile.control-plane
-      - Dockerfile.e2e
-    labels:
-      ci-operator.openshift.io/cloud: hypershift-aws
-      ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
-      ci.openshift.io/generator: prowgen
-      pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-openshift-hypershift-release-4.22-e2e-openstack-aws-conformance
-    optional: true
-    rerun_command: /test e2e-openstack-aws-conformance
-    spec:
-      containers:
-      - args:
-        - --gcs-upload-secret=/secrets/gcs/service-account.json
-        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
-        - --lease-server-credentials-file=/etc/boskos/credentials
-        - --report-credentials-file=/etc/report/credentials
-        - --secret-dir=/secrets/ci-pull-credentials
-        - --target=e2e-openstack-aws-conformance
-        command:
-        - ci-operator
-        env:
-        - name: HTTP_SERVER_IP
-          valueFrom:
-            fieldRef:
-              fieldPath: status.podIP
-        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
-        imagePullPolicy: Always
-        name: ""
-        ports:
-        - containerPort: 8080
-          name: http
-        resources:
-          requests:
-            cpu: 10m
-        volumeMounts:
-        - mountPath: /etc/boskos
-          name: boskos
-          readOnly: true
-        - mountPath: /secrets/ci-pull-credentials
-          name: ci-pull-credentials
-          readOnly: true
-        - mountPath: /secrets/gcs
-          name: gcs-credentials
-          readOnly: true
-        - mountPath: /secrets/manifest-tool
-          name: manifest-tool-local-pusher
-          readOnly: true
-        - mountPath: /etc/pull-secret
-          name: pull-secret
-          readOnly: true
-        - mountPath: /etc/report
-          name: result-aggregator
-          readOnly: true
-      serviceAccountName: ci-operator
-      volumes:
-      - name: boskos
-        secret:
-          items:
-          - key: credentials
-            path: credentials
-          secretName: boskos-credentials
-      - name: ci-pull-credentials
-        secret:
-          secretName: ci-pull-credentials
-      - name: manifest-tool-local-pusher
-        secret:
-          secretName: manifest-tool-local-pusher
-      - name: pull-secret
-        secret:
-          secretName: registry-pull-credentials
-      - name: result-aggregator
-        secret:
-          secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-openstack-aws-conformance,?($|\s.*)
-  - agent: kubernetes
-    always_run: false
-    branches:
-    - ^release-4\.22$
-    - ^release-4\.22-
-    cluster: build08
-    context: ci/prow/e2e-openstack-aws-csi-cinder
-    decorate: true
-    decoration_config:
-      sparse_checkout_files:
-      - .ci-operator.yaml
-      - Dockerfile
-      - Dockerfile.control-plane
-      - Dockerfile.e2e
-    labels:
-      ci-operator.openshift.io/cloud: hypershift-aws
-      ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
-      ci.openshift.io/generator: prowgen
-      pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-openshift-hypershift-release-4.22-e2e-openstack-aws-csi-cinder
-    optional: true
-    rerun_command: /test e2e-openstack-aws-csi-cinder
-    spec:
-      containers:
-      - args:
-        - --gcs-upload-secret=/secrets/gcs/service-account.json
-        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
-        - --lease-server-credentials-file=/etc/boskos/credentials
-        - --report-credentials-file=/etc/report/credentials
-        - --secret-dir=/secrets/ci-pull-credentials
-        - --target=e2e-openstack-aws-csi-cinder
-        command:
-        - ci-operator
-        env:
-        - name: HTTP_SERVER_IP
-          valueFrom:
-            fieldRef:
-              fieldPath: status.podIP
-        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
-        imagePullPolicy: Always
-        name: ""
-        ports:
-        - containerPort: 8080
-          name: http
-        resources:
-          requests:
-            cpu: 10m
-        volumeMounts:
-        - mountPath: /etc/boskos
-          name: boskos
-          readOnly: true
-        - mountPath: /secrets/ci-pull-credentials
-          name: ci-pull-credentials
-          readOnly: true
-        - mountPath: /secrets/gcs
-          name: gcs-credentials
-          readOnly: true
-        - mountPath: /secrets/manifest-tool
-          name: manifest-tool-local-pusher
-          readOnly: true
-        - mountPath: /etc/pull-secret
-          name: pull-secret
-          readOnly: true
-        - mountPath: /etc/report
-          name: result-aggregator
-          readOnly: true
-      serviceAccountName: ci-operator
-      volumes:
-      - name: boskos
-        secret:
-          items:
-          - key: credentials
-            path: credentials
-          secretName: boskos-credentials
-      - name: ci-pull-credentials
-        secret:
-          secretName: ci-pull-credentials
-      - name: manifest-tool-local-pusher
-        secret:
-          secretName: manifest-tool-local-pusher
-      - name: pull-secret
-        secret:
-          secretName: registry-pull-credentials
-      - name: result-aggregator
-        secret:
-          secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-openstack-aws-csi-cinder,?($|\s.*)
-  - agent: kubernetes
-    always_run: false
-    branches:
-    - ^release-4\.22$
-    - ^release-4\.22-
-    cluster: build08
-    context: ci/prow/e2e-openstack-aws-csi-manila
-    decorate: true
-    decoration_config:
-      sparse_checkout_files:
-      - .ci-operator.yaml
-      - Dockerfile
-      - Dockerfile.control-plane
-      - Dockerfile.e2e
-    labels:
-      ci-operator.openshift.io/cloud: hypershift-aws
-      ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
-      ci.openshift.io/generator: prowgen
-      pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-openshift-hypershift-release-4.22-e2e-openstack-aws-csi-manila
-    optional: true
-    rerun_command: /test e2e-openstack-aws-csi-manila
-    spec:
-      containers:
-      - args:
-        - --gcs-upload-secret=/secrets/gcs/service-account.json
-        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
-        - --lease-server-credentials-file=/etc/boskos/credentials
-        - --report-credentials-file=/etc/report/credentials
-        - --secret-dir=/secrets/ci-pull-credentials
-        - --target=e2e-openstack-aws-csi-manila
-        command:
-        - ci-operator
-        env:
-        - name: HTTP_SERVER_IP
-          valueFrom:
-            fieldRef:
-              fieldPath: status.podIP
-        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
-        imagePullPolicy: Always
-        name: ""
-        ports:
-        - containerPort: 8080
-          name: http
-        resources:
-          requests:
-            cpu: 10m
-        volumeMounts:
-        - mountPath: /etc/boskos
-          name: boskos
-          readOnly: true
-        - mountPath: /secrets/ci-pull-credentials
-          name: ci-pull-credentials
-          readOnly: true
-        - mountPath: /secrets/gcs
-          name: gcs-credentials
-          readOnly: true
-        - mountPath: /secrets/manifest-tool
-          name: manifest-tool-local-pusher
-          readOnly: true
-        - mountPath: /etc/pull-secret
-          name: pull-secret
-          readOnly: true
-        - mountPath: /etc/report
-          name: result-aggregator
-          readOnly: true
-      serviceAccountName: ci-operator
-      volumes:
-      - name: boskos
-        secret:
-          items:
-          - key: credentials
-            path: credentials
-          secretName: boskos-credentials
-      - name: ci-pull-credentials
-        secret:
-          secretName: ci-pull-credentials
-      - name: manifest-tool-local-pusher
-        secret:
-          secretName: manifest-tool-local-pusher
-      - name: pull-secret
-        secret:
-          secretName: registry-pull-credentials
-      - name: result-aggregator
-        secret:
-          secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-openstack-aws-csi-manila,?($|\s.*)
-  - agent: kubernetes
-    always_run: false
-    branches:
-    - ^release-4\.22$
-    - ^release-4\.22-
-    cluster: build08
-    context: ci/prow/e2e-openstack-aws-nfv
-    decorate: true
-    decoration_config:
-      sparse_checkout_files:
-      - .ci-operator.yaml
-      - Dockerfile
-      - Dockerfile.control-plane
-      - Dockerfile.e2e
-    labels:
-      ci-operator.openshift.io/cloud: hypershift-aws
-      ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
-      ci.openshift.io/generator: prowgen
-      pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-openshift-hypershift-release-4.22-e2e-openstack-aws-nfv
-    optional: true
-    rerun_command: /test e2e-openstack-aws-nfv
-    spec:
-      containers:
-      - args:
-        - --gcs-upload-secret=/secrets/gcs/service-account.json
-        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
-        - --lease-server-credentials-file=/etc/boskos/credentials
-        - --report-credentials-file=/etc/report/credentials
-        - --secret-dir=/secrets/ci-pull-credentials
-        - --target=e2e-openstack-aws-nfv
-        command:
-        - ci-operator
-        env:
-        - name: HTTP_SERVER_IP
-          valueFrom:
-            fieldRef:
-              fieldPath: status.podIP
-        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
-        imagePullPolicy: Always
-        name: ""
-        ports:
-        - containerPort: 8080
-          name: http
-        resources:
-          requests:
-            cpu: 10m
-        volumeMounts:
-        - mountPath: /etc/boskos
-          name: boskos
-          readOnly: true
-        - mountPath: /secrets/ci-pull-credentials
-          name: ci-pull-credentials
-          readOnly: true
-        - mountPath: /secrets/gcs
-          name: gcs-credentials
-          readOnly: true
-        - mountPath: /secrets/manifest-tool
-          name: manifest-tool-local-pusher
-          readOnly: true
-        - mountPath: /etc/pull-secret
-          name: pull-secret
-          readOnly: true
-        - mountPath: /etc/report
-          name: result-aggregator
-          readOnly: true
-      serviceAccountName: ci-operator
-      volumes:
-      - name: boskos
-        secret:
-          items:
-          - key: credentials
-            path: credentials
-          secretName: boskos-credentials
-      - name: ci-pull-credentials
-        secret:
-          secretName: ci-pull-credentials
-      - name: manifest-tool-local-pusher
-        secret:
-          secretName: manifest-tool-local-pusher
-      - name: pull-secret
-        secret:
-          secretName: registry-pull-credentials
-      - name: result-aggregator
-        secret:
-          secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-openstack-aws-nfv,?($|\s.*)
+    trigger: (?m)^/test( | .* )e2e-kubevirt-metal-ovn-backuprestore,?($|\s.*)
   - agent: kubernetes
     always_run: false
     annotations:
@@ -2289,7 +2092,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: hypershift-aws
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
@@ -2375,7 +2177,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci-operator.openshift.io/cloud: hypershift-aws
       ci-operator.openshift.io/cloud-cluster-profile: hypershift-aws
@@ -2462,7 +2263,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -2476,6 +2276,7 @@ presubmits:
         - --report-credentials-file=/etc/report/credentials
         - --target=[images]
         - --target=[release:latest]
+        - --target=hypershift-operator-pr
         command:
         - ci-operator
         image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
@@ -2514,7 +2315,152 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build01
+    cluster: build07
+    context: ci/prow/okd-scos-e2e-aws-ovn
+    decorate: true
+    decoration_config:
+      sparse_checkout_files:
+      - Dockerfile.control-plane
+    labels:
+      ci-operator.openshift.io/cloud: aws
+      ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
+      ci-operator.openshift.io/variant: okd-scos
+      ci.openshift.io/generator: prowgen
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-hypershift-release-4.22-okd-scos-e2e-aws-ovn
+    optional: true
+    rerun_command: /test okd-scos-e2e-aws-ovn
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/secrets/ci-pull-credentials
+        - --target=e2e-aws-ovn
+        - --variant=okd-scos
+        command:
+        - ci-operator
+        env:
+        - name: HTTP_SERVER_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
+        imagePullPolicy: Always
+        name: ""
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /secrets/ci-pull-credentials
+          name: ci-pull-credentials
+          readOnly: true
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /secrets/manifest-tool
+          name: manifest-tool-local-pusher
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: ci-pull-credentials
+        secret:
+          secretName: ci-pull-credentials
+      - name: manifest-tool-local-pusher
+        secret:
+          secretName: manifest-tool-local-pusher
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )okd-scos-e2e-aws-ovn,?($|\s.*)
+  - agent: kubernetes
+    always_run: true
+    branches:
+    - ^release-4\.22$
+    - ^release-4\.22-
+    cluster: build08
+    context: ci/prow/okd-scos-images
+    decorate: true
+    decoration_config:
+      sparse_checkout_files:
+      - Dockerfile.control-plane
+    labels:
+      ci-operator.openshift.io/variant: okd-scos
+      ci.openshift.io/generator: prowgen
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-hypershift-release-4.22-okd-scos-images
+    rerun_command: /test okd-scos-images
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --report-credentials-file=/etc/report/credentials
+        - --target=[images]
+        - --target=[release:latest]
+        - --variant=okd-scos
+        command:
+        - ci-operator
+        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /secrets/manifest-tool
+          name: manifest-tool-local-pusher
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: manifest-tool-local-pusher
+        secret:
+          secretName: manifest-tool-local-pusher
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )okd-scos-images,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
+    branches:
+    - ^release-4\.22$
+    - ^release-4\.22-
+    cluster: build07
     context: ci/prow/reqserving-e2e-aws
     decorate: true
     decoration_config:
@@ -2522,9 +2468,8 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
-      capability/build-tmpfs: build-tmpfs
+      capability/arm64: arm64
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
       ci.openshift.io/generator: prowgen
@@ -2610,7 +2555,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -2695,7 +2639,6 @@ presubmits:
       - .ci-operator.yaml
       - Dockerfile
       - Dockerfile.control-plane
-      - Dockerfile.e2e
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"

@@ -7,6 +7,8 @@ base_images:
     name: "4.17"
     namespace: ocp
     tag: upi-installer
+prowgen:
+  disable_sparse_checkout: true
 releases:
   latest:
     release:
@@ -46,6 +48,7 @@ tests:
       KATA_RPM_VERSION: ""
       MUST_GATHER_IMAGE: registry.redhat.io/openshift-sandboxed-containers/osc-must-gather-rhel9:latest
       MUST_GATHER_ON_FAILURE_ONLY: "true"
+      OSC_INSTALL: "true"
       SLEEP_DURATION: 0h
       TEST_FILTERS: ~DisconnectedOnly&;~Disruptive&
       TEST_RELEASE_TYPE: Pre-GA
@@ -82,6 +85,7 @@ tests:
       KATA_RPM_VERSION: ""
       MUST_GATHER_IMAGE: registry.redhat.io/openshift-sandboxed-containers/osc-must-gather-rhel9:latest
       MUST_GATHER_ON_FAILURE_ONLY: "true"
+      OSC_INSTALL: "true"
       RUNTIMECLASS: kata-remote
       SLEEP_DURATION: 0h
       TEST_FILTERS: ~DisconnectedOnly&;~Disruptive&
@@ -115,18 +119,19 @@ tests:
       CUSTOM_AZURE_REGION: eastus
       ENABLE_MUST_GATHER: "true"
       ENABLEPEERPODS: "true"
-      INITDATA: ""
       INSTALL_KATA_RPM: "false"
       KATA_RPM_VERSION: ""
       MUST_GATHER_IMAGE: registry.redhat.io/openshift-sandboxed-containers/osc-must-gather-rhel9:latest
       MUST_GATHER_ON_FAILURE_ONLY: "true"
+      OSC_INSTALL: "true"
       RUNTIMECLASS: kata-remote
       SLEEP_DURATION: 0h
       TEST_FILTERS: ~DisconnectedOnly&;~Disruptive&
       TEST_RELEASE_TYPE: Pre-GA
-      TEST_SCENARIOS: sig-kata.*Kata Author
+      TEST_SCENARIOS: sig-kata.*run and verify cosigned pod
       TEST_TIMEOUT: "90"
-      TRUSTEE_URL: ""
+      TRUSTEE_CATALOG_SOURCE_IMAGE: quay.io/redhat-user-workloads/ose-osc-tenant/trustee-test-fbc:latest
+      TRUSTEE_INSTALL: "true"
       WORKLOAD_TO_TEST: coco
     workflow: sandboxed-containers-operator-e2e-azure
   timeout: 24h0m0s
@@ -159,6 +164,7 @@ tests:
       LOCATION: eastus
       MUST_GATHER_IMAGE: registry.redhat.io/openshift-sandboxed-containers/osc-must-gather-rhel9:latest
       MUST_GATHER_ON_FAILURE_ONLY: "true"
+      OSC_INSTALL: "true"
       RUNTIMECLASS: kata-remote
       SLEEP_DURATION: 0h
       TEST_FILTERS: ~DisconnectedOnly&;~Disruptive&
@@ -192,19 +198,20 @@ tests:
       ENABLE_MUST_GATHER: "true"
       ENABLEPEERPODS: "true"
       HYPERSHIFT_AZURE_LOCATION: eastus
-      INITDATA: ""
       INSTALL_KATA_RPM: "false"
       KATA_RPM_VERSION: ""
       LOCATION: eastus
       MUST_GATHER_IMAGE: registry.redhat.io/openshift-sandboxed-containers/osc-must-gather-rhel9:latest
       MUST_GATHER_ON_FAILURE_ONLY: "true"
+      OSC_INSTALL: "true"
       RUNTIMECLASS: kata-remote
       SLEEP_DURATION: 0h
       TEST_FILTERS: ~DisconnectedOnly&;~Disruptive&
       TEST_RELEASE_TYPE: Pre-GA
-      TEST_SCENARIOS: sig-kata.*Kata Author
+      TEST_SCENARIOS: sig-kata.*run and verify cosigned pod
       TEST_TIMEOUT: "90"
-      TRUSTEE_URL: ""
+      TRUSTEE_CATALOG_SOURCE_IMAGE: quay.io/redhat-user-workloads/ose-osc-tenant/trustee-test-fbc:latest
+      TRUSTEE_INSTALL: "true"
       WORKLOAD_TO_TEST: coco
     workflow: sandboxed-containers-operator-e2e-aro
   timeout: 24h0m0s
@@ -235,6 +242,7 @@ tests:
       KATA_RPM_VERSION: ""
       MUST_GATHER_IMAGE: registry.redhat.io/openshift-sandboxed-containers/osc-must-gather-rhel9:latest
       MUST_GATHER_ON_FAILURE_ONLY: "true"
+      OSC_INSTALL: "true"
       RUNTIMECLASS: kata-remote
       SLEEP_DURATION: 0h
       TEST_FILTERS: ~DisconnectedOnly&;~Disruptive&
@@ -243,43 +251,6 @@ tests:
       TEST_TIMEOUT: "90"
       TRUSTEE_URL: ""
       WORKLOAD_TO_TEST: peer-pods
-    workflow: sandboxed-containers-operator-e2e-aws
-  timeout: 24h0m0s
-- as: aws-ipi-coco
-  capabilities:
-  - intranet
-  cron: 0 0 31 2 1
-  reporter_config:
-    channel: '#kata-ocp-ci-reports'
-    job_states_to_report:
-    - success
-    - failure
-    - error
-    report_template: '{{if eq .Status.State "success"}}SUCCESS{{else}}ERROR{{end}}
-      {{trimPrefix "periodic-ci-openshift-sandboxed-containers-operator-" .Spec.Job}}
-      <{{.Status.URL}}|View logs>'
-  restrict_network_access: false
-  steps:
-    cluster_profile: aws-sandboxed-containers-operator
-    env:
-      AWS_REGION_OVERRIDE: us-east-2
-      CATALOG_SOURCE_IMAGE: quay.io/redhat-user-workloads/ose-osc-tenant/osc-test-fbc:latest
-      CATALOG_SOURCE_NAME: brew-catalog
-      ENABLE_MUST_GATHER: "true"
-      ENABLEPEERPODS: "true"
-      INITDATA: ""
-      INSTALL_KATA_RPM: "false"
-      KATA_RPM_VERSION: ""
-      MUST_GATHER_IMAGE: registry.redhat.io/openshift-sandboxed-containers/osc-must-gather-rhel9:latest
-      MUST_GATHER_ON_FAILURE_ONLY: "true"
-      RUNTIMECLASS: kata-remote
-      SLEEP_DURATION: 0h
-      TEST_FILTERS: ~DisconnectedOnly&;~Disruptive&
-      TEST_RELEASE_TYPE: Pre-GA
-      TEST_SCENARIOS: sig-kata.*Kata Author
-      TEST_TIMEOUT: "90"
-      TRUSTEE_URL: ""
-      WORKLOAD_TO_TEST: coco
     workflow: sandboxed-containers-operator-e2e-aws
   timeout: 24h0m0s
 zz_generated_metadata:

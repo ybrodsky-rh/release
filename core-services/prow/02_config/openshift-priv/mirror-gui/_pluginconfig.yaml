@@ -2,10 +2,6 @@ approve:
 - repos:
   - openshift-priv/mirror-gui
   require_self_approval: false
-lgtm:
-- repos:
-  - openshift-priv/mirror-gui
-  review_acts_as_lgtm: true
 plugins:
   openshift-priv/mirror-gui:
     plugins:
@@ -35,9 +31,7 @@ plugins:
     - wip
     - yuks
 triggers:
-- org_invite:
-    prominent: {}
-  repos:
+- repos:
   - openshift-priv/mirror-gui
   trusted_apps:
   - openshift-merge-bot

@@ -1,11 +1,11 @@
 presubmits:
   openshift/cluster-ingress-operator:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build01
     context: ci/prow/e2e-aws-operator
     decorate: true
     decoration_config:
@@ -83,13 +83,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-operator,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-operator|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build01
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -167,13 +167,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build01
     context: ci/prow/e2e-aws-ovn-serial
     decorate: true
     decoration_config:
@@ -251,13 +251,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-serial,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-serial|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build01
     context: ci/prow/e2e-aws-ovn-single-node
     decorate: true
     decoration_config:
@@ -338,11 +338,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-ovn-single-node,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build01
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -420,13 +420,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build12
     context: ci/prow/e2e-azure-manual-oidc
     decorate: true
     decoration_config:
@@ -507,11 +507,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-azure-manual-oidc,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build12
     context: ci/prow/e2e-azure-operator
     decorate: true
     decoration_config:
@@ -589,13 +589,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-azure-operator,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-azure-operator|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build12
     context: ci/prow/e2e-azure-ovn
     decorate: true
     decoration_config:
@@ -676,11 +676,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-azure-ovn,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-gcp-operator
     decorate: true
     decoration_config:
@@ -758,13 +758,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-operator,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-operator|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-gcp-ovn
     decorate: true
     decoration_config:
@@ -845,11 +845,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-gcp-ovn,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build12
     context: ci/prow/e2e-hypershift
     decorate: true
     decoration_config:
@@ -927,13 +927,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-hypershift,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-hypershift|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build12
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -991,7 +991,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build12
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -1056,7 +1056,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build12
     context: ci/prow/verify
     decorate: true
     decoration_config:

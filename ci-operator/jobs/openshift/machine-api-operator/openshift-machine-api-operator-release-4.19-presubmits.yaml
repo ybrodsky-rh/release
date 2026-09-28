@@ -2,10 +2,12 @@ presubmits:
   openshift/machine-api-operator:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$|_test\.go$|vsphere
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build06
+    cluster: build09
     context: ci/prow/e2e-aws-operator
     decorate: true
     decoration_config:
@@ -19,7 +21,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-machine-api-operator-release-4.19-e2e-aws-operator
     rerun_command: /test e2e-aws-operator
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$|_test\.go$|vsphere
     spec:
       containers:
       - args:
@@ -87,10 +88,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-operator,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build06
+    cluster: build09
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -104,7 +107,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-machine-api-operator-release-4.19-e2e-aws-ovn
     rerun_command: /test e2e-aws-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -172,10 +174,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$|vsphere
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build06
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -189,7 +193,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-machine-api-operator-release-4.19-e2e-aws-ovn-upgrade
     rerun_command: /test e2e-aws-ovn-upgrade
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$|vsphere
     spec:
       containers:
       - args:
@@ -515,7 +518,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-gcp-operator
     decorate: true
     decoration_config:
@@ -600,7 +603,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-gcp-ovn
     decorate: true
     decoration_config:
@@ -1201,7 +1204,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build06
+    cluster: build09
     context: ci/prow/e2e-openstack
     decorate: true
     decoration_config:
@@ -2050,7 +2053,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build06
+    cluster: build09
     context: ci/prow/regression-clusterinfra-aws-ipi-mapi
     decorate: true
     decoration_config:

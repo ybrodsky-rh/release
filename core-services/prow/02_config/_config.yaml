@@ -6,6 +6,7 @@ branch-protection:
 deck:
   additional_allowed_buckets:
   - origin-federated-results
+  - prow-artifact-archive
   branding:
     favicon: /static/extensions/favicon.ico
     header_color: black
@@ -28,6 +29,14 @@ deck:
     rerun_auth_configs:
       github_users:
       - raelga
+  - repo: Azure/ARO-RP
+    rerun_auth_configs:
+      github_users:
+      - hlipsig
+      - tsatam
+      - wanghaoran1988
+      - stevekuznetsov
+      - rachelvweber
   - repo: openshift/multiarch-tuning-operator
     rerun_auth_configs:
       github_team_slugs:
@@ -129,6 +138,27 @@ deck:
       github_team_slugs:
       - org: redhat-chaos
         slug: redhat-chaos
+  - repo: redhat-developer/rhdh
+    rerun_auth_configs:
+      github_orgs:
+      - redhat-developer
+      github_team_slugs:
+      - org: openshift
+        slug: test-platform
+  - repo: redhat-developer/rhdh-plugin-export-overlays
+    rerun_auth_configs:
+      github_orgs:
+      - redhat-developer
+      github_team_slugs:
+      - org: openshift
+        slug: test-platform
+  - repo: redhat-developer/rhdh-test-instance
+    rerun_auth_configs:
+      github_orgs:
+      - redhat-developer
+      github_team_slugs:
+      - org: openshift
+        slug: test-platform
   - repo: openshift/operator-framework-operator-controller
     rerun_auth_configs:
       github_team_slugs:
@@ -363,10 +393,10 @@ plank:
             memory: 250Mi
       timeout: 8h0m0s
       utility_images:
-        clonerefs: us-docker.pkg.dev/k8s-infra-prow/images/clonerefs:v20260508-77c4e0541
-        entrypoint: us-docker.pkg.dev/k8s-infra-prow/images/entrypoint:v20260508-77c4e0541
-        initupload: us-docker.pkg.dev/k8s-infra-prow/images/initupload:v20260508-77c4e0541
-        sidecar: us-docker.pkg.dev/k8s-infra-prow/images/sidecar:v20260508-77c4e0541
+        clonerefs: us-docker.pkg.dev/k8s-infra-prow/images/clonerefs:v20260902-ffc57790b
+        entrypoint: us-docker.pkg.dev/k8s-infra-prow/images/entrypoint:v20260902-ffc57790b
+        initupload: us-docker.pkg.dev/k8s-infra-prow/images/initupload:v20260902-ffc57790b
+        sidecar: us-docker.pkg.dev/k8s-infra-prow/images/sidecar:v20260902-ffc57790b
   - config:
       censoring_options:
         exclude_directories:
@@ -668,7 +698,7 @@ scheduler:
   external:
     cache:
       cleanup_interval: 1h0m0s
-      entry_timeout_interval: 10m0s
+      entry_timeout_interval: 3m0s
     url: http://prowjob-dispatcher.ci.svc.cluster.local:8080
 sinker:
   max_pod_age: 6h0m0s
@@ -722,6 +752,13 @@ tide:
         repos:
           cri-o:
             skip-unknown-contexts: true
+      dora-metrics:
+        repos:
+          pelorus:
+            branches:
+              master:
+                required-if-present-contexts:
+                - ci/prow/4.13-e2e-openshift
       maistra:
         skip-unknown-contexts: true
       opendatahub-io:
@@ -729,6 +766,20 @@ tide:
           odh-dashboard:
             required-contexts:
             - Tests
+            required-if-present-contexts:
+            - AutoML BFF Tests
+            - AutoRAG BFF Tests
+            - AutoX Core Services Tests
+            - Core BFF Tests
+            - Dashboard Operator Tests
+            - EvalHub BFF Tests
+            - EvalHub Frontend Tests
+            - Gen AI BFF Tests
+            - Gen AI Frontend Tests
+            - MaaS BFF Tests
+            - MLflow BFF Tests
+            - Model Registry BFF Tests
+            - Model Registry Frontend Tests
             skip-unknown-contexts: true
           opendatahub-operator:
             optional-regex-contexts:
@@ -739,16 +790,100 @@ tide:
             skip-unknown-contexts: true
           assisted-test-infra:
             skip-unknown-contexts: true
+          aws-account-operator:
+            skip-unknown-contexts: true
           cert-manager-operator-release:
             skip-unknown-contexts: true
+          certman-operator:
+            skip-unknown-contexts: true
           ci-docs:
+            skip-unknown-contexts: true
+          cloud-ingress-operator:
+            skip-unknown-contexts: true
+          coderabbit:
+            required-contexts:
+            - CodeRabbit
+          configuration-anomaly-detection:
+            branches:
+              main:
+                required-if-present-contexts:
+                - ci/prow/coverage
+                - ci/prow/lint
+                - ci/prow/test
+                - ci/prow/validate
+          configure-alertmanager-operator:
+            skip-unknown-contexts: true
+          configure-goalert-operator:
+            branches:
+              main:
+                required-if-present-contexts:
+                - ci/prow/coverage
+                - ci/prow/lint
+                - ci/prow/test
+                - ci/prow/validate
+          deadmanssnitch-operator:
+            skip-unknown-contexts: true
+          gcp-project-operator:
             skip-unknown-contexts: true
           jenkins:
             optional-regex-contexts:
             - Red\ Hat\ Konflux.*
           lightspeed-service:
             skip-unknown-contexts: true
+          managed-node-metadata-operator:
+            skip-unknown-contexts: true
+          managed-upgrade-operator:
+            skip-unknown-contexts: true
+          managed-velero-operator:
+            skip-unknown-contexts: true
+          ocm-agent:
+            skip-unknown-contexts: true
+          ocm-agent-operator:
+            skip-unknown-contexts: true
+          osd-cluster-ready:
+            skip-unknown-contexts: true
+          pagerduty-operator:
+            skip-unknown-contexts: true
+          rbac-permissions-operator:
+            branches:
+              master:
+                required-if-present-contexts:
+                - ci/prow/coverage
+                - ci/prow/e2e-binary-build-success
+                - ci/prow/lint
+                - ci/prow/test
+                - ci/prow/validate
+            skip-unknown-contexts: true
           release:
+            skip-unknown-contexts: true
+          rosa:
+            branches:
+              master:
+                required-if-present-contexts:
+                - ci/prow/build
+                - ci/prow/commits
+                - ci/prow/lint
+                - ci/prow/test
+          route-monitor-operator:
+            branches:
+              master:
+                required-if-present-contexts:
+                - ci/prow/e2e-binary-build-success
+      openshift-eng:
+        repos:
+          coderabbit:
+            required-contexts:
+            - CodeRabbit
+      openshift-online:
+        repos:
+          aws-nuke-cf:
+            skip-unknown-contexts: true
+          coderabbit:
+            required-contexts:
+            - CodeRabbit
+          rosa-hyperfleet-api:
+            skip-unknown-contexts: true
+          rosa-hyperfleet-kube-applier:
             skip-unknown-contexts: true
       openshift-priv:
         repos:
@@ -757,15 +892,7 @@ tide:
           jenkins:
             optional-regex-contexts:
             - Red\ Hat\ Konflux.*
-          operator-lifecycle-manager:
-            branches:
-              master:
-                skip-unknown-contexts: true
           operator-marketplace:
-            branches:
-              master:
-                skip-unknown-contexts: true
-          operator-registry:
             branches:
               master:
                 skip-unknown-contexts: true
@@ -808,7 +935,43 @@ tide:
           recert:
             optional-regex-contexts:
             - Red\ Hat\ Konflux.*
+      terraform-redhat:
+        repos:
+          terraform-provider-rhcs:
+            branches:
+              main:
+                required-if-present-contexts:
+                - ci/prow/pre-push-checks
+                - ci/prow/images
+                - ci/prow/e2e-images
+                - ci/prow/e2e-presubmits-images
+                - ci/prow/e2e-presubmits-rosa-hcp-advanced-critical-high-presubmit
+                - ci/prow/e2e-presubmits-rosa-hcp-private-critical-high-presubmit
+                - ci/prow/e2e-presubmits-rosa-sts-advanced-critical-high-presubmit
+                - ci/prow/e2e-presubmits-rosa-sts-private-critical-high-presubmit
   display_all_tide_queries_in_status: true
+  github_merge_blocks_policy:
+    migtools/filebrowser: block
+    migtools/kopia: block
+    migtools/kubevirt-datamover-controller: block
+    migtools/kubevirt-datamover-plugin: block
+    migtools/kubevirt-velero-plugin: block
+    migtools/oadp-cli: block
+    migtools/oadp-non-admin: block
+    migtools/oadp-vm-file-restore: block
+    migtools/oadp-vmdp: block
+    migtools/udistribution: block
+    openshift/hypershift-oadp-plugin: block
+    openshift/oadp-must-gather: block
+    openshift/oadp-operator: block
+    openshift/openshift-velero-plugin: block
+    openshift/restic: block
+    openshift/velero: block
+    openshift/velero-plugin-for-aws: block
+    openshift/velero-plugin-for-csi: block
+    openshift/velero-plugin-for-gcp: block
+    openshift/velero-plugin-for-legacy-aws: block
+    openshift/velero-plugin-for-microsoft-azure: block
   max_goroutines: 100
   merge_label: tide/merge-method-merge
   pr_status_base_urls:
@@ -831,6 +994,8 @@ tide:
   priority:
   - labels:
     - priority/ci-critical
+  - labels:
+    - ci/severity-critical
   - labels:
     - jira/severity-critical
   - labels:

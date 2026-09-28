@@ -48,10 +48,36 @@ tests:
     clone: true
     from: shellcheck
   run_if_changed: .sh$
+- always_run: false
+  as: skills-lint
+  commands: make lint-all-skills
+  container:
+    clone: true
+    from: root
+  run_if_changed: (SKILL\.md|^scripts/lint-skills\.py|^Makefile|^plugins/.*/skills/)
+- always_run: false
+  as: eval-all
+  optional: true
+  steps:
+    env:
+      EVAL_DISCOVER: "true"
+      EVAL_MODEL: claude-opus-4-6
+      EVAL_PARALLELISM: "3"
+    workflow: openshift-edge-tooling-agent-eval
+- as: eval-changed
+  optional: true
+  run_if_changed: ^plugins/.*/evals/|^plugins/.*/skills/
+  steps:
+    env:
+      EVAL_CHANGED_ONLY: "true"
+      EVAL_DISCOVER: "true"
+      EVAL_MODEL: claude-opus-4-6
+      EVAL_PARALLELISM: "3"
+    workflow: openshift-edge-tooling-agent-eval
 - as: ocp-ci-monitor
   cron: 0 7 * * 1-5
   reporter_config:
-    channel: '#team-ocp-edge-collab'
+    channel: '#team-ocp-edge-notifications'
     job_states_to_report:
     - failure
     - error
@@ -60,22 +86,41 @@ tests:
   steps:
     workflow: openshift-edge-tooling-ci-monitor
 - as: microshift-ci-doctor
-  cron: 0 8,14 * * 1-5
+  cron: 0 7 * * 1-5
   reporter_config:
-    channel: '#team-ocp-edge-collab'
+    channel: '#team-ocp-edge-notifications'
     job_states_to_report:
     - success
     - failure
     - error
-    report_template: |
-      :ai-intensifies: *MicroShift CI Doctor* ended with *{{.Status.State}}*.
-      | <https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/test-platform-results/logs/{{.Spec.Job}}/{{.Status.BuildID}}/artifacts/microshift-ci-doctor/openshift-edge-tooling-microshift-ci-doctor/artifacts/microshift-ci-doctor-report.html|View report> | <https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/test-platform-results/logs/{{.Spec.Job}}/{{.Status.BuildID}}/artifacts/microshift-ci-doctor/openshift-edge-tooling-microshift-ci-doctor/artifacts/analyze-ci-create-bugs-merged.txt|View bugs> | <{{.Status.URL}}|View logs> |
+    report_template: |-
+      :robot_face: *MicroShift CI Doctor* ended with *{{.Status.State}}*.{{"\n"}}
+      {{- $ab := printf "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/test-platform-results/logs/%s/%s/artifacts/microshift-ci-doctor/openshift-edge-tooling-microshift-ci-doctor/artifacts/" .Spec.Job .Status.BuildID -}}
+      {{- $rp := printf "%s%s" $ab "report-microshift-ci-doctor.html" -}}
+      {{- $st := printf "%s%s" $ab "report-close-stale-bugs.txt" -}}
+      {{- $pr := printf "%s%s" $ab "report-fix-test-bugs.txt" -}}
+      | <{{$rp}}|Report> | <{{$st}}|Bugs(-)> | <{{$pr}}|PRs> | <{{.Status.URL}}|Logs> |
   steps:
     workflow: openshift-edge-tooling-microshift-ci-doctor
+- as: lvms-ci-doctor
+  cron: 30 6 * * 1,2,4
+  reporter_config:
+    channel: '#lvms-release-coordination'
+    job_states_to_report:
+    - success
+    - failure
+    - error
+    report_template: |-
+      :robot_face: *LVMS CI Doctor* ended with *{{.Status.State}}*.{{"\n"}}
+      {{- $ab := printf "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/test-platform-results/logs/%s/%s/artifacts/lvms-ci-doctor/openshift-edge-tooling-lvms-ci-doctor/artifacts/" .Spec.Job .Status.BuildID -}}
+      {{- $rp := printf "%s%s" $ab "report-lvm-operator-ci-doctor.html" -}}
+      | <{{$rp}}|Report> | <{{.Status.URL}}|Logs> |
+  steps:
+    workflow: openshift-edge-tooling-lvms-ci-doctor
 - as: pr-notifier
   cron: 0 7 * * 0-5
   reporter_config:
-    channel: '#team-ocp-edge-collab'
+    channel: '#team-ocp-edge-notifications'
     job_states_to_report:
     - failure
     - error

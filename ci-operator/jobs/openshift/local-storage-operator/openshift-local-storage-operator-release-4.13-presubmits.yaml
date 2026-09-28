@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build03
+    cluster: build09
     context: ci/prow/ci-index-local-storage-operator-bundle
     decorate: true
     decoration_config:
@@ -60,11 +60,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )ci-index-local-storage-operator-bundle,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build09
+    cluster: build11
     context: ci/prow/e2e-operator
     decorate: true
     decoration_config:
@@ -144,13 +144,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-operator,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-operator|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build03
+    cluster: build09
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -210,7 +210,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build03
+    cluster: build09
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -277,7 +277,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build03
+    cluster: build09
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

@@ -1,11 +1,11 @@
 presubmits:
   openshift/cluster-api-provider-openstack:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build09
+    cluster: build10
     context: ci/prow/e2e-techpreview
     decorate: true
     decoration_config:
@@ -84,13 +84,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-techpreview,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-techpreview|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build06
+    cluster: build11
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -149,7 +149,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build06
+    cluster: build11
     context: ci/prow/test
     decorate: true
     decoration_config:
@@ -215,7 +215,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build06
+    cluster: build11
     context: ci/prow/test-openshift
     decorate: true
     decoration_config:
@@ -281,7 +281,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build06
+    cluster: build11
     context: ci/prow/verify
     decorate: true
     decoration_config:

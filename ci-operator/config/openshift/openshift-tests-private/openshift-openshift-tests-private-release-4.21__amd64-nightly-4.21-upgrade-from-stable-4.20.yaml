@@ -547,7 +547,7 @@ tests:
 - as: metal-compact-agent-ipv4-static-connected-f28
   capabilities:
   - intranet
-  cron: 4 18 22 * *
+  cron: 29 11 26 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
     env:
@@ -564,7 +564,7 @@ tests:
 - as: metal-ha-agent-platform-none-ipv4-static-f28
   capabilities:
   - intranet
-  cron: 4 15 3 * *
+  cron: 59 4 4 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
     env:
@@ -583,7 +583,7 @@ tests:
 - as: metal-upi-ovn-ipv4-f28
   capabilities:
   - intranet
-  cron: 23 16 7 * *
+  cron: 39 18 6 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
     env:
@@ -655,7 +655,7 @@ tests:
 - as: metal-sno-agent-ipv4-static-connected-fips-f28
   capabilities:
   - intranet
-  cron: 26 21 6 * *
+  cron: 29 22 25 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
     env:
@@ -767,7 +767,7 @@ tests:
   cluster: build01
   cron: 12 19 3 * *
   steps:
-    cluster_profile: nutanix-qe
+    cluster_profile: nutanix
     env:
       EXTRACT_MANIFEST_INCLUDED: "true"
       RT_ENABLED: "true"
@@ -778,7 +778,7 @@ tests:
   cluster: build01
   cron: 5 9 4 * *
   steps:
-    cluster_profile: nutanix-qe
+    cluster_profile: nutanix
     env:
       EXTRACT_MANIFEST_INCLUDED: "true"
       SIZE_VARIANT: compact

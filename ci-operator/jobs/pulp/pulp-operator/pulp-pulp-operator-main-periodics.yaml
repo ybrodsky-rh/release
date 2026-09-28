@@ -1,7 +1,7 @@
 periodics:
 - agent: kubernetes
-  cluster: build04
-  cron: 0 4 * * *
+  cluster: build09
+  cron: '@yearly'
   decorate: true
   decoration_config:
     sparse_checkout_files:
@@ -83,8 +83,8 @@ periodics:
       secret:
         secretName: result-aggregator
 - agent: kubernetes
-  cluster: build04
-  cron: 0 4 * * *
+  cluster: build09
+  cron: '@yearly'
   decorate: true
   decoration_config:
     sparse_checkout_files:

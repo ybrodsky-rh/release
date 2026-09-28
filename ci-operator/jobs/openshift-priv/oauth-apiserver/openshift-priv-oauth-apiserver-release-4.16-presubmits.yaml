@@ -1,11 +1,11 @@
 presubmits:
   openshift-priv/oauth-apiserver:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build06
+    cluster: build09
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -92,13 +92,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build06
+    cluster: build09
     context: ci/prow/e2e-aws-serial
     decorate: true
     decoration_config:
@@ -185,13 +185,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-serial,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-serial|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build06
+    cluster: build09
     context: ci/prow/e2e-aws-upgrade
     decorate: true
     decoration_config:
@@ -278,13 +278,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-component
     decorate: true
     decoration_config:
@@ -371,7 +371,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-component,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-component|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:

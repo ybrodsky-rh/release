@@ -1,11 +1,11 @@
 presubmits:
   openshift/router:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-agnostic
     decorate: true
     decoration_config:
@@ -84,13 +84,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-agnostic,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-agnostic|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build09
+    cluster: build01
     context: ci/prow/e2e-aws-serial
     decorate: true
     decoration_config:
@@ -169,7 +169,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-serial,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-serial|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -432,11 +432,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-metal-ipi-ovn-router,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/e2e-upgrade
     decorate: true
     decoration_config:
@@ -515,13 +515,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -581,7 +581,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -647,7 +647,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/verify
     decorate: true
     decoration_config:

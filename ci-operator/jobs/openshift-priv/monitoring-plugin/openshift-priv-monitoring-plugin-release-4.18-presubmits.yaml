@@ -1,11 +1,11 @@
 presubmits:
   openshift-priv/monitoring-plugin:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build09
+    cluster: build11
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -23,6 +23,7 @@ presubmits:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-priv-monitoring-plugin-release-4.18-e2e-aws-ovn
+    optional: true
     path_alias: github.com/openshift/monitoring-plugin
     rerun_command: /test e2e-aws-ovn
     spec:
@@ -95,11 +96,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-ovn,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build09
+    cluster: build11
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -187,13 +188,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build09
     context: ci/prow/e2e-hypershift-conformance
     decorate: true
     decoration_config:
@@ -281,13 +282,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-hypershift-conformance,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-hypershift-conformance|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build09
     context: ci/prow/e2e-monitoring
     decorate: true
     decoration_config:
@@ -305,6 +306,19 @@ presubmits:
     name: pull-ci-openshift-priv-monitoring-plugin-release-4.18-e2e-monitoring
     optional: true
     path_alias: github.com/openshift/monitoring-plugin
+    reporter_config:
+      slack:
+        channel: '#observability-ui-qe'
+        job_states_to_report:
+        - success
+        - failure
+        - error
+        report_template: '{{if eq .Status.State "success"}} :rainbow: Job *{{.Spec.Job}}*
+          ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> | <https://github.com/openshift/monitoring-plugin/pull/{{with
+          index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}|View PR> :rainbow: {{else}}
+          :volcano: Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View
+          logs> | <https://github.com/openshift/monitoring-plugin/pull/{{with index
+          .Spec.Refs.Pulls 0}}{{.Number}}{{end}}|View PR> :volcano: {{end}}'
     rerun_command: /test e2e-monitoring
     spec:
       containers:
@@ -387,7 +401,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build09
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -454,7 +468,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build09
     context: ci/prow/lint
     decorate: true
     decoration_config:

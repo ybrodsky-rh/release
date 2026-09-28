@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-hypershift-ovn-kubevirt
     decorate: true
     decoration_config:
@@ -95,11 +95,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-hypershift-ovn-kubevirt,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-live-migration-sdn-ovn
     decorate: true
     decoration_config:
@@ -186,13 +186,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-live-migration-sdn-ovn,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-live-migration-sdn-ovn|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-live-migration-sdn-ovn-rollback
     decorate: true
     decoration_config:
@@ -282,7 +282,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-live-migration-sdn-ovn-rollback,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
@@ -373,13 +373,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-hypershift-conformance,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-hypershift-conformance|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-local-to-shared-gateway-mode-migration
     decorate: true
     decoration_config:
@@ -469,11 +469,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-ovn-local-to-shared-gateway-mode-migration,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-network-migration
     decorate: true
     decoration_config:
@@ -560,13 +560,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-network-migration,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-network-migration|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-serial
     decorate: true
     decoration_config:
@@ -653,13 +653,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-serial,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-serial|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-serial-ipsec
     decorate: true
     decoration_config:
@@ -753,7 +753,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-shared-to-local-gateway-mode-migration
     decorate: true
     decoration_config:
@@ -847,7 +847,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-single-node
     decorate: true
     decoration_config:
@@ -941,7 +941,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-techpreview-serial
     decorate: true
     decoration_config:
@@ -1031,11 +1031,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-ovn-techpreview-serial,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -1122,13 +1122,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-upgrade-ipsec
     decorate: true
     decoration_config:
@@ -1215,13 +1215,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade-ipsec,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-upgrade-ipsec|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-windows
     decorate: true
     decoration_config:
@@ -1308,13 +1308,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-windows,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-windows|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-sdn-upgrade
     decorate: true
     decoration_config:
@@ -1686,7 +1686,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-azure-ovn-manual-oidc,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
@@ -1777,13 +1777,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-azure-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-azure-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-ovn
     decorate: true
     decoration_config:
@@ -1870,13 +1870,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-ovn,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-ovn|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-ovn-techpreview
     decorate: true
     decoration_config:
@@ -1966,11 +1966,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-gcp-ovn-techpreview,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-ovn-upgrade
     decorate: true
     decoration_config:
@@ -2057,9 +2057,9 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
@@ -2151,7 +2151,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-metal-ipi-ovn-ipv6,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-metal-ipi-ovn-ipv6|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -2252,7 +2252,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-network-mtu-migration-ovn-ipv4
     decorate: true
     decoration_config:
@@ -2441,7 +2441,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-openstack-ovn
     decorate: true
     decoration_config:
@@ -2535,7 +2535,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-ovn-hybrid-step-registry
     decorate: true
     decoration_config:
@@ -2629,7 +2629,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-ovn-ipsec-step-registry
     decorate: true
     decoration_config:
@@ -2723,7 +2723,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-ovn-step-registry
     decorate: true
     decoration_config:
@@ -3333,7 +3333,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/qe-perfscale-aws-ovn-medium-cluster-density
     decorate: true
     decoration_config:
@@ -3427,7 +3427,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/qe-perfscale-aws-ovn-medium-node-density-cni
     decorate: true
     decoration_config:
@@ -3521,7 +3521,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/qe-perfscale-aws-ovn-small-cluster-density
     decorate: true
     decoration_config:
@@ -3615,7 +3615,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/qe-perfscale-aws-ovn-small-node-density-cni
     decorate: true
     decoration_config:

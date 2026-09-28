@@ -1,11 +1,11 @@
 presubmits:
   openshift-priv/operator-framework-olm:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-console-olm
     decorate: true
     decoration_config:
@@ -94,13 +94,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-console-olm,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-console-olm|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-olm
     decorate: true
     decoration_config:
@@ -189,13 +189,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-olm,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-olm|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-olm-flaky
     decorate: true
     decoration_config:
@@ -287,11 +287,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-gcp-olm-flaky,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn
     decorate: true
     decoration_config:
@@ -380,13 +380,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-ovn,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-ovn|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build06
     context: ci/prow/e2e-upgrade
     decorate: true
     decoration_config:
@@ -475,13 +475,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build08
+    cluster: build11
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -549,7 +549,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build08
+    cluster: build11
     context: ci/prow/unit-api
     decorate: true
     decoration_config:
@@ -625,7 +625,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build08
+    cluster: build11
     context: ci/prow/unit-olm
     decorate: true
     decoration_config:
@@ -701,7 +701,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build08
+    cluster: build11
     context: ci/prow/unit-psm
     decorate: true
     decoration_config:
@@ -777,7 +777,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build08
+    cluster: build11
     context: ci/prow/unit-registry
     decorate: true
     decoration_config:
@@ -853,7 +853,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build08
+    cluster: build11
     context: ci/prow/verify
     decorate: true
     decoration_config:

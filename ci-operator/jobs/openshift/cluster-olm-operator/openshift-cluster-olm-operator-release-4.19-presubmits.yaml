@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build06
     context: ci/prow/deps
     decorate: true
     decoration_config:
@@ -70,7 +70,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build06
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -128,7 +128,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build06
     context: ci/prow/lint
     decorate: true
     decoration_config:
@@ -190,10 +190,12 @@ presubmits:
     trigger: (?m)^/test( | .* )lint,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE|DCO)|\.golangci\.yaml|Tiltfile$
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build06
+    cluster: build09
     context: ci/prow/openshift-e2e-aws
     decorate: true
     decoration_config:
@@ -207,7 +209,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-olm-operator-release-4.19-openshift-e2e-aws
     rerun_command: /test openshift-e2e-aws
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE|DCO)|\.golangci\.yaml|Tiltfile$
     spec:
       containers:
       - args:
@@ -278,7 +279,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build06
+    cluster: build09
     context: ci/prow/openshift-e2e-aws-techpreview
     decorate: true
     decoration_config:
@@ -363,7 +364,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build06
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

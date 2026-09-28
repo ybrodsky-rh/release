@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-gatewayapi
     decorate: true
     decoration_config:
@@ -96,10 +96,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-gatewayapi,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-operator
     decorate: true
     decoration_config:
@@ -118,7 +120,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-ingress-operator-release-4.17-e2e-aws-operator
     path_alias: github.com/openshift/cluster-ingress-operator
     rerun_command: /test e2e-aws-operator
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -193,7 +194,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-operator-techpreview
     decorate: true
     decoration_config:
@@ -284,10 +285,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-operator-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -306,7 +309,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-ingress-operator-release-4.17-e2e-aws-ovn
     path_alias: github.com/openshift/cluster-ingress-operator
     rerun_command: /test e2e-aws-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -378,10 +380,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-serial
     decorate: true
     decoration_config:
@@ -400,7 +404,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-ingress-operator-release-4.17-e2e-aws-ovn-serial
     path_alias: github.com/openshift/cluster-ingress-operator
     rerun_command: /test e2e-aws-ovn-serial
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -475,7 +478,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-single-node
     decorate: true
     decoration_config:
@@ -569,7 +572,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-techpreview
     decorate: true
     decoration_config:
@@ -660,10 +663,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -682,7 +687,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-ingress-operator-release-4.17-e2e-aws-ovn-upgrade
     path_alias: github.com/openshift/cluster-ingress-operator
     rerun_command: /test e2e-aws-ovn-upgrade
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -757,7 +761,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build04
+    cluster: build07
     context: ci/prow/e2e-azure-manual-oidc
     decorate: true
     decoration_config:
@@ -848,10 +852,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-manual-oidc,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build04
+    cluster: build07
     context: ci/prow/e2e-azure-operator
     decorate: true
     decoration_config:
@@ -870,7 +876,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-ingress-operator-release-4.17-e2e-azure-operator
     path_alias: github.com/openshift/cluster-ingress-operator
     rerun_command: /test e2e-azure-operator
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -945,7 +950,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build04
+    cluster: build07
     context: ci/prow/e2e-azure-ovn
     decorate: true
     decoration_config:
@@ -1036,10 +1041,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-operator
     decorate: true
     decoration_config:
@@ -1058,7 +1065,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-ingress-operator-release-4.17-e2e-gcp-operator
     path_alias: github.com/openshift/cluster-ingress-operator
     rerun_command: /test e2e-gcp-operator
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -1133,7 +1139,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-ovn
     decorate: true
     decoration_config:
@@ -1224,10 +1230,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build04
+    cluster: build07
     context: ci/prow/e2e-hypershift
     decorate: true
     decoration_config:
@@ -1246,7 +1254,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-ingress-operator-release-4.17-e2e-hypershift
     path_alias: github.com/openshift/cluster-ingress-operator
     rerun_command: /test e2e-hypershift
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -1321,7 +1328,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build04
+    cluster: build07
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -1387,7 +1394,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build04
+    cluster: build07
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -1461,7 +1468,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build04
+    cluster: build07
     context: ci/prow/verify
     decorate: true
     decoration_config:

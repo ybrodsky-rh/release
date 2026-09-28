@@ -2,10 +2,12 @@ presubmits:
   openshift/cluster-api-provider-azure:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build04
     context: ci/prow/e2e-azure
     decorate: true
     decoration_config:
@@ -20,7 +22,6 @@ presubmits:
     name: pull-ci-openshift-cluster-api-provider-azure-release-4.16-e2e-azure
     path_alias: sigs.k8s.io/cluster-api-provider-azure
     rerun_command: /test e2e-azure
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -91,7 +92,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build04
     context: ci/prow/e2e-azure-manual-oidc
     decorate: true
     decoration_config:
@@ -174,10 +175,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-manual-oidc,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build04
     context: ci/prow/e2e-azure-serial
     decorate: true
     decoration_config:
@@ -192,7 +195,6 @@ presubmits:
     name: pull-ci-openshift-cluster-api-provider-azure-release-4.16-e2e-azure-serial
     path_alias: sigs.k8s.io/cluster-api-provider-azure
     rerun_command: /test e2e-azure-serial
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -263,7 +265,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build04
     context: ci/prow/e2e-azure-techpreview
     decorate: true
     decoration_config:
@@ -349,7 +351,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build04
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -408,7 +410,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build04
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -474,7 +476,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build04
     context: ci/prow/verify-commits
     decorate: true
     decoration_config:

@@ -1,11 +1,11 @@
 presubmits:
   openshift/csi-external-snapshotter:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build11
+    cluster: build01
     context: ci/prow/e2e-aws-csi
     decorate: true
     decoration_config:
@@ -86,13 +86,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-gcp-csi
     decorate: true
     decoration_config:
@@ -173,9 +173,9 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
@@ -260,9 +260,9 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-vsphere,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-vsphere|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
@@ -347,13 +347,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-vsphere-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-vsphere-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build08
+    cluster: build12
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -414,7 +414,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build08
+    cluster: build12
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -482,7 +482,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build08
+    cluster: build12
     context: ci/prow/verify-commits
     decorate: true
     decoration_config:
@@ -550,7 +550,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build08
+    cluster: build12
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

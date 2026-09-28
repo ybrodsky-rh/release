@@ -2,7 +2,7 @@ build_root:
   image_stream_tag:
     name: release
     namespace: openshift
-    tag: rhel-9-release-golang-1.25-openshift-4.21
+    tag: rhel-9-release-golang-1.26-openshift-5.0
 images:
   items:
   - dockerfile_path: Dockerfile.Konflux
@@ -28,31 +28,6 @@ tests:
     env:
       IMAGE_REPO: multicluster-observability-addon
       REGISTRY_ORG: stolostron
-    workflow: ocm-ci-image-mirror
-- as: publish-multicluster-observability-addon
-  postsubmit: true
-  steps:
-    dependencies:
-      SOURCE_IMAGE_REF: multicluster-observability-addon
-    env:
-      IMAGE_REPO: multicluster-observability-addon
-      REGISTRY_ORG: stolostron
-    test:
-    - as: publish
-      commands: |-
-        export SELF="make"
-        export OSCI_PUBLISH_DELAY="0"
-        export OSCI_COMPONENT_NAME="multicluster-observability-addon"
-        make osci/publish
-      credentials:
-      - mount_path: /etc/github
-        name: acm-cicd-github
-        namespace: test-credentials
-      from: src
-      resources:
-        requests:
-          cpu: 100m
-          memory: 200Mi
     workflow: ocm-ci-image-mirror
 zz_generated_metadata:
   branch: release-5.0

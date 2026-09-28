@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build11
+    cluster: build06
     context: ci/prow/ci-bundle-custom-metrics-autoscaler-operator-bundle
     decorate: true
     decoration_config:
@@ -70,7 +70,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build11
+    cluster: build06
     context: ci/prow/cma-check-all-csv
     decorate: true
     decoration_config:
@@ -141,6 +141,8 @@ presubmits:
     trigger: (?m)^/test( | .* )cma-check-all-csv,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|^\.github|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
@@ -162,7 +164,6 @@ presubmits:
     name: pull-ci-openshift-priv-custom-metrics-autoscaler-operator-release-4.15-cma-e2e-aws-ovn
     path_alias: github.com/kedacore/keda-olm-operator
     rerun_command: /test cma-e2e-aws-ovn
-    skip_if_only_changed: ^docs/|^\.github|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -237,7 +238,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build11
+    cluster: build06
     context: ci/prow/cma-verify-history
     decorate: true
     decoration_config:
@@ -311,7 +312,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build11
+    cluster: build06
     context: ci/prow/gofmt
     decorate: true
     decoration_config:
@@ -385,7 +386,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build11
+    cluster: build06
     context: ci/prow/govet
     decorate: true
     decoration_config:
@@ -459,7 +460,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build11
+    cluster: build06
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -524,7 +525,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build11
+    cluster: build06
     context: ci/prow/security
     decorate: true
     decoration_config:

@@ -2,10 +2,12 @@ presubmits:
   openshift/openshift-controller-manager:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^(pkg/build)
     branches:
     - ^release-5\.0$
     - ^release-5\.0-
-    cluster: build05
+    cluster: build06
     context: ci/prow/e2e-aws-builds
     decorate: true
     decoration_config:
@@ -19,7 +21,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-openshift-controller-manager-release-5.0-e2e-aws-builds
     rerun_command: /test e2e-aws-builds
-    run_if_changed: ^(pkg/build)
     spec:
       containers:
       - args:
@@ -87,10 +88,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-builds,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.0$
     - ^release-5\.0-
-    cluster: build05
+    cluster: build06
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -104,7 +107,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-openshift-controller-manager-release-5.0-e2e-aws-ovn
     rerun_command: /test e2e-aws-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -175,7 +177,7 @@ presubmits:
     branches:
     - ^release-5\.0$
     - ^release-5\.0-
-    cluster: build05
+    cluster: build06
     context: ci/prow/e2e-aws-ovn-proxy
     decorate: true
     decoration_config:
@@ -257,10 +259,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-proxy,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.0$
     - ^release-5\.0-
-    cluster: build05
+    cluster: build06
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -274,7 +278,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-openshift-controller-manager-release-5.0-e2e-aws-ovn-upgrade
     rerun_command: /test e2e-aws-ovn-upgrade
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -342,10 +345,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.0$
     - ^release-5\.0-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn
     decorate: true
     decoration_config:
@@ -359,7 +364,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-openshift-controller-manager-release-5.0-e2e-gcp-ovn
     rerun_command: /test e2e-gcp-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -427,10 +431,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.0$
     - ^release-5\.0-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn-builds
     decorate: true
     decoration_config:
@@ -444,7 +450,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-openshift-controller-manager-release-5.0-e2e-gcp-ovn-builds
     rerun_command: /test e2e-gcp-ovn-builds
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -511,11 +516,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-gcp-ovn-builds,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-5\.0$
     - ^release-5\.0-
-    cluster: build11
+    cluster: build10
     context: ci/prow/e2e-hypershift-conformance
     decorate: true
     decoration_config:
@@ -593,13 +598,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-hypershift-conformance,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-hypershift-conformance|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-5\.0$
     - ^release-5\.0-
-    cluster: build11
+    cluster: build10
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -619,6 +624,7 @@ presubmits:
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --report-credentials-file=/etc/report/credentials
         - --target=[images]
+        - --target=[release:latest]
         command:
         - ci-operator
         image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
@@ -653,11 +659,70 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )images,?($|\s.*)
   - agent: kubernetes
+    always_run: true
+    branches:
+    - ^release-5\.0$
+    - ^release-5\.0-
+    cluster: build10
+    context: ci/prow/okd-scos-images
+    decorate: true
+    decoration_config:
+      sparse_checkout_files:
+      - Dockerfile.rhel
+    labels:
+      ci-operator.openshift.io/variant: okd-scos
+      ci.openshift.io/generator: prowgen
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-openshift-controller-manager-release-5.0-okd-scos-images
+    rerun_command: /test okd-scos-images
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --report-credentials-file=/etc/report/credentials
+        - --target=[images]
+        - --target=[release:latest]
+        - --variant=okd-scos
+        command:
+        - ci-operator
+        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /secrets/manifest-tool
+          name: manifest-tool-local-pusher
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: manifest-tool-local-pusher
+        secret:
+          secretName: manifest-tool-local-pusher
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )okd-scos-images,?($|\s.*)
+  - agent: kubernetes
     always_run: false
     branches:
     - ^release-5\.0$
     - ^release-5\.0-
-    cluster: build05
+    cluster: build06
     context: ci/prow/openshift-e2e-aws-ovn-builds-techpreview
     decorate: true
     decoration_config:
@@ -742,7 +807,7 @@ presubmits:
     branches:
     - ^release-5\.0$
     - ^release-5\.0-
-    cluster: build11
+    cluster: build10
     context: ci/prow/security
     decorate: true
     decoration_config:
@@ -825,7 +890,7 @@ presubmits:
     branches:
     - ^release-5\.0$
     - ^release-5\.0-
-    cluster: build11
+    cluster: build10
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -891,7 +956,7 @@ presubmits:
     branches:
     - ^release-5\.0$
     - ^release-5\.0-
-    cluster: build11
+    cluster: build10
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -957,7 +1022,7 @@ presubmits:
     branches:
     - ^release-5\.0$
     - ^release-5\.0-
-    cluster: build11
+    cluster: build10
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

@@ -756,11 +756,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )images,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.20$
     - ^release-4\.20-
-    cluster: build05
+    cluster: build06
     context: ci/prow/operator-e2e
     decorate: true
     decoration_config:
@@ -850,7 +850,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )operator-e2e,?($|\s.*)
+    trigger: (?m)^/test( | .* )(operator-e2e|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:

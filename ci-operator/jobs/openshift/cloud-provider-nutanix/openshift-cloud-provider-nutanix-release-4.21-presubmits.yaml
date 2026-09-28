@@ -2,6 +2,8 @@ presubmits:
   openshift/cloud-provider-nutanix:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
@@ -14,14 +16,13 @@ presubmits:
       - openshift/Dockerfile.openshift
     labels:
       ci-operator.openshift.io/cloud: nutanix
-      ci-operator.openshift.io/cloud-cluster-profile: nutanix-qe
+      ci-operator.openshift.io/cloud-cluster-profile: nutanix
       ci-operator.openshift.io/cluster: build01
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cloud-provider-nutanix-release-4.21-e2e-nutanix
     path_alias: github.com/nutanix-cloud-native/cloud-provider-nutanix
     rerun_command: /test e2e-nutanix
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -89,6 +90,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-nutanix,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
@@ -101,14 +104,13 @@ presubmits:
       - openshift/Dockerfile.openshift
     labels:
       ci-operator.openshift.io/cloud: nutanix
-      ci-operator.openshift.io/cloud-cluster-profile: nutanix-qe
+      ci-operator.openshift.io/cloud-cluster-profile: nutanix
       ci-operator.openshift.io/cluster: build01
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cloud-provider-nutanix-release-4.21-e2e-nutanix-windows
     path_alias: github.com/nutanix-cloud-native/cloud-provider-nutanix
     rerun_command: /test e2e-nutanix-windows
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -179,7 +181,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build12
     context: ci/prow/fmt
     decorate: true
     decoration_config:
@@ -245,7 +247,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build12
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -304,7 +306,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build09
+    cluster: build11
     context: ci/prow/okd-scos-e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -390,7 +392,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build12
     context: ci/prow/okd-scos-images
     decorate: true
     decoration_config:
@@ -458,7 +460,7 @@ presubmits:
       - openshift/Dockerfile.openshift
     labels:
       ci-operator.openshift.io/cloud: nutanix
-      ci-operator.openshift.io/cloud-cluster-profile: nutanix-qe
+      ci-operator.openshift.io/cloud-cluster-profile: nutanix
       ci-operator.openshift.io/cluster: build01
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -537,7 +539,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build12
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -603,7 +605,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build12
     context: ci/prow/verify-commits
     decorate: true
     decoration_config:
@@ -670,7 +672,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build12
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

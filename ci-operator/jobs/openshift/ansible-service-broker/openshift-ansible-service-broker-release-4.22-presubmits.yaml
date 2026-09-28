@@ -319,11 +319,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )lint,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build09
+    cluster: build11
     context: ci/prow/operator-molecule-e2e
     decorate: true
     decoration_config:
@@ -401,13 +401,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )operator-molecule-e2e,?($|\s.*)
+    trigger: (?m)^/test( | .* )(operator-molecule-e2e|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build09
+    cluster: build11
     context: ci/prow/operator-molecule-olm-e2e
     decorate: true
     decoration_config:
@@ -485,7 +485,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )operator-molecule-olm-e2e,?($|\s.*)
+    trigger: (?m)^/test( | .* )(operator-molecule-olm-e2e|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:

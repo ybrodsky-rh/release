@@ -1,11 +1,11 @@
 presubmits:
   openshift-priv/ansible-operator-plugins:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-ansible
     decorate: true
     decoration_config:
@@ -95,13 +95,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-ansible,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-ansible|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-ansible-fips
     decorate: true
     decoration_config:
@@ -198,7 +198,7 @@ presubmits:
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-ansible-rhcos10
     decorate: true
     decoration_config:
@@ -295,7 +295,7 @@ presubmits:
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-ansible-rhcos10-fips
     decorate: true
     decoration_config:

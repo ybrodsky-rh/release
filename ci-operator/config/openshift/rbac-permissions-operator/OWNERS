@@ -5,17 +5,21 @@
 # See the OWNERS docs: https://git.k8s.io/community/contributors/guide/owners.md
 
 approvers:
+- ajpantuso
 - bergmannf
 - bmeng
+- bpresnel-rh
 - clcollins
 - diakovnec
 - dustman9000
 - feichashao
-- iamkirkbater
+- geowa4
+- joshbranham
 - mitalibhalla
+- psav
 - rafael-azevedo
 - ravitri
-- sam-nguyen7
+- rbhilare
 - samanthajayasinghe
 - smarthall
 - theautoroboto
@@ -24,7 +28,6 @@ approvers:
 options: {}
 reviewers:
 - bmeng
-- devppratik
 - diakovnec
 - feichashao
 - mitalibhalla

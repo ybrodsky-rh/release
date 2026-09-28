@@ -10,15 +10,16 @@ set -euo pipefail
 #
 # Job flows:
 #
-#   Scenario                                | JOB_TYPE  | JOB_NAME         | Mode     | GIT_PR_NUMBER | Code tested | OCI images | Tests
-#   ----------------------------------------|-----------|------------------|----------|---------------|-------------|------------|------
-#   Overlay PR (pr-check)                   | presubmit | pull-ci-*        | pr-check | PR number     | PR branch   | PR-built   | changed workspace
-#   Overlay PR (nightly)                    | presubmit | pull-ci-*nightly | nightly  | not exported  | PR branch   | released   | all workspaces
-#   Rehearse pr-check                       | presubmit | rehearse-*       | pr-check | empty         | main        | —          | skips (no changes)
-#   Rehearse pr-check + REHEARSE_PR_NUMBER  | presubmit | rehearse-*       | pr-check | REHEARSE_PR   | PR branch   | PR-built   | changed workspace
-#   Rehearse nightly                        | presubmit | rehearse-*night  | nightly  | not exported  | main        | released   | all workspaces
-#   Rehearse nightly  + REHEARSE_PR_NUMBER  | presubmit | rehearse-*night  | nightly  | not exported  | PR branch   | released   | all workspaces
-#   Periodic cron                           | periodic  | periodic-*       | nightly  | not exported  | main        | released   | all workspaces
+#   Scenario                               | JOB_TYPE  | JOB_NAME                   | Mode              | GIT_PR_NUMBER | Code tested | OCI images | Tests
+#   ---------------------------------------|-----------|----------------------------|-------------------|---------------|-------------|------------|------
+#   Overlay PR (pr-check)                  | presubmit | pull-ci-*                  | pr-check          | PR number     | PR branch   | PR-built   | changed workspace
+#   Overlay PR (nightly-pr-scoped)         | presubmit | pull-ci-*nightly-pr-scoped | nightly-pr-scoped | not exported  | PR branch   | released   | changed workspace
+#   Overlay PR (nightly)                   | presubmit | pull-ci-*nightly           | nightly           | not exported  | PR branch   | released   | all workspaces
+#   Rehearse pr-check                      | presubmit | rehearse-*                 | pr-check          | empty         | main        | —          | skips (no changes)
+#   Rehearse pr-check + REHEARSE_PR_NUMBER | presubmit | rehearse-*                 | pr-check          | REHEARSE_PR   | PR branch   | PR-built   | changed workspace
+#   Rehearse nightly                       | presubmit | rehearse-*night            | nightly           | not exported  | main        | released   | all workspaces
+#   Rehearse nightly  + REHEARSE_PR_NUMBER | presubmit | rehearse-*night            | nightly           | not exported  | PR branch   | released   | all workspaces
+#   Periodic cron                          | periodic  | periodic-*                 | nightly           | not exported  | main        | released   | all workspaces
 #
 # =============================================================================
 
@@ -28,6 +29,8 @@ GITHUB_ORG_NAME="redhat-developer"
 GITHUB_REPOSITORY_NAME="rhdh-plugin-export-overlays"
 OVERLAY_BRANCH=""
 REHEARSE_PR_NUMBER=""  # Set overlay repo PR number for rehearse testing
+CATALOG_INDEX_IMAGE=""
+PLAYWRIGHT_VERSION=""
 
 # ── Gangway API Overrides ────────────────────────────────────────────────────
 
@@ -46,6 +49,14 @@ fi
 if [[ -n "${MULTISTAGE_PARAM_OVERRIDE_GIT_PR_NUMBER}" ]]; then
     REHEARSE_PR_NUMBER="${MULTISTAGE_PARAM_OVERRIDE_GIT_PR_NUMBER}"
     echo "Override applied: REHEARSE_PR_NUMBER=${REHEARSE_PR_NUMBER}"
+fi
+if [[ -n "${MULTISTAGE_PARAM_OVERRIDE_CATALOG_INDEX_IMAGE}" ]]; then
+    CATALOG_INDEX_IMAGE="${MULTISTAGE_PARAM_OVERRIDE_CATALOG_INDEX_IMAGE}"
+    echo "Override applied: CATALOG_INDEX_IMAGE=${CATALOG_INDEX_IMAGE}"
+fi
+if [[ -n "${MULTISTAGE_PARAM_OVERRIDE_PLAYWRIGHT_VERSION}" ]]; then
+    PLAYWRIGHT_VERSION="${MULTISTAGE_PARAM_OVERRIDE_PLAYWRIGHT_VERSION}"
+    echo "Override applied: PLAYWRIGHT_VERSION=${PLAYWRIGHT_VERSION}"
 fi
 
 # ── Environment ──────────────────────────────────────────────────────────────
@@ -68,7 +79,9 @@ done
 RELEASE_BRANCH_NAME=$(echo "${JOB_SPEC}" | jq -r '.extra_refs[].base_ref' 2>/dev/null || echo "${JOB_SPEC}" | jq -r '.refs.base_ref')
 
 # Determine job mode
-if [[ "$JOB_TYPE" == "periodic" ]] || [[ "$JOB_NAME" == *nightly* ]]; then
+if [[ "$JOB_NAME" == *-nightly-pr-scoped ]]; then
+    JOB_MODE="nightly-pr-scoped"
+elif [[ "$JOB_TYPE" == "periodic" ]] || [[ "$JOB_NAME" == *nightly* ]]; then
     JOB_MODE="nightly"
 else
     JOB_MODE="pr-check"
@@ -90,7 +103,7 @@ if [[ "$JOB_MODE" == "pr-check" ]]; then
     export GIT_PR_NUMBER
 fi
 
-export GITHUB_ORG_NAME GITHUB_REPOSITORY_NAME RELEASE_BRANCH_NAME JOB_MODE
+export GITHUB_ORG_NAME GITHUB_REPOSITORY_NAME RELEASE_BRANCH_NAME JOB_MODE CATALOG_INDEX_IMAGE PLAYWRIGHT_VERSION
 echo "Repository: ${GITHUB_ORG_NAME}/${GITHUB_REPOSITORY_NAME}"
 echo "Branch: ${RELEASE_BRANCH_NAME}, Mode: ${JOB_MODE}, PR: ${GIT_PR_NUMBER:-none}"
 
@@ -118,6 +131,24 @@ if ! timeout --foreground 5m bash -c '
 '; then
     echo "ERROR: Timed out waiting for cluster login"
     exit 1
+fi
+
+echo "========== HTPasswd Identity Provider =========="
+# HTPasswd setup is opt-in via [debug] in the PR title — auth pod restarts add significant job time
+PR_TITLE=$(echo "${JOB_SPEC}" | jq -r '.refs.pulls[0].title // empty')
+if [[ "$JOB_TYPE" != "periodic" ]] && [[ "$PR_TITLE" != *"[debug]"* ]]; then
+    echo "Skipping HTPasswd identity provider setup. Add [debug] to PR title to enable."
+elif [[ ! -f /tmp/secrets/EPHEMERAL_CLUSTER_ADMIN_USERNAME ]] || [[ ! -f /tmp/secrets/EPHEMERAL_CLUSTER_ADMIN_PASSWORD ]]; then
+    echo "WARNING: EPHEMERAL_CLUSTER_ADMIN_* secrets not found, skipping HTPasswd identity provider setup"
+else
+    htpasswd -c -B -i users.htpasswd "$(cat /tmp/secrets/EPHEMERAL_CLUSTER_ADMIN_USERNAME)" <<< "$(cat /tmp/secrets/EPHEMERAL_CLUSTER_ADMIN_PASSWORD)"
+    oc create secret generic htpass-secret --from-file=htpasswd=users.htpasswd -n openshift-config
+    rm -f users.htpasswd
+    oc patch oauth cluster --type=merge --patch='{"spec":{"identityProviders":[{"name":"cluster_admin","mappingMethod":"claim","type":"HTPasswd","htpasswd":{"fileData":{"name":"htpass-secret"}}}]}}'
+    oc wait --for=condition=Progressing=False clusteroperator/authentication --timeout=10m
+    oc wait --for=condition=Available=True clusteroperator/authentication --timeout=10m
+    oc wait --for=condition=Ready pod --all -n openshift-authentication --timeout=400s
+    oc adm policy add-cluster-role-to-user cluster-admin "$(cat /tmp/secrets/EPHEMERAL_CLUSTER_ADMIN_USERNAME)"
 fi
 
 # ── Service account & platform info ──────────────────────────────────────────
@@ -161,7 +192,7 @@ export RHDH_VERSION INSTALLATION_METHOD
 if [ "${RELEASE_BRANCH_NAME}" != "main" ]; then
     RHDH_VERSION="$(echo "$RELEASE_BRANCH_NAME" | cut -d'-' -f2)"
 else
-    RHDH_VERSION="1.10" # TODO: Change to "next" when RHIDP-12071 is fixed
+    RHDH_VERSION="1.11" # TODO: Change to "next" when RHIDP-12071 & RHDHBUGS-3052 is fixed
 fi
 INSTALLATION_METHOD="helm"
 echo "RHDH_VERSION: ${RHDH_VERSION}, INSTALLATION_METHOD: ${INSTALLATION_METHOD}"
@@ -178,9 +209,18 @@ collect_artifacts() {
         cp -a node_modules/.cache/e2e-test-results "${ARTIFACT_DIR}/" 2>&1 || echo "[WARNING] e2e-test-results not found"
     fi
     # Copy JUnit results to SHARED_DIR for data-router step
+    # Gzip to stay under Kubernetes Secret 1 MiB limit (raw XML can exceed it)
     if [[ -f "playwright-report/junit-results.xml" ]]; then
-        cp "playwright-report/junit-results.xml" "${SHARED_DIR}/"
-        echo "[INFO] Copied junit-results.xml to ${SHARED_DIR}/"
+        gzip -c "playwright-report/junit-results.xml" > "${SHARED_DIR}/junit-results.xml.gz"
+        local gz_size
+        gz_size=$(stat -c%s "${SHARED_DIR}/junit-results.xml.gz" 2>/dev/null || stat -f%z "${SHARED_DIR}/junit-results.xml.gz")
+        local max_size=$((800 * 1024))
+        if (( gz_size > max_size )); then
+            echo "[WARNING] junit-results.xml.gz is $(( gz_size / 1024 )) KB, exceeds $(( max_size / 1024 )) KB limit. Removing from SHARED_DIR to prevent Secret update failure."
+            rm -f "${SHARED_DIR}/junit-results.xml.gz"
+        else
+            echo "[INFO] Copied junit-results.xml.gz to ${SHARED_DIR}/ ($(( gz_size / 1024 )) KB)"
+        fi
     fi
 }
 
@@ -227,7 +267,11 @@ if [[ "$JOB_MODE" == "nightly" ]]; then
     exit $TEST_EXIT_CODE
 fi
 
-# ── PR check ─────────────────────────────────────────────────────────────────
+if [[ "$JOB_MODE" == "nightly-pr-scoped" ]]; then
+    export E2E_NIGHTLY_MODE="true"
+fi
+
+# ── PR check / nightly-pr-scoped ─────────────────────────────────────────
 
 PR_CHANGESET=$(git diff --name-only "$RELEASE_BRANCH_NAME")
 echo "Changeset: ${PR_CHANGESET}"
@@ -243,19 +287,25 @@ echo "Changed workspaces: ${CHANGED_WORKSPACES:-none} (count: ${WORKSPACE_COUNT}
 if [ "$WORKSPACE_COUNT" -eq 0 ]; then
     echo "No workspace changes detected. Skipping tests."
     exit 0
-elif [ "$WORKSPACE_COUNT" -gt 1 ]; then
+elif [ "$WORKSPACE_COUNT" -gt 1 ] && [[ "$JOB_MODE" == "pr-check" ]]; then
     echo "ERROR: Multiple workspaces changed: ${CHANGED_WORKSPACES}"
     exit 1
 fi
 
-if [[ ! -f "workspaces/${CHANGED_WORKSPACES}/e2e-tests/package.json" ]]; then
-    echo "Workspace '${CHANGED_WORKSPACES}' has no e2e-tests. Skipping."
+# Filter to workspaces with e2e-tests, build -w flags
+RUN_E2E_ARGS=()
+for ws in $CHANGED_WORKSPACES; do
+    [[ -f "workspaces/${ws}/e2e-tests/package.json" ]] && RUN_E2E_ARGS+=("-w" "$ws")
+done
+
+if [ ${#RUN_E2E_ARGS[@]} -eq 0 ]; then
+    echo "No changed workspaces have e2e-tests. Skipping."
     exit 0
 fi
 
-echo "Running tests for workspace: ${CHANGED_WORKSPACES}"
-bash ./run-e2e.sh -w "${CHANGED_WORKSPACES}" || TEST_EXIT_CODE=$?
+echo "Running tests for: ${RUN_E2E_ARGS[*]}"
+bash ./run-e2e.sh "${RUN_E2E_ARGS[@]}" || TEST_EXIT_CODE=$?
 collect_artifacts
-post_github_comment "E2E Tests - \`${CHANGED_WORKSPACES}\`" || echo "WARNING: Failed to post GitHub comment"
+post_github_comment "E2E Tests (${RUN_E2E_ARGS[*]})" || echo "WARNING: Failed to post GitHub comment"
 
 exit $TEST_EXIT_CODE

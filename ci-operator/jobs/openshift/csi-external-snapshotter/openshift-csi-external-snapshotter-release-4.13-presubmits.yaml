@@ -1,11 +1,11 @@
 presubmits:
   openshift/csi-external-snapshotter:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build11
+    cluster: build01
     context: ci/prow/e2e-aws-csi
     decorate: true
     decoration_config:
@@ -86,13 +86,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-gcp-csi
     decorate: true
     decoration_config:
@@ -173,13 +173,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build11
+    cluster: build04
     context: ci/prow/e2e-ovirt
     decorate: true
     decoration_config:
@@ -267,7 +267,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build11
+    cluster: build04
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -328,7 +328,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build11
+    cluster: build04
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -396,7 +396,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build11
+    cluster: build04
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

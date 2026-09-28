@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/configmap-scale
     decorate: true
     decoration_config:
@@ -86,11 +86,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )configmap-scale,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-agnostic-ovn
     decorate: true
     decoration_config:
@@ -168,13 +168,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-agnostic-ovn,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-agnostic-ovn|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-agnostic-ovn-upgrade
     decorate: true
     decoration_config:
@@ -252,13 +252,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-agnostic-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-agnostic-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -343,7 +343,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-cpms
     decorate: true
     decoration_config:
@@ -428,7 +428,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-disruptive
     decorate: true
     decoration_config:
@@ -513,7 +513,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-disruptive-ovn
     decorate: true
     decoration_config:
@@ -598,7 +598,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-etcd-certrotation
     decorate: true
     decoration_config:
@@ -683,7 +683,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-etcd-recovery
     decorate: true
     decoration_config:
@@ -768,7 +768,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-ovn-etcd-scaling
     decorate: true
     decoration_config:
@@ -849,11 +849,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-ovn-etcd-scaling,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-ovn-serial-1of2
     decorate: true
     decoration_config:
@@ -932,13 +932,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-serial-1of2,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-serial-1of2|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-ovn-serial-2of2
     decorate: true
     decoration_config:
@@ -1017,13 +1017,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-serial-2of2,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-serial-2of2|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-ovn-single-node
     decorate: true
     decoration_config:
@@ -1101,7 +1101,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-single-node,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-single-node|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -1277,7 +1277,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp
     decorate: true
     decoration_config:
@@ -1362,7 +1362,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-disruptive
     decorate: true
     decoration_config:
@@ -1447,7 +1447,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-disruptive-ovn
     decorate: true
     decoration_config:
@@ -1532,7 +1532,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-ovn-etcd-scaling
     decorate: true
     decoration_config:
@@ -1699,7 +1699,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-metal-assisted,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
@@ -1782,13 +1782,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-metal-ipi-ovn-ipv6,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-metal-ipi-ovn-ipv6|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-metal-ovn-ha-cert-rotation-shutdown
     decorate: true
     decoration_config:
@@ -1873,7 +1873,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-metal-ovn-sno-cert-rotation-shutdown
     decorate: true
     decoration_config:
@@ -2124,11 +2124,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-metal-single-node-live-iso,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-operator
     decorate: true
     decoration_config:
@@ -2206,13 +2206,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-operator,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-operator|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-operator-fips
     decorate: true
     decoration_config:
@@ -2440,7 +2440,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build07
+    cluster: build10
     context: ci/prow/okd-scos-e2e-aws-ovn
     decorate: true
     decoration_config:

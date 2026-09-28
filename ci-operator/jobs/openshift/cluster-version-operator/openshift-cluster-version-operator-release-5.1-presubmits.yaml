@@ -2,6 +2,8 @@ presubmits:
   openshift/cluster-version-operator:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -19,7 +21,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-5.1-e2e-agnostic-operator
     rerun_command: /test e2e-agnostic-operator
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -172,6 +173,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-agnostic-operator-devpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -253,9 +256,11 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )(e2e-agnostic-operator-techpreview|remaining-required),?($|\s.*)
+    trigger: (?m)^/test( | .* )e2e-agnostic-operator-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -273,7 +278,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-5.1-e2e-agnostic-ovn
     rerun_command: /test e2e-agnostic-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -341,6 +345,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-agnostic-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -358,7 +364,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-5.1-e2e-agnostic-ovn-techpreview-serial-1of3
     rerun_command: /test e2e-agnostic-ovn-techpreview-serial-1of3
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -427,6 +432,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-agnostic-ovn-techpreview-serial-1of3,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -444,7 +451,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-5.1-e2e-agnostic-ovn-techpreview-serial-2of3
     rerun_command: /test e2e-agnostic-ovn-techpreview-serial-2of3
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -513,6 +519,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-agnostic-ovn-techpreview-serial-2of3,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -530,7 +538,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-5.1-e2e-agnostic-ovn-techpreview-serial-3of3
     rerun_command: /test e2e-agnostic-ovn-techpreview-serial-3of3
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -599,6 +606,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-agnostic-ovn-techpreview-serial-3of3,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -616,7 +625,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-5.1-e2e-agnostic-ovn-upgrade-into-change
     rerun_command: /test e2e-agnostic-ovn-upgrade-into-change
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -684,6 +692,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-agnostic-ovn-upgrade-into-change,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -765,9 +775,11 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )(e2e-agnostic-ovn-upgrade-into-change-techpreview|remaining-required),?($|\s.*)
+    trigger: (?m)^/test( | .* )e2e-agnostic-ovn-upgrade-into-change-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -785,7 +797,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-5.1-e2e-agnostic-ovn-upgrade-out-of-change
     rerun_command: /test e2e-agnostic-ovn-upgrade-out-of-change
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -853,6 +864,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-agnostic-ovn-upgrade-out-of-change,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -934,13 +947,15 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )(e2e-agnostic-ovn-upgrade-out-of-change-techpreview|remaining-required),?($|\s.*)
+    trigger: (?m)^/test( | .* )e2e-agnostic-ovn-upgrade-out-of-change-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-ovn-techpreview
     decorate: true
     decoration_config:
@@ -954,7 +969,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-5.1-e2e-aws-ovn-techpreview
     rerun_command: /test e2e-aws-ovn-techpreview
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -1025,7 +1039,7 @@ presubmits:
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-extended-tests
     decorate: true
     decoration_config:
@@ -1107,6 +1121,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-extended-tests,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -1124,7 +1140,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-5.1-e2e-hypershift
     rerun_command: /test e2e-hypershift
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -1192,6 +1207,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-hypershift,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -1209,7 +1226,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-5.1-e2e-hypershift-conformance
     rerun_command: /test e2e-hypershift-conformance
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -1365,7 +1381,6 @@ presubmits:
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --report-credentials-file=/etc/report/credentials
         - --target=[images]
-        - --target=[release:latest]
         command:
         - ci-operator
         image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
@@ -1469,8 +1484,8 @@ presubmits:
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build10
-    context: ci/prow/tls-scanner
+    cluster: build12
+    context: ci/prow/tls-scanner-default-profile
     decorate: true
     decoration_config:
       sparse_checkout_files:
@@ -1481,9 +1496,9 @@ presubmits:
       ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-openshift-cluster-version-operator-release-5.1-tls-scanner
+    name: pull-ci-openshift-cluster-version-operator-release-5.1-tls-scanner-default-profile
     optional: true
-    rerun_command: /test tls-scanner
+    rerun_command: /test tls-scanner-default-profile
     spec:
       containers:
       - args:
@@ -1492,7 +1507,7 @@ presubmits:
         - --lease-server-credentials-file=/etc/boskos/credentials
         - --report-credentials-file=/etc/report/credentials
         - --secret-dir=/secrets/ci-pull-credentials
-        - --target=tls-scanner
+        - --target=tls-scanner-default-profile
         command:
         - ci-operator
         env:
@@ -1548,7 +1563,92 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )tls-scanner,?($|\s.*)
+    trigger: (?m)^/test( | .* )tls-scanner-default-profile,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
+    branches:
+    - ^release-5\.1$
+    - ^release-5\.1-
+    cluster: build12
+    context: ci/prow/tls-scanner-modern-profile
+    decorate: true
+    decoration_config:
+      sparse_checkout_files:
+      - .ci-operator.yaml
+      - Dockerfile.rhel
+    labels:
+      ci-operator.openshift.io/cloud: aws
+      ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
+      ci.openshift.io/generator: prowgen
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-cluster-version-operator-release-5.1-tls-scanner-modern-profile
+    optional: true
+    rerun_command: /test tls-scanner-modern-profile
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/secrets/ci-pull-credentials
+        - --target=tls-scanner-modern-profile
+        command:
+        - ci-operator
+        env:
+        - name: HTTP_SERVER_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
+        imagePullPolicy: Always
+        name: ""
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /secrets/ci-pull-credentials
+          name: ci-pull-credentials
+          readOnly: true
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /secrets/manifest-tool
+          name: manifest-tool-local-pusher
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: ci-pull-credentials
+        secret:
+          secretName: ci-pull-credentials
+      - name: manifest-tool-local-pusher
+        secret:
+          secretName: manifest-tool-local-pusher
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )tls-scanner-modern-profile,?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:

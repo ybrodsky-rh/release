@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build10
     context: ci/prow/build
     decorate: true
     decoration_config:
@@ -79,7 +79,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build10
     context: ci/prow/fmt
     decorate: true
     decoration_config:
@@ -153,7 +153,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build10
     context: ci/prow/fmtcheck
     decorate: true
     decoration_config:
@@ -227,7 +227,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build10
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -293,7 +293,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build10
     context: ci/prow/lint
     decorate: true
     decoration_config:
@@ -363,11 +363,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )lint,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build05
+    cluster: build06
     context: ci/prow/operator-molecule-e2e
     decorate: true
     decoration_config:
@@ -454,13 +454,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )operator-molecule-e2e,?($|\s.*)
+    trigger: (?m)^/test( | .* )(operator-molecule-e2e|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build05
+    cluster: build06
     context: ci/prow/operator-molecule-olm-e2e
     decorate: true
     decoration_config:
@@ -547,13 +547,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )operator-molecule-olm-e2e,?($|\s.*)
+    trigger: (?m)^/test( | .* )(operator-molecule-olm-e2e|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build10
     context: ci/prow/test
     decorate: true
     decoration_config:
@@ -627,7 +627,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build10
     context: ci/prow/vet
     decorate: true
     decoration_config:

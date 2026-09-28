@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-ovn-ccm
     decorate: true
     decoration_config:
@@ -86,11 +86,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-gcp-ovn-ccm,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-ovn-techpreview
     decorate: true
     decoration_config:
@@ -168,13 +168,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-ovn-techpreview,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-ovn-techpreview|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build08
+    cluster: build04
     context: ci/prow/fmt
     decorate: true
     decoration_config:
@@ -239,7 +239,7 @@ presubmits:
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build08
+    cluster: build04
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -297,7 +297,7 @@ presubmits:
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build08
+    cluster: build04
     context: ci/prow/openshift-e2e-gcp-ovn-techpreview-upgrade
     decorate: true
     decoration_config:

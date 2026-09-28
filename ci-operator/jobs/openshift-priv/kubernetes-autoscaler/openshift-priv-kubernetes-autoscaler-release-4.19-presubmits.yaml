@@ -2,10 +2,12 @@ presubmits:
   openshift-priv/kubernetes-autoscaler:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -25,7 +27,6 @@ presubmits:
     name: pull-ci-openshift-priv-kubernetes-autoscaler-release-4.19-e2e-aws
     path_alias: k8s.io/autoscaler
     rerun_command: /test e2e-aws
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -97,10 +98,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$|_test\.go$
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-aws-operator
     decorate: true
     decoration_config:
@@ -120,7 +123,6 @@ presubmits:
     name: pull-ci-openshift-priv-kubernetes-autoscaler-release-4.19-e2e-aws-operator
     path_alias: k8s.io/autoscaler
     rerun_command: /test e2e-aws-operator
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$|_test\.go$
     spec:
       containers:
       - args:
@@ -195,7 +197,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-aws-periodic-pre
     decorate: true
     decoration_config:
@@ -480,7 +482,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-operator
     decorate: true
     decoration_config:
@@ -575,7 +577,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-periodic-pre
     decorate: true
     decoration_config:
@@ -667,6 +669,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-periodic-pre,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -690,7 +694,6 @@ presubmits:
     name: pull-ci-openshift-priv-kubernetes-autoscaler-release-4.19-e2e-hypershift
     path_alias: k8s.io/autoscaler
     rerun_command: /test e2e-hypershift
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -765,7 +768,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-openstack-periodic-pre
     decorate: true
     decoration_config:
@@ -1324,7 +1327,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build05
     context: ci/prow/regression-clusterinfra-aws-ipi-proxy-autoscaler
     decorate: true
     decoration_config:

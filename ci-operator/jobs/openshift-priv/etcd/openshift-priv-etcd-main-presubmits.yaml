@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build01
+    cluster: build07
     context: ci/prow/configmap-scale
     decorate: true
     decoration_config:
@@ -99,7 +99,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build01
+    cluster: build07
     context: ci/prow/e2e-aws-etcd-recovery
     decorate: true
     decoration_config:
@@ -190,11 +190,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-etcd-recovery,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^main$
     - ^main-
-    cluster: build01
+    cluster: build07
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -282,13 +282,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^main$
     - ^main-
-    cluster: build01
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-serial
     decorate: true
     decoration_config:
@@ -376,13 +376,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-serial,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-serial|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^main$
     - ^main-
-    cluster: build01
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -470,13 +470,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build12
     context: ci/prow/e2e-hypershift
     decorate: true
     decoration_config:
@@ -571,7 +571,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build12
     context: ci/prow/e2e-hypershift-conformance
     decorate: true
     decoration_config:
@@ -666,7 +666,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build12
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -733,8 +733,8 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build01
-    context: ci/prow/perfscale-payload-control-plane-6nodes
+    cluster: build07
+    context: ci/prow/perfscale-control-plane-6nodes
     decorate: true
     decoration_config:
       oauth_token_secret:
@@ -750,10 +750,11 @@ presubmits:
       ci-operator.openshift.io/cloud-cluster-profile: aws-perfscale-qe
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-openshift-priv-etcd-main-perfscale-payload-control-plane-6nodes
+    name: pull-ci-openshift-priv-etcd-main-perfscale-control-plane-6nodes
     optional: true
     path_alias: go.etcd.io/etcd
-    rerun_command: /test perfscale-payload-control-plane-6nodes
+    rerun_command: /test perfscale-control-plane-6nodes
+    skip_if_only_changed: ^docs/|^Documentation/|^logos/|^contrib/|^tests/|^scripts/|^\.github/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     spec:
       containers:
       - args:
@@ -763,7 +764,7 @@ presubmits:
         - --oauth-token-path=/usr/local/github-credentials/oauth
         - --report-credentials-file=/etc/report/credentials
         - --secret-dir=/secrets/ci-pull-credentials
-        - --target=perfscale-payload-control-plane-6nodes
+        - --target=perfscale-control-plane-6nodes
         command:
         - ci-operator
         env:
@@ -822,13 +823,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )perfscale-payload-control-plane-6nodes,?($|\s.*)
+    trigger: (?m)^/test( | .* )perfscale-control-plane-6nodes,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build12
     context: ci/prow/upstream-e2e
     decorate: true
     decoration_config:
@@ -904,7 +905,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build12
     context: ci/prow/upstream-integration
     decorate: true
     decoration_config:
@@ -980,7 +981,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build12
     context: ci/prow/upstream-release
     decorate: true
     decoration_config:
@@ -1056,7 +1057,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build12
     context: ci/prow/upstream-unit
     decorate: true
     decoration_config:

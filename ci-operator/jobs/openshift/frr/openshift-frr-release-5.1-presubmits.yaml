@@ -1,7 +1,7 @@
 presubmits:
   openshift/frr:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -84,13 +84,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )frrk8s-e2e-metal,?($|\s.*)
+    trigger: (?m)^/test( | .* )(frrk8s-e2e-metal|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build06
+    cluster: build07
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -109,7 +109,6 @@ presubmits:
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --report-credentials-file=/etc/report/credentials
         - --target=[images]
-        - --target=[release:latest]
         command:
         - ci-operator
         image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
@@ -144,7 +143,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )images,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -227,13 +226,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )metallb-e2e-metal,?($|\s.*)
+    trigger: (?m)^/test( | .* )(metallb-e2e-metal|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build06
+    cluster: build07
     context: ci/prow/security
     decorate: true
     decoration_config:
@@ -316,7 +315,7 @@ presubmits:
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build06
+    cluster: build07
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

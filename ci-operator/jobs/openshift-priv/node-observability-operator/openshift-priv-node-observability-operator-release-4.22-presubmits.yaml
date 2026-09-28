@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build08
+    cluster: build04
     context: ci/prow/ci-index-node-observability-operator-bundle
     decorate: true
     decoration_config:
@@ -67,11 +67,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )ci-index-node-observability-operator-bundle,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-gcp
     decorate: true
     decoration_config:
@@ -158,13 +158,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build08
+    cluster: build04
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -230,7 +230,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build08
+    cluster: build04
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -304,7 +304,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build08
+    cluster: build04
     context: ci/prow/verify
     decorate: true
     decoration_config:

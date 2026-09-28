@@ -1,11 +1,11 @@
 presubmits:
   openshift-priv/azure-disk-csi-driver-operator:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-azure
     decorate: true
     decoration_config:
@@ -93,13 +93,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-azure,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-azure|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-azure-csi
     decorate: true
     decoration_config:
@@ -187,13 +187,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-azure-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-azure-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-azure-csi-extended
     decorate: true
     decoration_config:
@@ -288,7 +288,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-azure-manual-oidc
     decorate: true
     decoration_config:
@@ -379,11 +379,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-azure-manual-oidc,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-azure-ovn-upgrade
     decorate: true
     decoration_config:
@@ -471,7 +471,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-azure-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-azure-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -573,7 +573,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build08
+    cluster: build04
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -640,7 +640,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build08
+    cluster: build04
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -715,7 +715,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build08
+    cluster: build04
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

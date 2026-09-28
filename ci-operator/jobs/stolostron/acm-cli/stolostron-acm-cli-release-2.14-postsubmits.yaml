@@ -6,10 +6,7 @@ postsubmits:
     - ^release-2\.14$
     cluster: build06
     decorate: true
-    decoration_config:
-      sparse_checkout_files:
-      - .ci-operator.yaml
-      - Dockerfile
+    decoration_config: {}
     labels:
       capability/arm64: arm64
       ci-operator.openshift.io/is-promotion: "true"
@@ -67,13 +64,11 @@ postsubmits:
     always_run: true
     branches:
     - ^release-2\.14$
-    cluster: build09
+    cluster: build06
     decorate: true
-    decoration_config:
-      sparse_checkout_files:
-      - .ci-operator.yaml
-      - Dockerfile
+    decoration_config: {}
     labels:
+      capability/arm64: arm64
       ci.openshift.io/generator: prowgen
     max_concurrency: 1
     name: branch-ci-stolostron-acm-cli-release-2.14-publish

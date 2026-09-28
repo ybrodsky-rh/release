@@ -18,7 +18,12 @@ external_plugins:
     events:
     - issue_comment
     - pull_request
+    - pull_request_review
     name: jira-lifecycle-plugin
+  - endpoint: http://repo-brancher-controller
+    events:
+    - push
+    name: repo-brancher-controller
 plugins:
   openshift-kni:
     plugins:
@@ -48,9 +53,7 @@ plugins:
     - wip
     - yuks
 triggers:
-- org_invite:
-    prominent: {}
-  repos:
+- repos:
   - openshift-kni
   trusted_apps:
   - openshift-merge-bot

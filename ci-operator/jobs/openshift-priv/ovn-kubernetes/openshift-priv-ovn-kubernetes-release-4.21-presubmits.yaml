@@ -28,7 +28,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-agent-compact-ipv4
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -100,10 +99,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-agent-compact-ipv4,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -124,7 +125,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-aws-ovn
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -199,7 +199,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-clusternetwork-cidr-expansion
     decorate: true
     decoration_config:
@@ -221,7 +221,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-clusternetwork-cidr-expansion
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -293,10 +292,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-clusternetwork-cidr-expansion,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-edge-zones
     decorate: true
     decoration_config:
@@ -317,7 +318,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-aws-ovn-edge-zones
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-edge-zones
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -392,7 +392,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-fdp-qe
     decorate: true
     decoration_config:
@@ -414,7 +414,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-fdp-qe
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -486,10 +485,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-fdp-qe,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-hypershift
     decorate: true
     decoration_config:
@@ -510,7 +511,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-aws-ovn-hypershift
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-hypershift
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -582,10 +582,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-hypershift,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-local-gateway
     decorate: true
     decoration_config:
@@ -606,7 +608,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-aws-ovn-local-gateway
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-local-gateway
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -678,10 +679,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-local-gateway,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-local-to-shared-gateway-mode-migration
     decorate: true
     decoration_config:
@@ -702,7 +705,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-aws-ovn-local-to-shared-gateway-mode-migration
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-local-to-shared-gateway-mode-migration
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -777,7 +779,105 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
+    context: ci/prow/e2e-aws-ovn-multi-cidr
+    decorate: true
+    decoration_config:
+      oauth_token_secret:
+        key: oauth
+        name: github-credentials-openshift-ci-robot-private-git-cloner
+      sparse_checkout_files:
+      - .ci-operator.yaml
+      - Dockerfile
+      - Dockerfile.base
+      - Dockerfile.microshift
+    hidden: true
+    labels:
+      ci-operator.openshift.io/cloud: aws
+      ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
+      ci.openshift.io/generator: prowgen
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-aws-ovn-multi-cidr
+    optional: true
+    path_alias: github.com/openshift/ovn-kubernetes
+    rerun_command: /test e2e-aws-ovn-multi-cidr
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --oauth-token-path=/usr/local/github-credentials/oauth
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/secrets/ci-pull-credentials
+        - --target=e2e-aws-ovn-multi-cidr
+        command:
+        - ci-operator
+        env:
+        - name: HTTP_SERVER_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
+        imagePullPolicy: Always
+        name: ""
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /secrets/ci-pull-credentials
+          name: ci-pull-credentials
+          readOnly: true
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /usr/local/github-credentials
+          name: github-credentials-openshift-ci-robot-private-git-cloner
+          readOnly: true
+        - mountPath: /secrets/manifest-tool
+          name: manifest-tool-local-pusher
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: ci-pull-credentials
+        secret:
+          secretName: ci-pull-credentials
+      - name: manifest-tool-local-pusher
+        secret:
+          secretName: manifest-tool-local-pusher
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )e2e-aws-ovn-multi-cidr,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
+    branches:
+    - ^release-4\.21$
+    - ^release-4\.21-
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-serial
     decorate: true
     decoration_config:
@@ -798,7 +898,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-aws-ovn-serial
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-serial
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -873,7 +972,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-serial-ipsec
     decorate: true
     decoration_config:
@@ -895,7 +994,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-serial-ipsec
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -967,10 +1065,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-serial-ipsec,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-shared-to-local-gateway-mode-migration
     decorate: true
     decoration_config:
@@ -991,7 +1091,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-aws-ovn-shared-to-local-gateway-mode-migration
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-shared-to-local-gateway-mode-migration
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -1066,7 +1165,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-single-node-techpreview
     decorate: true
     decoration_config:
@@ -1088,7 +1187,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-single-node-techpreview
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -1163,7 +1261,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-techpreview
     decorate: true
     decoration_config:
@@ -1185,7 +1283,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-techpreview
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -1257,10 +1354,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -1281,7 +1380,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-aws-ovn-upgrade
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-upgrade
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -1356,7 +1454,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-upgrade-ipsec
     decorate: true
     decoration_config:
@@ -1378,7 +1476,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-upgrade-ipsec
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -1450,10 +1547,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade-ipsec,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-upgrade-local-gateway
     decorate: true
     decoration_config:
@@ -1474,7 +1573,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-aws-ovn-upgrade-local-gateway
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-upgrade-local-gateway
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -1546,10 +1644,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade-local-gateway,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-ovn-windows
     decorate: true
     decoration_config:
@@ -1570,7 +1670,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-aws-ovn-windows
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-aws-ovn-windows
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -1645,7 +1744,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-azure-ovn
     decorate: true
     decoration_config:
@@ -1667,7 +1766,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-azure-ovn
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -1742,7 +1840,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-azure-ovn-techpreview
     decorate: true
     decoration_config:
@@ -1764,7 +1862,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-azure-ovn-techpreview
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -1836,10 +1933,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-ovn-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-azure-ovn-upgrade
     decorate: true
     decoration_config:
@@ -1860,7 +1959,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-azure-ovn-upgrade
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-azure-ovn-upgrade
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -1932,10 +2030,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-ovn-upgrade,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn
     decorate: true
     decoration_config:
@@ -1956,7 +2056,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-gcp-ovn
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-gcp-ovn
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -2028,10 +2127,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn-techpreview
     decorate: true
     decoration_config:
@@ -2052,7 +2153,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-gcp-ovn-techpreview
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-gcp-ovn-techpreview
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -2150,7 +2250,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-metal-ipi-ovn-bgp-virt-dualstack
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -2248,7 +2347,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-metal-ipi-ovn-bgp-virt-dualstack-techpreview
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -2320,6 +2418,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-metal-ipi-ovn-bgp-virt-dualstack-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
@@ -2345,7 +2445,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-metal-ipi-ovn-dualstack
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-metal-ipi-ovn-dualstack
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -2417,6 +2516,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-metal-ipi-ovn-dualstack,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
@@ -2442,7 +2543,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-metal-ipi-ovn-dualstack-bgp
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-metal-ipi-ovn-dualstack-bgp
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -2514,6 +2614,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-metal-ipi-ovn-dualstack-bgp,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
@@ -2539,7 +2641,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-metal-ipi-ovn-dualstack-bgp-local-gw
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-metal-ipi-ovn-dualstack-bgp-local-gw
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -2637,7 +2738,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-metal-ipi-ovn-dualstack-local-gateway
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -2735,7 +2835,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-metal-ipi-ovn-dualstack-local-gateway-techpreview
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -2833,7 +2932,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-metal-ipi-ovn-dualstack-techpreview
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -2931,7 +3029,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-metal-ipi-ovn-ipv4
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -3003,6 +3100,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-metal-ipi-ovn-ipv4,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
@@ -3028,7 +3127,6 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-e2e-metal-ipi-ovn-ipv6
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-metal-ipi-ovn-ipv6
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -3126,7 +3224,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-metal-ipi-ovn-ipv6-techpreview
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -3224,7 +3321,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-metal-ipi-ovn-techpreview
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -3299,7 +3395,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-metal-ovn-fdp-qe-ipv6
     decorate: true
     decoration_config:
@@ -3322,7 +3418,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-metal-ovn-fdp-qe-ipv6
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -3397,7 +3492,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-openstack-ovn
     decorate: true
     decoration_config:
@@ -3419,7 +3514,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-openstack-ovn
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -3494,7 +3588,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-ovn-hybrid-step-registry
     decorate: true
     decoration_config:
@@ -3516,7 +3610,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-ovn-hybrid-step-registry
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -3613,7 +3706,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-vsphere-ovn
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -3710,7 +3802,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-vsphere-ovn-techpreview
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -3807,7 +3898,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test e2e-vsphere-windows
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -3882,7 +3972,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/gofmt
     decorate: true
     decoration_config:
@@ -3958,7 +4048,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -4026,7 +4116,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/lint
     decorate: true
     decoration_config:
@@ -4102,7 +4192,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build04
+    cluster: build08
     context: ci/prow/openshift-e2e-gcp-ovn-techpreview-upgrade
     decorate: true
     decoration_config:
@@ -4124,7 +4214,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test openshift-e2e-gcp-ovn-techpreview-upgrade
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -4199,7 +4288,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/ovncore-perfscale-aws-ovn-large-cluster-density-v2
     decorate: true
     decoration_config:
@@ -4220,6 +4309,33 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-ovncore-perfscale-aws-ovn-large-cluster-density-v2
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
+    reporter_config:
+      slack:
+        channel: '#coreovn'
+        job_states_to_report:
+        - success
+        - failure
+        - error
+        - triggered
+        report_template: |-
+          {{- $link := "" }}
+          {{- $ref := "" }}
+          {{- if .Spec.Refs.Pulls }}
+            {{- $pull := index .Spec.Refs.Pulls 0 }}
+            {{- $link = $pull.Link }}
+            {{- $ref = printf "PR %d by %s" $pull.Number $pull.Author }}
+          {{- else }}
+            {{- $link = .Spec.Refs.BaseLink }}
+            {{- $ref = .Spec.Refs.BaseRef }}
+          {{- end }}
+
+          {{- if eq .Status.State "success" -}}
+            :ovn: <{{ printf "%s" $link }}|{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}} [{{ printf "%s" $ref }}]> Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> :white_check_mark:
+          {{- else if eq .Status.State "triggered" -}}
+            :ovn: <{{ printf "%s" $link }}|{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}} [{{ printf "%s" $ref }}]> Job *{{.Spec.Job}}* was triggered.
+          {{- else -}}
+            :ovn: <{{ printf "%s" $link }}|{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}} [{{ printf "%s" $ref }}]> Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> :warning:
+          {{- end -}}
     rerun_command: /test ovncore-perfscale-aws-ovn-large-cluster-density-v2
     spec:
       containers:
@@ -4295,7 +4411,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/ovncore-perfscale-aws-ovn-large-node-density-cni
     decorate: true
     decoration_config:
@@ -4316,6 +4432,33 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-ovncore-perfscale-aws-ovn-large-node-density-cni
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
+    reporter_config:
+      slack:
+        channel: '#coreovn'
+        job_states_to_report:
+        - success
+        - failure
+        - error
+        - triggered
+        report_template: |-
+          {{- $link := "" }}
+          {{- $ref := "" }}
+          {{- if .Spec.Refs.Pulls }}
+            {{- $pull := index .Spec.Refs.Pulls 0 }}
+            {{- $link = $pull.Link }}
+            {{- $ref = printf "PR %d by %s" $pull.Number $pull.Author }}
+          {{- else }}
+            {{- $link = .Spec.Refs.BaseLink }}
+            {{- $ref = .Spec.Refs.BaseRef }}
+          {{- end }}
+
+          {{- if eq .Status.State "success" -}}
+            :ovn: <{{ printf "%s" $link }}|{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}} [{{ printf "%s" $ref }}]> Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> :white_check_mark:
+          {{- else if eq .Status.State "triggered" -}}
+            :ovn: <{{ printf "%s" $link }}|{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}} [{{ printf "%s" $ref }}]> Job *{{.Spec.Job}}* was triggered.
+          {{- else -}}
+            :ovn: <{{ printf "%s" $link }}|{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}} [{{ printf "%s" $ref }}]> Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> :warning:
+          {{- end -}}
     rerun_command: /test ovncore-perfscale-aws-ovn-large-node-density-cni
     spec:
       containers:
@@ -4391,7 +4534,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/ovncore-perfscale-aws-ovn-xlarge-cluster-density-v2
     decorate: true
     decoration_config:
@@ -4412,6 +4555,33 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-ovncore-perfscale-aws-ovn-xlarge-cluster-density-v2
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
+    reporter_config:
+      slack:
+        channel: '#coreovn'
+        job_states_to_report:
+        - success
+        - failure
+        - error
+        - triggered
+        report_template: |-
+          {{- $link := "" }}
+          {{- $ref := "" }}
+          {{- if .Spec.Refs.Pulls }}
+            {{- $pull := index .Spec.Refs.Pulls 0 }}
+            {{- $link = $pull.Link }}
+            {{- $ref = printf "PR %d by %s" $pull.Number $pull.Author }}
+          {{- else }}
+            {{- $link = .Spec.Refs.BaseLink }}
+            {{- $ref = .Spec.Refs.BaseRef }}
+          {{- end }}
+
+          {{- if eq .Status.State "success" -}}
+            :ovn: <{{ printf "%s" $link }}|{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}} [{{ printf "%s" $ref }}]> Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> :white_check_mark:
+          {{- else if eq .Status.State "triggered" -}}
+            :ovn: <{{ printf "%s" $link }}|{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}} [{{ printf "%s" $ref }}]> Job *{{.Spec.Job}}* was triggered.
+          {{- else -}}
+            :ovn: <{{ printf "%s" $link }}|{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}} [{{ printf "%s" $ref }}]> Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> :warning:
+          {{- end -}}
     rerun_command: /test ovncore-perfscale-aws-ovn-xlarge-cluster-density-v2
     spec:
       containers:
@@ -4487,7 +4657,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/ovncore-perfscale-aws-ovn-xlarge-node-density-cni
     decorate: true
     decoration_config:
@@ -4508,6 +4678,33 @@ presubmits:
     name: pull-ci-openshift-priv-ovn-kubernetes-release-4.21-ovncore-perfscale-aws-ovn-xlarge-node-density-cni
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
+    reporter_config:
+      slack:
+        channel: '#coreovn'
+        job_states_to_report:
+        - success
+        - failure
+        - error
+        - triggered
+        report_template: |-
+          {{- $link := "" }}
+          {{- $ref := "" }}
+          {{- if .Spec.Refs.Pulls }}
+            {{- $pull := index .Spec.Refs.Pulls 0 }}
+            {{- $link = $pull.Link }}
+            {{- $ref = printf "PR %d by %s" $pull.Number $pull.Author }}
+          {{- else }}
+            {{- $link = .Spec.Refs.BaseLink }}
+            {{- $ref = .Spec.Refs.BaseRef }}
+          {{- end }}
+
+          {{- if eq .Status.State "success" -}}
+            :ovn: <{{ printf "%s" $link }}|{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}} [{{ printf "%s" $ref }}]> Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> :white_check_mark:
+          {{- else if eq .Status.State "triggered" -}}
+            :ovn: <{{ printf "%s" $link }}|{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}} [{{ printf "%s" $ref }}]> Job *{{.Spec.Job}}* was triggered.
+          {{- else -}}
+            :ovn: <{{ printf "%s" $link }}|{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}} [{{ printf "%s" $ref }}]> Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> :warning:
+          {{- end -}}
     rerun_command: /test ovncore-perfscale-aws-ovn-xlarge-node-density-cni
     spec:
       containers:
@@ -4583,7 +4780,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/perfscale-aws-ovn-medium-cluster-density-v2
     decorate: true
     decoration_config:
@@ -4605,7 +4802,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test perfscale-aws-ovn-medium-cluster-density-v2
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -4680,7 +4876,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/perfscale-aws-ovn-medium-node-density-cni
     decorate: true
     decoration_config:
@@ -4702,7 +4898,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test perfscale-aws-ovn-medium-node-density-cni
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -4777,7 +4972,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/perfscale-aws-ovn-small-cluster-density-v2
     decorate: true
     decoration_config:
@@ -4799,7 +4994,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test perfscale-aws-ovn-small-cluster-density-v2
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -4874,7 +5068,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/perfscale-aws-ovn-small-node-density-cni
     decorate: true
     decoration_config:
@@ -4896,7 +5090,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test perfscale-aws-ovn-small-node-density-cni
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -4971,7 +5164,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/qe-perfscale-aws-ovn-small-udn-density-l2
     decorate: true
     decoration_config:
@@ -4993,7 +5186,6 @@ presubmits:
     optional: true
     path_alias: github.com/openshift/ovn-kubernetes
     rerun_command: /test qe-perfscale-aws-ovn-small-udn-density-l2
-    skip_if_only_changed: ^(docs|\.github|contrib|etc|helm)/|\.md$|^(\.gitignore|OWNERS|LICENSE|CODEOWNERS|\.coderabbit\.yml|crd-docs-config\.yaml|mkdocs\.yml|requirements\.txt)$
     spec:
       containers:
       - args:
@@ -5068,7 +5260,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/qe-perfscale-aws-ovn-small-udn-density-l3
     decorate: true
     decoration_config:
@@ -5165,7 +5357,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/qe-perfscale-payload-control-plane-6nodes
     decorate: true
     decoration_config:
@@ -5261,7 +5453,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/security
     decorate: true
     decoration_config:
@@ -5355,7 +5547,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build05
+    cluster: build07
     context: ci/prow/unit
     decorate: true
     decoration_config:

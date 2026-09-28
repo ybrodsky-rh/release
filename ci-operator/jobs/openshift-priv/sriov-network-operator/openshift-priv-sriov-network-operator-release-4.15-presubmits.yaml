@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build04
+    cluster: build06
     context: ci/prow/api
     decorate: true
     decoration_config:
@@ -81,7 +81,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build04
+    cluster: build06
     context: ci/prow/ci-index-sriov-network-operator-bundle
     decorate: true
     decoration_config:
@@ -149,7 +149,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build04
+    cluster: build06
     context: ci/prow/controllers
     decorate: true
     decoration_config:
@@ -225,7 +225,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build04
+    cluster: build06
     context: ci/prow/e2e-openstack-nfv
     decorate: true
     decoration_config:
@@ -416,7 +416,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build04
+    cluster: build06
     context: ci/prow/gofmt
     decorate: true
     decoration_config:
@@ -492,7 +492,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build04
+    cluster: build06
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -556,11 +556,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )images,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build05
+    cluster: build06
     context: ci/prow/operator-e2e
     decorate: true
     decoration_config:
@@ -649,13 +649,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )operator-e2e,?($|\s.*)
+    trigger: (?m)^/test( | .* )(operator-e2e|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build04
+    cluster: build06
     context: ci/prow/pkg
     decorate: true
     decoration_config:

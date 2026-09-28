@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build06
+    cluster: build11
     context: ci/prow/configmap-scale
     decorate: true
     decoration_config:
@@ -91,7 +91,7 @@ presubmits:
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build06
+    cluster: build11
     context: ci/prow/e2e-aws-etcd-recovery
     decorate: true
     decoration_config:
@@ -174,11 +174,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-etcd-recovery,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build06
+    cluster: build11
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -258,13 +258,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build06
+    cluster: build11
     context: ci/prow/e2e-aws-ovn-serial
     decorate: true
     decoration_config:
@@ -344,13 +344,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-serial,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-serial|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build06
+    cluster: build11
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -430,13 +430,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build03
+    cluster: build07
     context: ci/prow/e2e-hypershift
     decorate: true
     decoration_config:
@@ -523,7 +523,7 @@ presubmits:
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build03
+    cluster: build07
     context: ci/prow/e2e-hypershift-conformance
     decorate: true
     decoration_config:
@@ -610,7 +610,7 @@ presubmits:
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build03
+    cluster: build07
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -670,7 +670,7 @@ presubmits:
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build06
+    cluster: build11
     context: ci/prow/perfscale-payload-control-plane-6nodes
     decorate: true
     decoration_config:
@@ -753,11 +753,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )perfscale-payload-control-plane-6nodes,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build03
+    cluster: build07
     context: ci/prow/upstream-e2e
     decorate: true
     decoration_config:
@@ -825,7 +825,7 @@ presubmits:
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build03
+    cluster: build07
     context: ci/prow/upstream-integration
     decorate: true
     decoration_config:
@@ -893,7 +893,7 @@ presubmits:
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build03
+    cluster: build07
     context: ci/prow/upstream-release
     decorate: true
     decoration_config:
@@ -961,7 +961,7 @@ presubmits:
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build03
+    cluster: build07
     context: ci/prow/upstream-unit
     decorate: true
     decoration_config:

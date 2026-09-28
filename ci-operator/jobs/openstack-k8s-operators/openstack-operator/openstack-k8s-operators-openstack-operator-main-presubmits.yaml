@@ -1,11 +1,11 @@
 presubmits:
   openstack-k8s-operators/openstack-operator:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^main$
     - ^main-
-    cluster: build11
+    cluster: build08
     context: ci/prow/functional
     decorate: true
     decoration_config:
@@ -16,6 +16,7 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openstack-k8s-operators-openstack-operator-main-functional
     rerun_command: /test functional
+    skip_if_only_changed: ^(\.github/.*|renovate.json|.*\.md|tests?/kuttl/.*|OWNERS.*|LICENSE.*|zuul.d/.*)$
     spec:
       containers:
       - args:
@@ -69,7 +70,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build11
+    cluster: build08
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -126,7 +127,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build11
+    cluster: build08
     context: ci/prow/openstack-operator-build-deploy
     decorate: true
     decoration_config:
@@ -214,8 +215,8 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build11
-    context: ci/prow/openstack-operator-build-deploy-kuttl-4-18
+    cluster: build08
+    context: ci/prow/openstack-operator-build-deploy-kuttl-4-20
     decorate: true
     decoration_config:
       sparse_checkout_files:
@@ -223,9 +224,9 @@ presubmits:
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-openstack-k8s-operators-openstack-operator-main-openstack-operator-build-deploy-kuttl-4-18
-    rerun_command: /test openstack-operator-build-deploy-kuttl-4-18
-    skip_if_only_changed: ^renovate.json|^README.md
+    name: pull-ci-openstack-k8s-operators-openstack-operator-main-openstack-operator-build-deploy-kuttl-4-20
+    rerun_command: /test openstack-operator-build-deploy-kuttl-4-20
+    skip_if_only_changed: ^(\.github/.*|renovate.json|.*\.md|tests?/functional/.*|OWNERS.*|LICENSE.*|zuul.d/.*)$
     spec:
       containers:
       - args:
@@ -235,7 +236,7 @@ presubmits:
         - --lease-server-credentials-file=/etc/boskos/credentials
         - --report-credentials-file=/etc/report/credentials
         - --secret-dir=/secrets/ci-pull-credentials
-        - --target=openstack-operator-build-deploy-kuttl-4-18
+        - --target=openstack-operator-build-deploy-kuttl-4-20
         command:
         - ci-operator
         env:
@@ -297,13 +298,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )openstack-operator-build-deploy-kuttl-4-18,?($|\s.*)
+    trigger: (?m)^/test( | .* )openstack-operator-build-deploy-kuttl-4-20,?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^main$
     - ^main-
-    cluster: build11
+    cluster: build08
     context: ci/prow/openstack-operator-build-deploy-tempest
     decorate: true
     decoration_config:
@@ -392,7 +393,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build11
+    cluster: build08
     context: ci/prow/precommit-check
     decorate: true
     decoration_config:

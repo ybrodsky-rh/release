@@ -2,10 +2,12 @@ presubmits:
   openshift-priv/cluster-storage-operator:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^$
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-csi
     decorate: true
     decoration_config:
@@ -92,13 +94,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )(e2e-aws-csi|remaining-required),?($|\s.*)
+    trigger: (?m)^/test( | .* )e2e-aws-csi,?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -188,11 +190,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-ovn,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -279,13 +281,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-aws-shared-resources
     decorate: true
     decoration_config:
@@ -375,7 +377,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-shared-resources,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
@@ -466,9 +468,9 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-azure-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-azure-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
@@ -559,7 +561,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-azure-file-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-azure-file-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -750,10 +752,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^$
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-csi
     decorate: true
     decoration_config:
@@ -840,13 +844,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )(e2e-gcp-csi|remaining-required),?($|\s.*)
+    trigger: (?m)^/test( | .* )e2e-gcp-csi,?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-manual-oidc
     decorate: true
     decoration_config:
@@ -940,7 +944,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-ovn
     decorate: true
     decoration_config:
@@ -1128,7 +1132,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-openstack
     decorate: true
     decoration_config:
@@ -1222,7 +1226,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build07
+    cluster: build09
     context: ci/prow/e2e-openstack-parallel
     decorate: true
     decoration_config:
@@ -1406,7 +1410,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-ovn-vsphere,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
@@ -1497,7 +1501,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-vsphere-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-vsphere-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:

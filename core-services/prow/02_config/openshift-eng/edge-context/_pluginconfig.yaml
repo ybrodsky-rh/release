@@ -9,18 +9,18 @@ lgtm:
 plugins:
   openshift-eng/edge-context:
     plugins:
+    - assign
     - approve
     - hold
     - label
     - lgtm
+    - retitle
     - trigger
     - verify-owners
     - wip
     - jira
 triggers:
-- org_invite:
-    prominent: {}
-  repos:
+- repos:
   - openshift-eng/edge-context
   trusted_apps:
   - openshift-merge-bot

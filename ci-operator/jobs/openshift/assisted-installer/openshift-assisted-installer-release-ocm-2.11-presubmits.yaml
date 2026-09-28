@@ -2,6 +2,8 @@ presubmits:
   openshift/assisted-installer:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|^\.github/|\.md$|^(?:.*/)?(?:\.gitignore|.tekton/.*|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     branches:
     - ^release-ocm-2\.11$
     - ^release-ocm-2\.11-
@@ -22,8 +24,8 @@ presubmits:
       job-release: "4.16"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-assisted-installer-release-ocm-2.11-e2e-ai-operator-ztp
+    optional: true
     rerun_command: /test e2e-ai-operator-ztp
-    skip_if_only_changed: ^docs/|^\.github/|\.md$|^(?:.*/)?(?:\.gitignore|.tekton/.*|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -183,7 +185,7 @@ presubmits:
     branches:
     - ^release-ocm-2\.11$
     - ^release-ocm-2\.11-
-    cluster: build05
+    cluster: build13
     context: ci/prow/format-check
     decorate: true
     decoration_config:
@@ -252,7 +254,7 @@ presubmits:
     branches:
     - ^release-ocm-2\.11$
     - ^release-ocm-2\.11-
-    cluster: build05
+    cluster: build13
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -312,7 +314,7 @@ presubmits:
     branches:
     - ^release-ocm-2\.11$
     - ^release-ocm-2\.11-
-    cluster: build05
+    cluster: build13
     context: ci/prow/lint
     decorate: true
     decoration_config:
@@ -381,7 +383,7 @@ presubmits:
     branches:
     - ^release-ocm-2\.11$
     - ^release-ocm-2\.11-
-    cluster: build05
+    cluster: build13
     context: ci/prow/mce-images
     decorate: true
     decoration_config:
@@ -441,7 +443,7 @@ presubmits:
     branches:
     - ^release-ocm-2\.11$
     - ^release-ocm-2\.11-
-    cluster: build05
+    cluster: build13
     context: ci/prow/unit-test
     decorate: true
     decoration_config:

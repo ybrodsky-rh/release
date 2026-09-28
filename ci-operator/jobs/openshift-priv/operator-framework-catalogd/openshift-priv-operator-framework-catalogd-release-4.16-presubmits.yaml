@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build03
+    cluster: build07
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -69,10 +69,12 @@ presubmits:
     trigger: (?m)^/test( | .* )images,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|DOWNSTREAM_OWNERS|DOWNSTREAM_OWNERS_ALIASES|LICENSE|DCO|CODEOWNERS)|\.golangci\.yaml|\.goreleaser\.yml|\.markdownlint.yaml|^\.github|Tiltfile$
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build11
+    cluster: build12
     context: ci/prow/openshift-e2e-aws-techpreview
     decorate: true
     decoration_config:
@@ -92,7 +94,6 @@ presubmits:
     name: pull-ci-openshift-priv-operator-framework-catalogd-release-4.16-openshift-e2e-aws-techpreview
     path_alias: github.com/openshift/operator-framework-catalogd
     rerun_command: /test openshift-e2e-aws-techpreview
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|DOWNSTREAM_OWNERS|DOWNSTREAM_OWNERS_ALIASES|LICENSE|DCO|CODEOWNERS)|\.golangci\.yaml|\.goreleaser\.yml|\.markdownlint.yaml|^\.github|Tiltfile$
     spec:
       containers:
       - args:
@@ -167,7 +168,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build03
+    cluster: build07
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -242,7 +243,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build03
+    cluster: build07
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -317,7 +318,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build03
+    cluster: build07
     context: ci/prow/verify-commits
     decorate: true
     decoration_config:
@@ -392,7 +393,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build03
+    cluster: build07
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:
@@ -467,7 +468,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build03
+    cluster: build07
     context: ci/prow/verify-manifests
     decorate: true
     decoration_config:
@@ -542,7 +543,7 @@ presubmits:
     branches:
     - ^release-4\.16$
     - ^release-4\.16-
-    cluster: build03
+    cluster: build07
     context: ci/prow/vet
     decorate: true
     decoration_config:

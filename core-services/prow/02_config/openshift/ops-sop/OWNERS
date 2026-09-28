@@ -5,7 +5,6 @@
 # See the OWNERS docs: https://git.k8s.io/community/contributors/guide/owners.md
 
 approvers:
-- abyrne55
 - ajpantuso
 - alexsmithgh
 - batman-jd
@@ -17,7 +16,7 @@ approvers:
 - devppratik
 - dustman9000
 - eth1030
-- iamkirkbater
+- geowa4
 - joshbranham
 - makdaam
 - nikokolas3270
@@ -30,13 +29,16 @@ approvers:
 - smarthall
 - tafhim
 - theautoroboto
-- thetechnick
 - typeid
 - zmird-r
 options: {}
 reviewers:
-- abyrne55
+- acandelp
+- adsinglaredhat
 - alexsmithgh
+- alvlkov
+- anantpednekar
+- asheth1
 - batman-jd
 - bergmannf
 - chamalabey
@@ -44,13 +46,34 @@ reviewers:
 - dakotalongrh
 - devppratik
 - eth1030
+- faldanarh
+- fnarel
+- geowa4
+- givaldolins
+- jdgutz
+- judexzhu
+- kkulshreshth
+- luis-falcon
+- madhusudanupadhyay
 - makdaam
+- mikefrancisco
 - nikokolas3270
+- pburrows-a11y
+- pjackell
+- priyankakanthale94
+- pyates86
+- rafaelguerra01
 - ravitri
 - rbhilare
 - reedcort
+- rhdunk
+- rkantsingh
 - sam-nguyen7
+- santiagomaudet
 - smarthall
+- squirrd
 - tafhim
 - theautoroboto
+- tof1973
+- zhigwang
 - zmird-r

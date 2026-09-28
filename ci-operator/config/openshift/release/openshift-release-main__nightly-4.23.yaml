@@ -226,27 +226,13 @@ tests:
   interval: 168h
   steps:
     cluster_profile: equinix-edge-enablement
-    env:
-      TEST_FUNC: test_bip_add_worker
-    workflow: baremetalds-sno
+    workflow: baremetalds-sno-with-worker
 - as: e2e-metal-ipi-ovn-ipv4
   capabilities:
   - intranet
   interval: 168h
   steps:
     cluster_profile: equinix-ocp-metal
-    observers:
-      enable:
-      - observers-resource-watch
-    workflow: baremetalds-e2e-ovn-ipv4
-- as: e2e-metal-ipi-ovn-bm
-  capabilities:
-  - intranet
-  interval: 168h
-  steps:
-    cluster_profile: equinix-ocp-metal
-    env:
-      CLUSTERTYPE: baremetal
     observers:
       enable:
       - observers-resource-watch
@@ -261,7 +247,6 @@ tests:
       enable:
       - observers-resource-watch
     workflow: baremetalds-e2e-serial-ovn-ipv6-runc
-  timeout: 5h0m0s
 - as: e2e-metal-ipi-ovn-serial-ipv4
   capabilities:
   - intranet
@@ -289,7 +274,6 @@ tests:
       enable:
       - observers-resource-watch
     workflow: baremetalds-e2e-serial-ovn-ipv4
-  timeout: 5h0m0s
 - as: e2e-metal-ipi-serial-ovn-ipv6
   capabilities:
   - intranet
@@ -321,7 +305,6 @@ tests:
       enable:
       - observers-resource-watch
     workflow: baremetalds-e2e-serial-ovn-dualstack
-  timeout: 5h0m0s
 - as: e2e-metal-ipi-ovn-upgrade
   capabilities:
   - intranet
@@ -406,7 +389,6 @@ tests:
       enable:
       - observers-resource-watch
     workflow: baremetalds-e2e-serial-ovn-ipv6
-  timeout: 5h0m0s
 - as: e2e-metal-ipi-ovn-ipv6-runc-techpreview
   capabilities:
   - intranet
@@ -468,7 +450,6 @@ tests:
       enable:
       - observers-resource-watch
     workflow: baremetalds-e2e-serial-ovn-dualstack
-  timeout: 5h0m0s
 - as: e2e-metal-ipi-ovn-ipv6
   capabilities:
   - intranet
@@ -699,12 +680,34 @@ tests:
   steps:
     cluster_profile: equinix-edge-enablement
     workflow: agent-e2e-two-node-fencing-ipv4
+- as: e2e-agent-ovn-two-node-fencing-rhcos10-techpreview
+  capabilities:
+  - intranet
+  interval: 168h
+  steps:
+    cluster_profile: equinix-edge-enablement
+    env:
+      DEVSCRIPTS_CONFIG: |
+        AGENT_E2E_TEST_SCENARIO=TNF_IPV4
+        BMC_DRIVER=redfish
+        FEATURE_SET="TechPreviewNoUpgrade"
+      OSSTREAM: rhel-10
+    workflow: agent-e2e-two-node-fencing-ipv4
 - as: e2e-metal-ovn-two-node-fencing-techpreview
   capabilities:
   - intranet
   cron: 37 7,17 * * *
   steps:
     cluster_profile: equinix-edge-enablement
+    workflow: baremetalds-two-node-fencing-techpreview
+- as: e2e-metal-ovn-two-node-fencing-rhcos10-techpreview
+  capabilities:
+  - intranet
+  interval: 168h
+  steps:
+    cluster_profile: equinix-edge-enablement
+    env:
+      OSSTREAM: rhel-10
     workflow: baremetalds-two-node-fencing-techpreview
 - as: e2e-metal-ovn-two-node-fencing-validation
   capabilities:
@@ -798,8 +801,28 @@ tests:
   capabilities:
   - intranet
   cron: 19 10,20 * * *
+  shard_count: 3
   steps:
     cluster_profile: equinix-edge-enablement
+    workflow: baremetalds-two-node-fencing-recovery
+- as: e2e-metal-ovn-two-node-fencing-recovery-rhcos10-techpreview
+  capabilities:
+  - intranet
+  interval: 168h
+  shard_count: 3
+  steps:
+    cluster_profile: equinix-edge-enablement
+    env:
+      DEVSCRIPTS_CONFIG: |
+        BMC_DRIVER=redfish
+        FEATURE_SET=TechPreviewNoUpgrade
+        IP_STACK=v4
+        MASTER_DISK=100
+        MASTER_MEMORY=32768
+        MASTER_VCPU=8
+        NUM_MASTERS=2
+        NUM_WORKERS=0
+      OSSTREAM: rhel-10
     workflow: baremetalds-two-node-fencing-recovery
 - as: e2e-metal-ovn-two-node-fencing-recovery-repo-ra
   capabilities:
@@ -891,6 +914,15 @@ tests:
   steps:
     cluster_profile: equinix-edge-enablement
     workflow: baremetalds-two-node-fencing-extended
+- as: e2e-metal-ovn-two-node-fencing-private-tests-rhcos10-tp
+  capabilities:
+  - intranet
+  interval: 168h
+  steps:
+    cluster_profile: equinix-edge-enablement
+    env:
+      OSSTREAM: rhel-10
+    workflow: baremetalds-two-node-fencing-extended
 - as: e2e-aws-ovn-proxy
   cron: 0 0 */2 * *
   steps:
@@ -899,12 +931,11 @@ tests:
       enable:
       - observers-resource-watch
     workflow: openshift-e2e-aws-proxy
-- as: e2e-aws-ovn-installer-dualstack-ipv4-primary-techpreview
+- as: e2e-aws-ovn-installer-dualstack-ipv4-primary
   interval: 24h
   steps:
     cluster_profile: openshift-org-aws
     env:
-      FEATURE_SET: TechPreviewNoUpgrade
       IP_FAMILY: DualStackIPv4Primary
       TEST_SKIPS: '\[sig-network\] \[Feature:IPv6DualStack\] Granular Checks: Services
         Secondary IP Family \[LinuxOnly\] should function for service endpoints using
@@ -913,12 +944,11 @@ tests:
       enable:
       - observers-resource-watch
     workflow: openshift-e2e-aws
-- as: e2e-aws-ovn-installer-dualstack-ipv6-primary-techpreview
+- as: e2e-aws-ovn-installer-dualstack-ipv6-primary
   interval: 24h
   steps:
     cluster_profile: openshift-org-aws
     env:
-      FEATURE_SET: TechPreviewNoUpgrade
       IP_FAMILY: DualStackIPv6Primary
       TEST_SKIPS: '\[sig-network\] \[Feature:IPv6DualStack\] Granular Checks: Services
         Secondary IP Family \[LinuxOnly\] should function for service endpoints using
@@ -965,8 +995,6 @@ tests:
   steps:
     cluster_profile: vsphere-elastic
     env:
-      FEATURE_GATES: '["VSphereMultiNetworks=true"]'
-      FEATURE_SET: CustomNoUpgrade
       MULTI_NIC_IPI: "true"
     workflow: openshift-e2e-vsphere
 - as: e2e-external-vsphere-ccm
@@ -1061,6 +1089,7 @@ tests:
       TEST_SKIPS: provisioning should mount multiple PV pointing to the same storage
         on the same node
     workflow: openshift-e2e-vsphere-serial
+  timeout: 6h0m0s
 - as: e2e-vsphere-ovn-techpreview-serial
   cron: 25,40,55 3,22,23 * * *
   reporter_config:
@@ -1075,7 +1104,7 @@ tests:
     env:
       FEATURE_SET: TechPreviewNoUpgrade
     workflow: openshift-e2e-vsphere-serial
-  timeout: 5h0m0s
+  timeout: 6h0m0s
 - as: e2e-vsphere-ovn-rhcos10-techpreview-serial
   cron: 31,46 4,20 * * *
   steps:
@@ -1084,7 +1113,7 @@ tests:
       FEATURE_SET: TechPreviewNoUpgrade
       OS_IMAGE_STREAM: rhel-10
     workflow: openshift-e2e-vsphere-serial
-  timeout: 5h0m0s
+  timeout: 6h0m0s
 - as: e2e-vsphere-ovn-upi
   cron: 19 10 * * 5
   reporter_config:
@@ -1124,7 +1153,7 @@ tests:
       TEST_SKIPS: provisioning should mount multiple PV pointing to the same storage
         on the same node
     workflow: openshift-e2e-vsphere-upi-serial
-  timeout: 5h0m0s
+  timeout: 6h0m0s
 - as: e2e-vsphere-csi-operator-test
   cron: 52 15 * * *
   steps:
@@ -1173,7 +1202,7 @@ tests:
     env:
       ENABLE_LONG_CSI_CERTIFICATION_TESTS: "true"
       ENABLE_VSPHERE_FILESHARE_TESTS: "true"
-      POOL_SELECTOR: vsphere-type=vcf9
+      POOL_SELECTOR: vsphere-type=vcf9,vsanfs=true
       TEST_SKIPS: 'Testpattern: Dynamic PV (xfs).*multiVolume.*should concurrently
         access the single volume from pods on different node\|Testpattern: Dynamic
         PV (block volmode).*multiVolume.*should concurrently access the single volume
@@ -1276,11 +1305,11 @@ tests:
       PERSISTENT_MONITORING: "false"
       SETUP_IMAGE_REGISTRY_WITH_PVC: "false"
       TEST_ARGS: ' --disable-monitor=legacy-cvo-invariants --cluster-stability=Disruptive '
-      TEST_SKIPS: \[FeatureGate:VSphereDriverConfiguration\]\|\[sig-arch\]\[Early\]
+      TEST_SKIPS: \[sig-cli\]\|\[FeatureGate:VSphereDriverConfiguration\]\|\[sig-arch\]\[Early\]
         Operators low level operators
       TEST_SUITE: openshift/conformance/serial
     workflow: openshift-e2e-vsphere-hybrid-env
-  timeout: 5h0m0s
+  timeout: 6h0m0s
 - as: e2e-vsphere-ovn-upi-hybrid-env-techpreview
   cron: 40 18 * * 1
   steps:
@@ -1327,6 +1356,8 @@ tests:
   steps:
     cluster_profile: openshift-org-aws
     env:
+      COMPUTE_NODE_TYPE: m6a.2xlarge
+      CONTROL_PLANE_INSTANCE_TYPE: m6a.2xlarge
       DEBUG_ENABLE_TCPDUMP: "true"
       FIPS_ENABLED: "true"
       TEST_REQUIRES_BUILDFARM_NET_ADMIN: "true"
@@ -1342,6 +1373,8 @@ tests:
   steps:
     cluster_profile: openshift-org-aws
     env:
+      COMPUTE_NODE_TYPE: m6a.2xlarge
+      CONTROL_PLANE_INSTANCE_TYPE: m6a.2xlarge
       FAIL_ON_CORE_DUMP: "true"
       FIPS_ENABLED: "true"
       TEST_TYPE: upgrade-conformance
@@ -1358,6 +1391,8 @@ tests:
     cluster_profile: openshift-org-aws
     env:
       CI_NAT_REPLACE: "false"
+      COMPUTE_NODE_TYPE: m6a.2xlarge
+      CONTROL_PLANE_INSTANCE_TYPE: m6a.2xlarge
       FAIL_ON_CORE_DUMP: "true"
       FIPS_ENABLED: "true"
       TEST_TYPE: upgrade-conformance
@@ -1406,6 +1441,8 @@ tests:
   steps:
     cluster_profile: openshift-org-aws
     env:
+      COMPUTE_NODE_TYPE: m6a.2xlarge
+      CONTROL_PLANE_INSTANCE_TYPE: m6a.2xlarge
       FIPS_ENABLED: "true"
       TEST_SUITE: openshift/conformance/serial
     observers:
@@ -1574,35 +1611,6 @@ tests:
       enable:
       - observers-resource-watch
     workflow: telco5g-sno-cnf
-- as: e2e-telco5g-ptp
-  capabilities:
-  - intranet
-  cron: 0 0 * * 0
-  restrict_network_access: false
-  steps:
-    env:
-      SKIP_OCP_INSTALL: "false"
-      T5CI_JOB_TYPE: ptp
-      T5CI_VERSION: "4.23"
-    observers:
-      enable:
-      - observers-resource-watch
-    workflow: telco5g-ptp
-- as: e2e-telco5g-ptp-upstream
-  capabilities:
-  - intranet
-  cron: 0 5 * * 0
-  restrict_network_access: false
-  steps:
-    env:
-      SKIP_OCP_INSTALL: "true"
-      T5CI_DEPLOY_UPSTREAM: "true"
-      T5CI_JOB_TYPE: ptp
-      T5CI_VERSION: "4.23"
-    observers:
-      enable:
-      - observers-resource-watch
-    workflow: telco5g-ptp
 - as: e2e-telco5g-hcp-cnftests
   capabilities:
   - intranet
@@ -1818,6 +1826,8 @@ tests:
   interval: 168h
   steps:
     cluster_profile: openshift-org-gcp
+    env:
+      CONTROL_PLANE_NODE_TYPE: e2-custom-6-16384
     observers:
       enable:
       - observers-resource-watch
@@ -1917,6 +1927,9 @@ tests:
   interval: 168h
   steps:
     cluster_profile: openshift-org-aws
+    env:
+      TEST_SKIPS: \[sig-node\] Node Lifecycle should run through the lifecycle of
+        a node
     workflow: openshift-e2e-aws-cpu-partitioning
 - as: e2e-aws-ovn-single-node-one-core-serial
   interval: 168h
@@ -1948,6 +1961,7 @@ tests:
       DEVSCRIPTS_CONFIG: |
         AGENT_E2E_TEST_SCENARIO=COMPACT_IPV4
         FIPS_MODE=true
+        MASTER_VCPU=8
       TEST_SUITE: openshift/conformance/parallel
     workflow: agent-e2e-generic-conformance
 - as: e2e-agent-single-node-ipv6-conformance
@@ -1970,6 +1984,7 @@ tests:
     env:
       DEVSCRIPTS_CONFIG: |
         AGENT_E2E_TEST_SCENARIO=HA_IPV4V6
+        WORKER_MEMORY=24576
       TEST_SUITE: openshift/conformance/parallel
     workflow: agent-e2e-generic-conformance
 - as: e2e-metal-ovn-sno-cert-rotation-suspend-30d
@@ -2528,7 +2543,7 @@ tests:
       TEST_SKIPS: provisioning should mount multiple PV pointing to the same storage
         on the same node
     workflow: openshift-e2e-vsphere-serial-runc
-  timeout: 5h0m0s
+  timeout: 6h0m0s
 - as: e2e-azure-ovn-serial-runc
   cron: '@daily'
   steps:
@@ -2542,6 +2557,8 @@ tests:
   cron: '@daily'
   steps:
     cluster_profile: openshift-org-gcp
+    env:
+      CONTROL_PLANE_NODE_TYPE: e2-custom-6-16384
     observers:
       enable:
       - observers-resource-watch
@@ -2677,6 +2694,7 @@ tests:
   steps:
     cluster_profile: openshift-org-gcp
     env:
+      CONTROL_PLANE_NODE_TYPE: e2-custom-6-16384
       FEATURE_SET: TechPreviewNoUpgrade
       FIPS_ENABLED: "true"
       OS_IMAGE_STREAM: rhel-10
@@ -2707,10 +2725,10 @@ tests:
   steps:
     cluster_profile: openshift-org-gcp
     env:
-      COMPUTE_NODE_TYPE: n2-standard-8
       FEATURE_SET: TechPreviewNoUpgrade
       OS_IMAGE_STREAM: rhel-10
       RT_ENABLED: "true"
+      TEST_SKIPS: regional PD should store data and sync across zones
     observers:
       enable:
       - observers-resource-watch

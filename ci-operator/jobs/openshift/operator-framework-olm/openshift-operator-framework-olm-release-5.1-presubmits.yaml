@@ -70,11 +70,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )bindata-check,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-olmv0-ext
     decorate: true
     decoration_config:
@@ -155,13 +155,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-olmv0-ext,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-olmv0-ext|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-upgrade-ovn-single-node
     decorate: true
     decoration_config:
@@ -246,10 +246,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-upgrade-ovn-single-node,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|DOWNSTREAM_OWNERS|DOWNSTREAM_OWNERS_ALIASES|LICENSE|DCO)|\.golangci\.yaml|Tiltfile$|^(?:.*\/)?tests-extension\/
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-console-olm
     decorate: true
     decoration_config:
@@ -266,7 +268,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-operator-framework-olm-release-5.1-e2e-gcp-console-olm
     rerun_command: /test e2e-gcp-console-olm
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|DOWNSTREAM_OWNERS|DOWNSTREAM_OWNERS_ALIASES|LICENSE|DCO)|\.golangci\.yaml|Tiltfile$|^(?:.*\/)?tests-extension\/
     spec:
       containers:
       - args:
@@ -334,10 +335,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-console-olm,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|DOWNSTREAM_OWNERS|DOWNSTREAM_OWNERS_ALIASES|LICENSE|DCO)|\.golangci\.yaml|Tiltfile$|^(?:.*\/)?tests-extension\/
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-olm
     decorate: true
     decoration_config:
@@ -354,7 +357,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-operator-framework-olm-release-5.1-e2e-gcp-olm
     rerun_command: /test e2e-gcp-olm
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|DOWNSTREAM_OWNERS|DOWNSTREAM_OWNERS_ALIASES|LICENSE|DCO)|\.golangci\.yaml|Tiltfile$|^(?:.*\/)?tests-extension\/
     spec:
       containers:
       - args:
@@ -425,7 +427,7 @@ presubmits:
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-olm-flaky
     decorate: true
     decoration_config:
@@ -510,10 +512,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-olm-flaky,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|DOWNSTREAM_OWNERS|DOWNSTREAM_OWNERS_ALIASES|LICENSE|DCO)|\.golangci\.yaml|Tiltfile$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-ovn
     decorate: true
     decoration_config:
@@ -530,7 +534,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-operator-framework-olm-release-5.1-e2e-gcp-ovn
     rerun_command: /test e2e-gcp-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|DOWNSTREAM_OWNERS|DOWNSTREAM_OWNERS_ALIASES|LICENSE|DCO)|\.golangci\.yaml|Tiltfile$
     spec:
       containers:
       - args:
@@ -598,10 +601,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|DOWNSTREAM_OWNERS|DOWNSTREAM_OWNERS_ALIASES|LICENSE|DCO)|\.golangci\.yaml|Tiltfile$
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-upgrade
     decorate: true
     decoration_config:
@@ -618,7 +623,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-operator-framework-olm-release-5.1-e2e-upgrade
     rerun_command: /test e2e-upgrade
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|DOWNSTREAM_OWNERS|DOWNSTREAM_OWNERS_ALIASES|LICENSE|DCO)|\.golangci\.yaml|Tiltfile$
     spec:
       containers:
       - args:
@@ -711,7 +715,6 @@ presubmits:
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --report-credentials-file=/etc/report/credentials
         - --target=[images]
-        - --target=[release:latest]
         command:
         - ci-operator
         image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest

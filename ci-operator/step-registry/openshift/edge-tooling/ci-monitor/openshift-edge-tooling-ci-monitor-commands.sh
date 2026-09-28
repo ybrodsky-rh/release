@@ -54,6 +54,10 @@ if ! echo "${GCLOUD_SHA}  ${GCLOUD_TGZ}" | sha256sum -c -; then
 fi
 tar -xzf "${GCLOUD_TGZ}" -C /tmp
 rm -f "${GCLOUD_TGZ}"
+# Redirect gcloud config to a writable directory — /home/claude/.config/gcloud/
+# is not writable in CI pods, causing install.sh to fail with PermissionError.
+export CLOUDSDK_CONFIG="/tmp/gcloud-config"
+mkdir -p "${CLOUDSDK_CONFIG}"
 /tmp/google-cloud-sdk/install.sh --quiet --path-update true
 export PATH="/tmp/google-cloud-sdk/bin:${PATH}"
 
@@ -125,9 +129,9 @@ copy_artifacts() {
     if [[ -r "${ARTIFACT_DIR}/claude-analysis.log" ]]; then
         {
             sed -n '/BLOCKING_JOBS_START/,/BLOCKING_JOBS_END/p' "${ARTIFACT_DIR}/claude-analysis.log" \
-                | grep -oE 'BLOCKING\|[^|]+\|https://[^|]+\|[^|]+\|[0-9]+\.[0-9]+\|[^|"\\]+'
+                | grep -oE 'BLOCKING\|[^|]+\|https://[^|]+\|[^|]+\|[0-9]+\.[0-9]+\|[a-zA-Z0-9._-]+'
             sed -n '/INFORMING_JOBS_START/,/INFORMING_JOBS_END/p' "${ARTIFACT_DIR}/claude-analysis.log" \
-                | grep -oE 'INFORMING\|[^|]+\|https://[^|]+\|[^|]+\|[0-9]+\.[0-9]+\|[^|"\\]+'
+                | grep -oE 'INFORMING\|[^|]+\|https://[^|]+\|[^|]+\|[0-9]+\.[0-9]+\|[a-zA-Z0-9._-]+'
         } | sort -u > "${SHARED_DIR}/failing-jobs.txt" || true
     fi
 
@@ -265,5 +269,12 @@ EOF
 
 echo ""
 echo "JUnit XML written to ${JUNIT_FILE}"
-touch "${SHARED_DIR}/monitor-completed"
+
+if [[ "${CLAUDE_EXIT}" -eq 0 ]] || { [[ "${CLAUDE_EXIT}" -eq 124 ]] && [[ "${NUDGE_EXIT}" -eq 0 ]]; }; then
+    touch "${SHARED_DIR}/monitor-completed"
+elif grep -q 'BLOCKING_JOBS_START\|edge failures' "${ARTIFACT_DIR}/claude-analysis.log" 2>/dev/null; then
+    echo "Claude failed (exit ${CLAUDE_EXIT}) but payload_monitor data found — enabling Slack notification."
+    touch "${SHARED_DIR}/monitor-completed"
+fi
+
 echo "=== Edge CI Monitor complete ==="

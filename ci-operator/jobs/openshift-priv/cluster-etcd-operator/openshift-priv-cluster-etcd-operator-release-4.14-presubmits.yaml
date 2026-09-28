@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/configmap-scale
     decorate: true
     decoration_config:
@@ -96,10 +96,12 @@ presubmits:
     trigger: (?m)^/test( | .* )configmap-scale,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-agnostic-ovn
     decorate: true
     decoration_config:
@@ -118,7 +120,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-etcd-operator-release-4.14-e2e-agnostic-ovn
     path_alias: github.com/openshift/cluster-etcd-operator
     rerun_command: /test e2e-agnostic-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     spec:
       containers:
       - args:
@@ -190,10 +191,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-agnostic-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-agnostic-ovn-upgrade
     decorate: true
     decoration_config:
@@ -212,7 +215,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-etcd-operator-release-4.14-e2e-agnostic-ovn-upgrade
     path_alias: github.com/openshift/cluster-etcd-operator
     rerun_command: /test e2e-agnostic-ovn-upgrade
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     spec:
       containers:
       - args:
@@ -287,7 +289,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -381,7 +383,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-aws-disruptive
     decorate: true
     decoration_config:
@@ -475,7 +477,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-aws-disruptive-ovn
     decorate: true
     decoration_config:
@@ -569,7 +571,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-aws-etcd-recovery
     decorate: true
     decoration_config:
@@ -659,11 +661,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-etcd-recovery,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-aws-ovn-etcd-scaling
     decorate: true
     decoration_config:
@@ -750,13 +752,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-etcd-scaling,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-etcd-scaling|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-aws-ovn-serial
     decorate: true
     decoration_config:
@@ -843,13 +845,15 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-serial,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-serial|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-aws-ovn-single-node
     decorate: true
     decoration_config:
@@ -868,7 +872,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-etcd-operator-release-4.14-e2e-aws-ovn-single-node
     path_alias: github.com/openshift/cluster-etcd-operator
     rerun_command: /test e2e-aws-ovn-single-node
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     spec:
       containers:
       - args:
@@ -943,7 +946,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-azure
     decorate: true
     decoration_config:
@@ -1037,7 +1040,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-azure-ovn-etcd-scaling
     decorate: true
     decoration_config:
@@ -1131,7 +1134,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp
     decorate: true
     decoration_config:
@@ -1225,7 +1228,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-disruptive
     decorate: true
     decoration_config:
@@ -1319,7 +1322,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-disruptive-ovn
     decorate: true
     decoration_config:
@@ -1413,7 +1416,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-ovn-etcd-scaling
     decorate: true
     decoration_config:
@@ -1504,6 +1507,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-ovn-etcd-scaling,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
@@ -1595,7 +1600,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )(e2e-metal-assisted|remaining-required),?($|\s.*)
+    trigger: (?m)^/test( | .* )e2e-metal-assisted,?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -1693,6 +1698,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-metal-ipi,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
@@ -1784,7 +1791,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )(e2e-metal-ipi-ovn-ipv6|remaining-required),?($|\s.*)
+    trigger: (?m)^/test( | .* )e2e-metal-ipi-ovn-ipv6,?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -1885,7 +1892,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-metal-single-node-live-iso
     decorate: true
     decoration_config:
@@ -1976,10 +1983,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-metal-single-node-live-iso,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-operator
     decorate: true
     decoration_config:
@@ -1998,7 +2007,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-etcd-operator-release-4.14-e2e-operator
     path_alias: github.com/openshift/cluster-etcd-operator
     rerun_command: /test e2e-operator
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     spec:
       containers:
       - args:
@@ -2069,11 +2077,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-operator,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/e2e-operator-fips
     decorate: true
     decoration_config:
@@ -2160,7 +2168,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-operator-fips,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-operator-fips|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -2260,7 +2268,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -2326,7 +2334,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -2400,7 +2408,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -2474,7 +2482,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

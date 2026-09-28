@@ -1,7 +1,7 @@
 periodics:
 - agent: kubernetes
-  cluster: build11
-  cron: 54 0 * * 2,6
+  cluster: build03
+  cron: 23 1 * * 2,6
   decorate: true
   decoration_config:
     sparse_checkout_files:
@@ -152,8 +152,8 @@ periodics:
       secret:
         secretName: result-aggregator
 - agent: kubernetes
-  cluster: build11
-  cron: 46 1 * * 2,6
+  cluster: build03
+  cron: 43 1 * * 2,6
   decorate: true
   decoration_config:
     sparse_checkout_files:
@@ -304,8 +304,8 @@ periodics:
       secret:
         secretName: result-aggregator
 - agent: kubernetes
-  cluster: build11
-  cron: 20 2 * * 2,6
+  cluster: build03
+  cron: 4 1 * * 2,6
   decorate: true
   decoration_config:
     sparse_checkout_files:
@@ -456,8 +456,8 @@ periodics:
       secret:
         secretName: result-aggregator
 - agent: kubernetes
-  cluster: build11
-  cron: 16 0 * * 2,6
+  cluster: build03
+  cron: 16 5 * * 2,6
   decorate: true
   decoration_config:
     sparse_checkout_files:
@@ -609,7 +609,7 @@ periodics:
         secretName: result-aggregator
 - agent: kubernetes
   cluster: build11
-  cron: 32 5 * * 2,6
+  cron: 41 0 * * 2,6
   decorate: true
   decoration_config:
     sparse_checkout_files:
@@ -681,6 +681,17 @@ periodics:
     ci.openshift.io/generator: prowgen
     pj-rehearse.openshift.io/can-be-rehearsed: "true"
   name: periodic-ci-openshift-knative-eventing-release-v1.17-421-test-conformance-c
+  reporter_config:
+    slack:
+      channel: '#knative-eventing-ci'
+      job_states_to_report:
+      - success
+      - failure
+      - error
+      report_template: '{{if eq .Status.State "success"}} :rainbow: Job *{{.Spec.Job}}*
+        ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> :rainbow: {{else}}
+        :volcano: Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View
+        logs> :volcano: {{end}}'
   spec:
     containers:
     - args:
@@ -755,7 +766,7 @@ periodics:
         secretName: result-aggregator
 - agent: kubernetes
   cluster: build11
-  cron: 46 1 * * 2,6
+  cron: 35 4 * * 2,6
   decorate: true
   decoration_config:
     sparse_checkout_files:
@@ -827,6 +838,17 @@ periodics:
     ci.openshift.io/generator: prowgen
     pj-rehearse.openshift.io/can-be-rehearsed: "true"
   name: periodic-ci-openshift-knative-eventing-release-v1.17-421-test-e2e-c
+  reporter_config:
+    slack:
+      channel: '#knative-eventing-ci'
+      job_states_to_report:
+      - success
+      - failure
+      - error
+      report_template: '{{if eq .Status.State "success"}} :rainbow: Job *{{.Spec.Job}}*
+        ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> :rainbow: {{else}}
+        :volcano: Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View
+        logs> :volcano: {{end}}'
   spec:
     containers:
     - args:
@@ -901,7 +923,7 @@ periodics:
         secretName: result-aggregator
 - agent: kubernetes
   cluster: build11
-  cron: 2 4 * * 2,6
+  cron: 42 1 * * 2,6
   decorate: true
   decoration_config:
     sparse_checkout_files:
@@ -973,6 +995,17 @@ periodics:
     ci.openshift.io/generator: prowgen
     pj-rehearse.openshift.io/can-be-rehearsed: "true"
   name: periodic-ci-openshift-knative-eventing-release-v1.17-421-test-encryption-auth-e2e-c
+  reporter_config:
+    slack:
+      channel: '#knative-eventing-ci'
+      job_states_to_report:
+      - success
+      - failure
+      - error
+      report_template: '{{if eq .Status.State "success"}} :rainbow: Job *{{.Spec.Job}}*
+        ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> :rainbow: {{else}}
+        :volcano: Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View
+        logs> :volcano: {{end}}'
   spec:
     containers:
     - args:
@@ -1047,7 +1080,7 @@ periodics:
         secretName: result-aggregator
 - agent: kubernetes
   cluster: build11
-  cron: 37 2 * * 2,6
+  cron: 6 5 * * 2,6
   decorate: true
   decoration_config:
     sparse_checkout_files:
@@ -1119,6 +1152,17 @@ periodics:
     ci.openshift.io/generator: prowgen
     pj-rehearse.openshift.io/can-be-rehearsed: "true"
   name: periodic-ci-openshift-knative-eventing-release-v1.17-421-test-reconciler-c
+  reporter_config:
+    slack:
+      channel: '#knative-eventing-ci'
+      job_states_to_report:
+      - success
+      - failure
+      - error
+      report_template: '{{if eq .Status.State "success"}} :rainbow: Job *{{.Spec.Job}}*
+        ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> :rainbow: {{else}}
+        :volcano: Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View
+        logs> :volcano: {{end}}'
   spec:
     containers:
     - args:

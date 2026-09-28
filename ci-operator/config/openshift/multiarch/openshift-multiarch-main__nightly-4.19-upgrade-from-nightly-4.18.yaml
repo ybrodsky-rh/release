@@ -134,10 +134,10 @@ tests:
     workflow: openshift-e2e-libvirt-vpn
 - as: ocp-ovn-remote-s2s-libvirt-multi-p-p
   capabilities:
-  - power-s2s-dns
+  - intranet
   cron: 0 23 * * 1-4
   steps:
-    cluster_profile: libvirt-ppc64le-s2s
+    cluster_profile: power-s2s
     dependencies:
       OPENSHIFT_INSTALL_TARGET: release:initial
     env:
@@ -145,6 +145,7 @@ tests:
       BRANCH: "4.18"
       ETCD_DISK_SPEED: slow
       TEST_TYPE: upgrade
+      USE_EXTERNAL_DNS: "true"
     workflow: openshift-e2e-libvirt-upi
 zz_generated_metadata:
   branch: main

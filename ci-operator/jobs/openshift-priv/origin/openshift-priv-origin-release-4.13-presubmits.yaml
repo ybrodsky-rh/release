@@ -100,7 +100,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -195,7 +195,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-csi
     decorate: true
     decoration_config:
@@ -290,7 +290,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-disruptive
     decorate: true
     decoration_config:
@@ -382,10 +382,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-disruptive,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^(test/extended/builds/pipeline_jenkins_e2e.go)|^(test/extended/testdata/jenkins-plugin)|^(examples/jenkins)
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-jenkins
     decorate: true
     decoration_config:
@@ -405,7 +407,6 @@ presubmits:
     name: pull-ci-openshift-priv-origin-release-4.13-e2e-aws-jenkins
     path_alias: github.com/openshift/origin
     rerun_command: /test e2e-aws-jenkins
-    run_if_changed: ^(test/extended/builds/pipeline_jenkins_e2e.go)|^(test/extended/testdata/jenkins-plugin)|^(examples/jenkins)
     spec:
       containers:
       - args:
@@ -480,7 +481,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-multitenant
     decorate: true
     decoration_config:
@@ -575,7 +576,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -670,7 +671,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-cgroupsv2
     decorate: true
     decoration_config:
@@ -765,7 +766,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-etcd-scaling
     decorate: true
     decoration_config:
@@ -856,11 +857,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-ovn-etcd-scaling,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-fips
     decorate: true
     decoration_config:
@@ -948,13 +949,15 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-fips,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-fips|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^(pkg/image)|^(test/extended/registry)|^(test/extended/images)|^(test/extended/imageapis)|^(vendor/github.com/docker/distribution)
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-image-registry
     decorate: true
     decoration_config:
@@ -974,7 +977,6 @@ presubmits:
     name: pull-ci-openshift-priv-origin-release-4.13-e2e-aws-ovn-image-registry
     path_alias: github.com/openshift/origin
     rerun_command: /test e2e-aws-ovn-image-registry
-    run_if_changed: ^(pkg/image)|^(test/extended/registry)|^(test/extended/images)|^(test/extended/imageapis)|^(vendor/github.com/docker/distribution)
     spec:
       containers:
       - args:
@@ -1045,11 +1047,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-ovn-image-registry,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-serial
     decorate: true
     decoration_config:
@@ -1137,13 +1139,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-serial,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-serial|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-single-node
     decorate: true
     decoration_config:
@@ -1238,7 +1240,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-single-node-serial
     decorate: true
     decoration_config:
@@ -1333,7 +1335,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-single-node-upgrade
     decorate: true
     decoration_config:
@@ -1428,7 +1430,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -1523,7 +1525,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-ovn-upi
     decorate: true
     decoration_config:
@@ -1618,7 +1620,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-aws-proxy
     decorate: true
     decoration_config:
@@ -1903,7 +1905,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-csi
     decorate: true
     decoration_config:
@@ -1998,7 +2000,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-disruptive
     decorate: true
     decoration_config:
@@ -2093,7 +2095,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-fips-serial
     decorate: true
     decoration_config:
@@ -2184,11 +2186,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-gcp-fips-serial,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn
     decorate: true
     decoration_config:
@@ -2276,13 +2278,15 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-ovn,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-ovn|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^(pkg/oc/cli/startbuild/startbuild.go)|^(pkg/build)|^(staging/src/.*/pkg/.*build)|^(pkg/cmd/infra/builder)|^(test/extended/builds)|^(test/extended/testdata/builds)|^(test/extended/util)|^(vendor/github.com/openshift/source-to-image)|^(vendor/github.com/openshift/imagebuilder)
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn-builds
     decorate: true
     decoration_config:
@@ -2302,7 +2306,6 @@ presubmits:
     name: pull-ci-openshift-priv-origin-release-4.13-e2e-gcp-ovn-builds
     path_alias: github.com/openshift/origin
     rerun_command: /test e2e-gcp-ovn-builds
-    run_if_changed: ^(pkg/oc/cli/startbuild/startbuild.go)|^(pkg/build)|^(staging/src/.*/pkg/.*build)|^(pkg/cmd/infra/builder)|^(test/extended/builds)|^(test/extended/testdata/builds)|^(test/extended/util)|^(vendor/github.com/openshift/source-to-image)|^(vendor/github.com/openshift/imagebuilder)
     spec:
       containers:
       - args:
@@ -2377,7 +2380,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn-etcd-scaling
     decorate: true
     decoration_config:
@@ -2469,10 +2472,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-ovn-etcd-scaling,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^(test/extended/image_ecosystem)|^(examples/db-templates)|^(examples/quickstarts)|^(examples/image-streams)|^(examples/jenkins)|^(vendor/github.com/openshift/source-to-image)|^(vendor/github.com/openshift/imagebuilder)
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn-image-ecosystem
     decorate: true
     decoration_config:
@@ -2492,7 +2497,6 @@ presubmits:
     name: pull-ci-openshift-priv-origin-release-4.13-e2e-gcp-ovn-image-ecosystem
     path_alias: github.com/openshift/origin
     rerun_command: /test e2e-gcp-ovn-image-ecosystem
-    run_if_changed: ^(test/extended/image_ecosystem)|^(examples/db-templates)|^(examples/quickstarts)|^(examples/image-streams)|^(examples/jenkins)|^(vendor/github.com/openshift/source-to-image)|^(vendor/github.com/openshift/imagebuilder)
     spec:
       containers:
       - args:
@@ -2567,7 +2571,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn-rt-upgrade
     decorate: true
     decoration_config:
@@ -2662,7 +2666,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn-techpreview
     decorate: true
     decoration_config:
@@ -2757,7 +2761,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn-techpreview-serial
     decorate: true
     decoration_config:
@@ -2848,11 +2852,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-gcp-ovn-techpreview-serial,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn-upgrade
     decorate: true
     decoration_config:
@@ -2940,7 +2944,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -3522,7 +3526,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-openstack-ovn
     decorate: true
     decoration_config:
@@ -3617,7 +3621,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build09
     context: ci/prow/e2e-openstack-serial
     decorate: true
     decoration_config:

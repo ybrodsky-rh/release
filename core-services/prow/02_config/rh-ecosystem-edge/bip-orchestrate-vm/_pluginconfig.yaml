@@ -31,6 +31,7 @@ external_plugins:
     events:
     - issue_comment
     - pull_request
+    - pull_request_review
     name: jira-lifecycle-plugin
   - endpoint: http://pipeline-controller
     events:
@@ -74,9 +75,7 @@ plugins:
     - yuks
     - approve
 triggers:
-- org_invite:
-    prominent: {}
-  repos:
+- repos:
   - rh-ecosystem-edge/bip-orchestrate-vm
   trusted_apps:
   - openshift-merge-bot

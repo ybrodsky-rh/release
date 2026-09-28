@@ -8,6 +8,7 @@ approvers:
 - abhat
 - arghosh93
 - danwinship
+- jluhrsen
 - knobunc
 - tssurya
 options: {}
@@ -18,6 +19,9 @@ reviewers:
 - jluhrsen
 - kyrtapz
 - martinkennelly
+- marty-power
+- mattedallo
 - miheer
 - pperiyasamy
+- taanyas
 - tssurya

@@ -1,11 +1,11 @@
 presubmits:
   openshift-priv/aws-ebs-csi-driver:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-csi
     decorate: true
     decoration_config:
@@ -92,13 +92,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-csi-extended
     decorate: true
     decoration_config:
@@ -188,11 +188,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-csi-extended,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -279,13 +279,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build11
+    cluster: build07
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -351,7 +351,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build11
+    cluster: build07
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -425,7 +425,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build11
+    cluster: build07
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -499,7 +499,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build11
+    cluster: build07
     context: ci/prow/verify-commits
     decorate: true
     decoration_config:
@@ -573,7 +573,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build11
+    cluster: build07
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

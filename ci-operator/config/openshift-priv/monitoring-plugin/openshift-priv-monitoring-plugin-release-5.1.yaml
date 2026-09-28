@@ -19,29 +19,30 @@ images:
     to: monitoring-ui-tests-runner
 promotion:
   to:
-  - excluded_images:
+  - disabled: true
+    excluded_images:
     - monitoring-plugin-test
-    name: 5.1-priv
-    namespace: ocp-private
+    name: "5.1"
+    namespace: ocp-priv
 prowgen:
   private: true
 releases:
   initial:
     integration:
-      name: 5.1-priv
-      namespace: ocp-private
+      name: "5.1"
+      namespace: ocp-priv
   latest:
     integration:
       include_built_images: true
-      name: 5.1-priv
-      namespace: ocp-private
+      name: "5.1"
+      namespace: ocp-priv
 resources:
   '*':
     limits:
-      memory: 8Gi
+      memory: 16Gi
     requests:
       cpu: 1000m
-      memory: 8Gi
+      memory: 16Gi
 tests:
 - as: go-tests
   commands: |
@@ -65,7 +66,14 @@ tests:
     make test-translations
   container:
     from: monitoring-plugin-test
-- as: e2e-aws-ovn
+- as: test-frontend-unit
+  commands: |
+    make test-frontend-unit
+  container:
+    from: monitoring-plugin-test
+- always_run: false
+  as: e2e-aws-ovn
+  optional: true
   steps:
     cluster_profile: openshift-org-aws
     workflow: openshift-e2e-aws
@@ -89,7 +97,18 @@ tests:
     - ref: go-verify-deps
 - always_run: false
   as: e2e-monitoring
-  optional: true
+  reporter_config:
+    channel: '#observability-ui-qe'
+    job_states_to_report:
+    - success
+    - failure
+    - error
+    report_template: '{{if eq .Status.State "success"}} :rainbow: Job *{{.Spec.Job}}*
+      ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> | <https://github.com/openshift/monitoring-plugin/pull/{{with
+      index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}|View PR> :rainbow: {{else}} :volcano:
+      Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs>
+      | <https://github.com/openshift/monitoring-plugin/pull/{{with index .Spec.Refs.Pulls
+      0}}{{.Number}}{{end}}|View PR> :volcano: {{end}}'
   steps:
     cluster_profile: openshift-org-aws
     test:
@@ -98,6 +117,18 @@ tests:
 - always_run: false
   as: e2e-coo
   optional: true
+  reporter_config:
+    channel: '#observability-ui-qe'
+    job_states_to_report:
+    - success
+    - failure
+    - error
+    report_template: '{{if eq .Status.State "success"}} :rainbow: Job *{{.Spec.Job}}*
+      ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> | <https://github.com/openshift/monitoring-plugin/pull/{{with
+      index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}|View PR> :rainbow: {{else}} :volcano:
+      Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs>
+      | <https://github.com/openshift/monitoring-plugin/pull/{{with index .Spec.Refs.Pulls
+      0}}{{.Number}}{{end}}|View PR> :volcano: {{end}}'
   steps:
     cluster_profile: openshift-org-aws
     test:
@@ -106,6 +137,18 @@ tests:
 - always_run: false
   as: e2e-incidents
   optional: true
+  reporter_config:
+    channel: '#observability-ui-qe'
+    job_states_to_report:
+    - success
+    - failure
+    - error
+    report_template: '{{if eq .Status.State "success"}} :rainbow: Job *{{.Spec.Job}}*
+      ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> | <https://github.com/openshift/monitoring-plugin/pull/{{with
+      index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}|View PR> :rainbow: {{else}} :volcano:
+      Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs>
+      | <https://github.com/openshift/monitoring-plugin/pull/{{with index .Spec.Refs.Pulls
+      0}}{{.Number}}{{end}}|View PR> :volcano: {{end}}'
   steps:
     cluster_profile: openshift-org-aws
     test:
@@ -118,6 +161,16 @@ tests:
     cluster_profile: openshift-org-aws
     test:
     - ref: monitoring-plugin-tests-alerts-ui
+    workflow: ipi-aws
+- always_run: false
+  as: e2e-management-api
+  optional: true
+  skip_branches:
+  - ^main$
+  steps:
+    cluster_profile: openshift-org-aws
+    test:
+    - ref: monitoring-plugin-tests-management-api
     workflow: ipi-aws
 - always_run: false
   as: e2e-dashboards
@@ -154,6 +207,18 @@ tests:
 - always_run: false
   as: e2e-virtualization
   optional: true
+  reporter_config:
+    channel: '#observability-ui-qe'
+    job_states_to_report:
+    - success
+    - failure
+    - error
+    report_template: '{{if eq .Status.State "success"}} :rainbow: Job *{{.Spec.Job}}*
+      ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> | <https://github.com/openshift/monitoring-plugin/pull/{{with
+      index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}|View PR> :rainbow: {{else}} :volcano:
+      Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs>
+      | <https://github.com/openshift/monitoring-plugin/pull/{{with index .Spec.Refs.Pulls
+      0}}{{.Number}}{{end}}|View PR> :volcano: {{end}}'
   steps:
     cluster_profile: openshift-org-aws
     test:
@@ -162,6 +227,18 @@ tests:
 - always_run: false
   as: e2e-perses
   optional: true
+  reporter_config:
+    channel: '#observability-ui-qe'
+    job_states_to_report:
+    - success
+    - failure
+    - error
+    report_template: '{{if eq .Status.State "success"}} :rainbow: Job *{{.Spec.Job}}*
+      ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> | <https://github.com/openshift/monitoring-plugin/pull/{{with
+      index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}|View PR> :rainbow: {{else}} :volcano:
+      Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs>
+      | <https://github.com/openshift/monitoring-plugin/pull/{{with index .Spec.Refs.Pulls
+      0}}{{.Number}}{{end}}|View PR> :volcano: {{end}}'
   steps:
     cluster_profile: openshift-org-aws
     test:
@@ -170,6 +247,18 @@ tests:
 - always_run: false
   as: e2e-monitoring-dev
   optional: true
+  reporter_config:
+    channel: '#observability-ui-qe'
+    job_states_to_report:
+    - success
+    - failure
+    - error
+    report_template: '{{if eq .Status.State "success"}} :rainbow: Job *{{.Spec.Job}}*
+      ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> | <https://github.com/openshift/monitoring-plugin/pull/{{with
+      index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}|View PR> :rainbow: {{else}} :volcano:
+      Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs>
+      | <https://github.com/openshift/monitoring-plugin/pull/{{with index .Spec.Refs.Pulls
+      0}}{{.Number}}{{end}}|View PR> :volcano: {{end}}'
   steps:
     cluster_profile: openshift-org-aws
     test:
@@ -178,10 +267,63 @@ tests:
 - always_run: false
   as: e2e-perses-dev
   optional: true
+  reporter_config:
+    channel: '#observability-ui-qe'
+    job_states_to_report:
+    - success
+    - failure
+    - error
+    report_template: '{{if eq .Status.State "success"}} :rainbow: Job *{{.Spec.Job}}*
+      ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> | <https://github.com/openshift/monitoring-plugin/pull/{{with
+      index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}|View PR> :rainbow: {{else}} :volcano:
+      Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs>
+      | <https://github.com/openshift/monitoring-plugin/pull/{{with index .Spec.Refs.Pulls
+      0}}{{.Number}}{{end}}|View PR> :volcano: {{end}}'
   steps:
     cluster_profile: openshift-org-aws
     test:
     - ref: monitoring-plugin-tests-perses-dev-ui
+    workflow: ipi-aws
+- always_run: false
+  as: e2e-perses-ivt
+  optional: true
+  reporter_config:
+    channel: '#observability-ui-qe'
+    job_states_to_report:
+    - success
+    - failure
+    - error
+    report_template: '{{if eq .Status.State "success"}} :rainbow: Job *{{.Spec.Job}}*
+      ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> | <https://github.com/openshift/monitoring-plugin/pull/{{with
+      index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}|View PR> :rainbow: {{else}} :volcano:
+      Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs>
+      | <https://github.com/openshift/monitoring-plugin/pull/{{with index .Spec.Refs.Pulls
+      0}}{{.Number}}{{end}}|View PR> :volcano: {{end}}'
+  steps:
+    cluster_profile: openshift-org-aws
+    test:
+    - ref: monitoring-plugin-tests-perses-ui-ivt
+    workflow: ipi-aws
+- always_run: true
+  as: security
+  optional: true
+  steps:
+    env:
+      PROJECT_NAME: monitoring-plugin
+    workflow: openshift-ci-security
+- always_run: false
+  as: e2e-agnostic-cmo
+  steps:
+    cluster_profile: openshift-org-aws
+    test:
+    - as: test
+      cli: latest
+      commands: E2E_TEST_ARGS="-run '(TestDefaultTLSSecurityProfileConfiguration|TestClusterMonitorConsolePlugin)'"
+        make test-e2e
+      from: stable:cluster-monitoring-operator-src
+      resources:
+        requests:
+          cpu: 100m
     workflow: ipi-aws
 zz_generated_metadata:
   branch: release-5.1

@@ -149,7 +149,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build10
+    cluster: build12
     context: ci/prow/debug-disasterrecovery-aws-ipi
     decorate: true
     decoration_config:
@@ -334,7 +334,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build10
+    cluster: build12
     context: ci/prow/debug-winc-aws-ipi
     decorate: true
     decoration_config:
@@ -518,7 +518,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build04
+    cluster: build08
     context: ci/prow/debug-winc-gcp-ipi
     decorate: true
     decoration_config:
@@ -617,7 +617,7 @@ presubmits:
       skip_cloning: true
     labels:
       ci-operator.openshift.io/cloud: nutanix
-      ci-operator.openshift.io/cloud-cluster-profile: nutanix-qe
+      ci-operator.openshift.io/cloud-cluster-profile: nutanix
       ci.openshift.io/generator: prowgen
       job-release: "4.17"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -699,10 +699,12 @@ presubmits:
     trigger: (?m)^/test( | .* )debug-winc-nutanix-ipi,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^frontend/|^images/|^pipeline/|^test/extended/(cluster_operator/hive|disaster_recovery|hypershift|kata|ocm_terraform|psap/hypernto|rosacli|testdata|util|winc)/|include\.go$|OWNERS$
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -716,7 +718,6 @@ presubmits:
     name: pull-ci-openshift-openshift-tests-private-release-4.17-e2e-aws
     optional: true
     rerun_command: /test e2e-aws
-    skip_if_only_changed: ^frontend/|^images/|^pipeline/|^test/extended/(cluster_operator/hive|disaster_recovery|hypershift|kata|ocm_terraform|psap/hypernto|rosacli|testdata|util|winc)/|include\.go$|OWNERS$
     spec:
       containers:
       - args:
@@ -791,10 +792,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: frontend/tests/.*.cy.ts
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-console
     decorate: true
     decoration_config:
@@ -808,7 +811,6 @@ presubmits:
     name: pull-ci-openshift-openshift-tests-private-release-4.17-e2e-console
     optional: true
     rerun_command: /test e2e-console
-    run_if_changed: frontend/tests/.*.cy.ts
     spec:
       containers:
       - args:

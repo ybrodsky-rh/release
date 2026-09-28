@@ -9,8 +9,7 @@ images:
     to: networking-console-plugin
 promotion:
   to:
-  - disabled: true
-    name: "5.0"
+  - name: "5.0"
     namespace: ocp
 releases:
   initial:
@@ -54,7 +53,8 @@ tests:
         requests:
           cpu: 200m
           memory: 300Mi
-- as: e2e
+- always_run: false
+  as: e2e
   steps:
     cluster_profile: openshift-org-aws
     test:

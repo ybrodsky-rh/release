@@ -1,11 +1,11 @@
 presubmits:
   openshift/cluster-bootstrap:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build01
+    cluster: build05
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -83,13 +83,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build09
     context: ci/prow/e2e-metal-single-node-live-iso
     decorate: true
     decoration_config:
@@ -170,11 +170,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-metal-single-node-live-iso,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build01
+    cluster: build05
     context: ci/prow/e2e-upgrade
     decorate: true
     decoration_config:
@@ -252,13 +252,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build09
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -316,7 +316,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build09
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -381,7 +381,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build09
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -446,7 +446,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build09
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

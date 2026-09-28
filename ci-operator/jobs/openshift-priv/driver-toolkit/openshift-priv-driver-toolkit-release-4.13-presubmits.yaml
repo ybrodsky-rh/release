@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build11
+    cluster: build06
     context: ci/prow/check-commits-count
     decorate: true
     decoration_config:
@@ -75,11 +75,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )check-commits-count,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -166,13 +166,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-aws-driver-toolkit-presubmit
     decorate: true
     decoration_config:
@@ -259,13 +259,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-driver-toolkit-presubmit,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-driver-toolkit-presubmit|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build05
+    cluster: build07
     context: ci/prow/e2e-upgrade
     decorate: true
     decoration_config:
@@ -352,13 +352,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build11
+    cluster: build06
     context: ci/prow/image-contents
     decorate: true
     decoration_config:
@@ -432,7 +432,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build11
+    cluster: build06
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -499,7 +499,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build11
+    cluster: build06
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -573,7 +573,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build11
+    cluster: build06
     context: ci/prow/verify-imagestream
     decorate: true
     decoration_config:

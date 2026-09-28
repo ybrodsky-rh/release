@@ -1,11 +1,11 @@
 presubmits:
   openshift-priv/multus-cni:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build10
+    cluster: build01
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -92,13 +92,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build10
+    cluster: build01
     context: ci/prow/e2e-aws-upgrade
     decorate: true
     decoration_config:
@@ -185,7 +185,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
@@ -257,7 +257,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build10
+    cluster: build01
     context: ci/prow/qe-perfscale-aws-ovn-medium-cluster-density
     decorate: true
     decoration_config:
@@ -351,7 +351,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build10
+    cluster: build01
     context: ci/prow/qe-perfscale-aws-ovn-medium-node-density-cni
     decorate: true
     decoration_config:
@@ -445,7 +445,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build10
+    cluster: build01
     context: ci/prow/qe-perfscale-aws-ovn-small-cluster-density
     decorate: true
     decoration_config:
@@ -539,7 +539,7 @@ presubmits:
     branches:
     - ^release-4\.13$
     - ^release-4\.13-
-    cluster: build10
+    cluster: build01
     context: ci/prow/qe-perfscale-aws-ovn-small-node-density-cni
     decorate: true
     decoration_config:

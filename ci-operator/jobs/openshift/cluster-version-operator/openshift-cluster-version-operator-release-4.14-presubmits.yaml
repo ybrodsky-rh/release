@@ -2,10 +2,12 @@ presubmits:
   openshift/cluster-version-operator:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build10
     context: ci/prow/e2e-agnostic-operator
     decorate: true
     decoration_config:
@@ -19,7 +21,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-4.14-e2e-agnostic-operator
     rerun_command: /test e2e-agnostic-operator
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -87,10 +88,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-agnostic-operator,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build10
     context: ci/prow/e2e-agnostic-ovn
     decorate: true
     decoration_config:
@@ -104,7 +107,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-4.14-e2e-agnostic-ovn
     rerun_command: /test e2e-agnostic-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -172,10 +174,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-agnostic-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build10
     context: ci/prow/e2e-agnostic-ovn-upgrade-into-change
     decorate: true
     decoration_config:
@@ -189,7 +193,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-4.14-e2e-agnostic-ovn-upgrade-into-change
     rerun_command: /test e2e-agnostic-ovn-upgrade-into-change
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -257,10 +260,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-agnostic-ovn-upgrade-into-change,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build10
     context: ci/prow/e2e-agnostic-ovn-upgrade-out-of-change
     decorate: true
     decoration_config:
@@ -274,7 +279,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-version-operator-release-4.14-e2e-agnostic-ovn-upgrade-out-of-change
     rerun_command: /test e2e-agnostic-ovn-upgrade-out-of-change
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -341,11 +345,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-agnostic-ovn-upgrade-out-of-change,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build10
     context: ci/prow/e2e-hypershift
     decorate: true
     decoration_config:
@@ -423,13 +427,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-hypershift,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-hypershift|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build10
     context: ci/prow/e2e-hypershift-conformance
     decorate: true
     decoration_config:
@@ -507,13 +511,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-hypershift-conformance,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-hypershift-conformance|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build10
     context: ci/prow/gofmt
     decorate: true
     decoration_config:
@@ -579,7 +583,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build10
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -638,7 +642,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build10
     context: ci/prow/lint
     decorate: true
     decoration_config:
@@ -704,7 +708,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build10
     context: ci/prow/unit
     decorate: true
     decoration_config:

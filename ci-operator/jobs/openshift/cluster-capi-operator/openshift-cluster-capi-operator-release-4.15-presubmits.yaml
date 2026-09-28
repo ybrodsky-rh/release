@@ -2,10 +2,12 @@ presubmits:
   openshift/cluster-capi-operator:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-capi-techpreview
     decorate: true
     decoration_config:
@@ -19,7 +21,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-capi-operator-release-4.15-e2e-aws-capi-techpreview
     rerun_command: /test e2e-aws-capi-techpreview
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -87,10 +88,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-capi-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -104,7 +107,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-capi-operator-release-4.15-e2e-aws-ovn
     rerun_command: /test e2e-aws-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -172,10 +174,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-ovn-serial
     decorate: true
     decoration_config:
@@ -189,7 +193,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-capi-operator-release-4.15-e2e-aws-ovn-serial
     rerun_command: /test e2e-aws-ovn-serial
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -256,11 +259,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-ovn-serial,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-ovn-techpreview
     decorate: true
     decoration_config:
@@ -338,13 +341,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-techpreview,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-techpreview|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build08
+    cluster: build07
     context: ci/prow/e2e-azure-ovn-techpreview
     decorate: true
     decoration_config:
@@ -426,10 +429,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-ovn-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-capi-techpreview
     decorate: true
     decoration_config:
@@ -443,7 +448,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-capi-operator-release-4.15-e2e-gcp-capi-techpreview
     rerun_command: /test e2e-gcp-capi-techpreview
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -514,7 +518,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-ovn-techpreview
     decorate: true
     decoration_config:
@@ -596,6 +600,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-ovn-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
@@ -613,7 +619,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-capi-operator-release-4.15-e2e-vsphere-capi-techpreview
     rerun_command: /test e2e-vsphere-capi-techpreview
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -684,7 +689,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build08
+    cluster: build07
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -742,7 +747,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build08
+    cluster: build07
     context: ci/prow/lint
     decorate: true
     decoration_config:
@@ -807,7 +812,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build08
+    cluster: build07
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -872,7 +877,7 @@ presubmits:
     branches:
     - ^release-4\.15$
     - ^release-4\.15-
-    cluster: build08
+    cluster: build07
     context: ci/prow/vendor
     decorate: true
     decoration_config:

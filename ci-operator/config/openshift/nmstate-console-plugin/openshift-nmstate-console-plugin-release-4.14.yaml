@@ -2,7 +2,7 @@ build_root:
   image_stream_tag:
     name: release
     namespace: openshift
-    tag: tectonic-console-builder-v24
+    tag: tectonic-console-builder-v29
 images:
   items:
   - dockerfile_path: Dockerfile
@@ -29,7 +29,8 @@ resources:
       cpu: 1000m
       memory: 6Gi
 tests:
-- as: e2e-tests
+- always_run: false
+  as: e2e-tests
   steps:
     cluster_profile: openshift-org-aws
     test:

@@ -21,6 +21,7 @@
 #   - MAISTRA_NAMESPACE: The namespace where the test pod is running.
 #   - MAISTRA_SC_POD: The name of the test pod.
 #   - ARTIFACT_DIR: The local directory to store test artifacts.
+#   - OLM (optional): Set to "false" to avoid creating and deploying the operator using the OLM bundle.
 #   - VERSIONS_YAML_CONFIG (optional): Path to versions YAML config.
 #   - E2E_COMMAND (optional): Replace with the specific test command to run.
 # ==============================================================================
@@ -33,6 +34,37 @@ set -o pipefail
 readonly RETRY_SLEEP_INTERVAL=30
 
 # --- Functions ---
+
+# collect_oom_debug_info gathers debugging information when a pod exits with 137 (OOM/SIGKILL).
+# This helps determine if the pod was killed due to pod limits or node-level OOM.
+collect_oom_debug_info() {
+  echo "=== OOM DEBUG INFO: Collecting diagnostics for exit code 137 ==="
+
+  echo "--- Pod description for ${MAISTRA_SC_POD} ---"
+  oc describe pod "${MAISTRA_SC_POD}" -n "${MAISTRA_NAMESPACE}" 2>&1 || echo "Failed to describe pod"
+
+  local node_name
+  node_name=$(oc get pod "${MAISTRA_SC_POD}" -n "${MAISTRA_NAMESPACE}" -o jsonpath='{.spec.nodeName}' 2>/dev/null || echo "")
+
+  echo "--- Events from namespace ${MAISTRA_NAMESPACE} ---"
+  oc get events -n "${MAISTRA_NAMESPACE}" --sort-by='.lastTimestamp' 2>&1 || echo "Failed to get namespace events"
+
+  if [[ -n "${node_name}" ]]; then
+    echo "--- Node ${node_name} description ---"
+    oc describe node "${node_name}" 2>&1 || echo "Failed to describe node"
+
+    echo "--- Events from node ${node_name} ---"
+    oc get events --field-selector "involvedObject.name=${node_name}" --all-namespaces --sort-by='.lastTimestamp' 2>&1 || echo "Failed to get node events"
+
+    echo "--- All pods on node ${node_name} with resource usage ---"
+    oc adm top pods --all-namespaces --selector="spec.nodeName=${node_name}" 2>&1 || echo "Failed to get pod metrics (metrics-server may not be available)"
+    oc get pods --all-namespaces --field-selector "spec.nodeName=${node_name}" -o wide 2>&1 || echo "Failed to list pods on node"
+  else
+    echo "WARNING: Could not determine node name for pod ${MAISTRA_SC_POD}"
+  fi
+
+  echo "=== END OOM DEBUG INFO ==="
+}
 
 # check_cluster_operators waits up to 15 minutes for all OpenShift cluster
 # operators to be in a stable (not Progressing, not Degraded, and Available) state.
@@ -53,14 +85,20 @@ check_cluster_operators() {
   local stable_checks_count=0
 
   while [ "$(date +%s)" -lt $end_time ]; do
-    local unstable_operators_json
-    unstable_operators_json=$(oc get clusteroperator -o json | jq -r '[.items[] | select(.status.conditions[] | (.type == "Available" and .status == "False") or (.type == "Progressing" and .status == "True") or (.type == "Degraded" and .status == "True")) | .metadata.name]')
+    local oc_output
+    if ! oc_output=$(oc get clusteroperator -o json); then
+      echo "Warning: API connection dropped, retrying in next loop..." >&2
+      stable_checks_count=0
+      sleep "$sleep_interval"
+      continue
+    fi
 
-    if [ $? -ne 0 ]; then
-        echo "WARN: 'oc get clusteroperator' command failed. Resetting stability count and retrying."
-        stable_checks_count=0
-        sleep "$sleep_interval"
-        continue
+    local unstable_operators_json
+    if ! unstable_operators_json=$(echo "$oc_output" | jq -r '[.items[] | select(.status.conditions[] | (.type == "Available" and .status == "False") or (.type == "Progressing" and .status == "True") or (.type == "Degraded" and .status == "True")) | .metadata.name]'); then
+      echo "Warning: Failed to parse cluster operator JSON, retrying in next loop..." >&2
+      stable_checks_count=0
+      sleep "$sleep_interval"
+      continue
     fi
 
     if [[ $(echo "$unstable_operators_json" | jq 'length') -eq 0 ]]; then
@@ -99,6 +137,9 @@ run_tests() {
     export HUB=\"${HUB:-quay.io/sail-dev}\"
     export USE_INTERNAL_REGISTRY=\"false\"
     export PR_NUMBER=\"${PULL_NUMBER:-}\"
+    export OLM=\"${OLM:-true}\"
+    export GINKGO_LABEL_FILTER=\"${GINKGO_LABEL_FILTER:-}\"
+    export EXPECTED_REGISTRY=\"${EXPECTED_REGISTRY:-}\"
     ${VERSIONS_YAML_CONFIG:-}
     oc version
     cd /work
@@ -127,12 +168,33 @@ execute_and_collect_artifacts() {
   test_rc=$?
   echo "Test run (attempt ${attempt}) completed with exit code ${test_rc}"
 
+  # Collect debug info if pod was killed (likely OOM)
+  if [[ "${test_rc}" -eq 137 ]]; then
+    collect_oom_debug_info
+  fi
+
+  if [ "${test_rc}" -ne 0 ] && [ "${OLM:-true}" = "true" ]; then
+    echo "=== OLM Diagnostic Information ==="
+    oc rsh -n "${MAISTRA_NAMESPACE}" "${MAISTRA_SC_POD}" sh -c "
+      export KUBECONFIG=/work/ci-kubeconfig
+      echo '--- Pods in sail-operator namespace ---'
+      oc get pods -n sail-operator -o wide 2>/dev/null || true
+      echo '--- CatalogSource status ---'
+      oc get catalogsource -n sail-operator -o yaml 2>/dev/null || true
+      echo '--- Subscription status ---'
+      oc get subscription -n sail-operator -o yaml 2>/dev/null || true
+      echo '--- Events (sail-operator namespace) ---'
+      oc get events -n sail-operator --sort-by='.lastTimestamp' 2>/dev/null || true
+    " 2>/dev/null || true
+    echo "=== End OLM Diagnostic ==="
+  fi
+
   echo "Copying artifacts from test pod after attempt ${attempt}..."
   oc cp "${MAISTRA_NAMESPACE}"/"${MAISTRA_SC_POD}":"${ARTIFACT_DIR}"/. "${ARTIFACT_DIR}"
 
-  # share artifacts with next job step which is uploading results to report portal
+  # share artifacts with next job step which is uploading results to report portal, use only xml files as there is a 1MB limit
   echo "Copying artifacts to SHARED_DIR after attempt ${attempt}..."
-  cp "${ARTIFACT_DIR}/"* "${SHARED_DIR}"
+  cp "${ARTIFACT_DIR}/"*.xml "${SHARED_DIR}"
 
   set -o errexit
 

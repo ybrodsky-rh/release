@@ -4,10 +4,24 @@ build_root:
       FROM registry.ci.openshift.org/ocp/ubi-python-312:9
       USER 0
       RUN pip install uv==0.9.24
+images:
+  items:
+  - dockerfile_path: Containerfile
+    to: lightspeed-agentic-sandbox
+promotion:
+  to:
+  - namespace: ols
+    tag: latest
+releases:
+  latest:
+    release:
+      architecture: amd64
+      channel: candidate
+      version: "4.21"
 resources:
   '*':
     limits:
-      memory: 4Gi
+      memory: 2Gi
     requests:
       cpu: 100m
       memory: 2Gi

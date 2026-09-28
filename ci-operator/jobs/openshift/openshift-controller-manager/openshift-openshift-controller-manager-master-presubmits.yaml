@@ -2,10 +2,12 @@ presubmits:
   openshift/openshift-controller-manager:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^(pkg/build)
     branches:
     - ^master$
     - ^master-
-    cluster: build09
+    cluster: build11
     context: ci/prow/e2e-aws-builds
     decorate: true
     decoration_config:
@@ -19,7 +21,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-openshift-controller-manager-master-e2e-aws-builds
     rerun_command: /test e2e-aws-builds
-    run_if_changed: ^(pkg/build)
     spec:
       containers:
       - args:
@@ -87,10 +88,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-builds,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^master$
     - ^master-
-    cluster: build09
+    cluster: build11
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -104,7 +107,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-openshift-controller-manager-master-e2e-aws-ovn
     rerun_command: /test e2e-aws-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -175,7 +177,7 @@ presubmits:
     branches:
     - ^master$
     - ^master-
-    cluster: build09
+    cluster: build11
     context: ci/prow/e2e-aws-ovn-proxy
     decorate: true
     decoration_config:
@@ -257,10 +259,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-proxy,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^master$
     - ^master-
-    cluster: build09
+    cluster: build11
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -274,7 +278,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-openshift-controller-manager-master-e2e-aws-ovn-upgrade
     rerun_command: /test e2e-aws-ovn-upgrade
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -342,10 +345,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^master$
     - ^master-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-ovn
     decorate: true
     decoration_config:
@@ -359,7 +364,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-openshift-controller-manager-master-e2e-gcp-ovn
     rerun_command: /test e2e-gcp-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -427,10 +431,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^master$
     - ^master-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-ovn-builds
     decorate: true
     decoration_config:
@@ -444,7 +450,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-openshift-controller-manager-master-e2e-gcp-ovn-builds
     rerun_command: /test e2e-gcp-ovn-builds
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -511,7 +516,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-gcp-ovn-builds,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^master$
     - ^master-
@@ -593,7 +598,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-hypershift-conformance,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-hypershift-conformance|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -658,7 +663,7 @@ presubmits:
     branches:
     - ^master$
     - ^master-
-    cluster: build09
+    cluster: build11
     context: ci/prow/okd-scos-e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -803,7 +808,7 @@ presubmits:
     branches:
     - ^master$
     - ^master-
-    cluster: build09
+    cluster: build11
     context: ci/prow/openshift-e2e-aws-ovn-builds-techpreview
     decorate: true
     decoration_config:

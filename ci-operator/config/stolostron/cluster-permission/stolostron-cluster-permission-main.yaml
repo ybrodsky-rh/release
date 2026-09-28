@@ -7,7 +7,7 @@ build_root:
   image_stream_tag:
     name: builder
     namespace: stolostron
-    tag: go1.25-linux
+    tag: go1.26-linux
 images:
   items:
   - dockerfile_path: Dockerfile
@@ -53,12 +53,6 @@ tests:
   secrets:
   - mount_path: /etc/sonarcloud/
     name: acm-sonarcloud-token
-- as: fast-forward
-  postsubmit: true
-  steps:
-    env:
-      DESTINATION_BRANCH: backplane-5.0
-    workflow: ocm-ci-fastforward
 - as: latest-image-mirror
   postsubmit: true
   steps:

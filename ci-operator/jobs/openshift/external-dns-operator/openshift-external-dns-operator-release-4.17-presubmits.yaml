@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build08
+    cluster: build13
     context: ci/prow/ci-bundle-external-dns-operator-bundle
     decorate: true
     decoration_config:
@@ -58,11 +58,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )ci-bundle-external-dns-operator-bundle,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-operator
     decorate: true
     decoration_config:
@@ -140,13 +140,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-operator,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-operator|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build07
+    cluster: build10
     context: ci/prow/e2e-aws-shared-vpc-phz-operator
     decorate: true
     decoration_config:
@@ -224,13 +224,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-shared-vpc-phz-operator,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-shared-vpc-phz-operator|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-azure-infoblox-operator
     decorate: true
     decoration_config:
@@ -308,13 +308,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-azure-infoblox-operator,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-azure-infoblox-operator|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build08
+    cluster: build13
     context: ci/prow/e2e-azure-operator
     decorate: true
     decoration_config:
@@ -392,13 +392,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-azure-operator,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-azure-operator|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-operator
     decorate: true
     decoration_config:
@@ -476,13 +476,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-operator,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-operator|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build08
+    cluster: build13
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -539,7 +539,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build08
+    cluster: build13
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -604,7 +604,7 @@ presubmits:
     branches:
     - ^release-4\.17$
     - ^release-4\.17-
-    cluster: build08
+    cluster: build13
     context: ci/prow/verify
     decorate: true
     decoration_config:

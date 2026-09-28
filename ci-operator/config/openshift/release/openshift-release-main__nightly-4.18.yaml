@@ -193,9 +193,7 @@ tests:
   cron: 5 15 17 8 *
   steps:
     cluster_profile: equinix-edge-enablement
-    env:
-      TEST_FUNC: test_bip_add_worker
-    workflow: baremetalds-sno
+    workflow: baremetalds-sno-with-worker
 - as: e2e-metal-ipi-ovn-ipv4
   capabilities:
   - intranet
@@ -206,26 +204,12 @@ tests:
       enable:
       - observers-resource-watch
     workflow: baremetalds-e2e-ovn-ipv4
-- as: e2e-metal-ipi-ovn-bm
-  capabilities:
-  - intranet
-  cron: 35 4 10 3 *
-  steps:
-    cluster_profile: equinix-ocp-metal
-    env:
-      CLUSTERTYPE: baremetal
-    observers:
-      enable:
-      - observers-resource-watch
-    workflow: baremetalds-e2e-ovn-ipv4
 - as: e2e-metal-ipi-ovn-ipv4-cgroupsv1
   capabilities:
   - intranet
   cron: 50 15 3 8 *
   steps:
     cluster_profile: equinix-ocp-metal
-    env:
-      CLUSTERTYPE: baremetal
     observers:
       enable:
       - observers-resource-watch
@@ -538,6 +522,7 @@ tests:
       TEST_SKIPS: provisioning should mount multiple PV pointing to the same storage
         on the same node
     workflow: openshift-e2e-vsphere-serial
+  timeout: 6h0m0s
 - as: e2e-vsphere-ovn-techpreview-serial
   cron: 56 5 7 2 *
   reporter_config:
@@ -552,6 +537,7 @@ tests:
     env:
       FEATURE_SET: TechPreviewNoUpgrade
     workflow: openshift-e2e-vsphere-serial
+  timeout: 6h0m0s
 - as: e2e-vsphere-ovn-upi
   cron: 14 0 4 11 *
   reporter_config:
@@ -582,6 +568,7 @@ tests:
       TEST_SKIPS: provisioning should mount multiple PV pointing to the same storage
         on the same node
     workflow: openshift-e2e-vsphere-upi-serial
+  timeout: 6h0m0s
 - as: e2e-vsphere-csi-operator-test
   cron: 57 10 17 10 *
   steps:
@@ -858,20 +845,6 @@ tests:
         requests:
           cpu: 100m
     workflow: ipi-aws
-- as: e2e-telco5g-ptp
-  capabilities:
-  - intranet
-  cron: 0 19 * * 1,4
-  restrict_network_access: false
-  steps:
-    env:
-      SKIP_OCP_INSTALL: "false"
-      T5CI_JOB_TYPE: ptp
-      T5CI_VERSION: "4.18"
-    observers:
-      enable:
-      - observers-resource-watch
-    workflow: telco5g-ptp
 - as: telco5g-network-flow-matrix-bm
   capabilities:
   - intranet
@@ -996,6 +969,8 @@ tests:
   cron: 35 20 23 7 *
   steps:
     cluster_profile: openshift-org-gcp
+    env:
+      CONTROL_PLANE_NODE_TYPE: e2-custom-6-16384
     observers:
       enable:
       - observers-resource-watch
@@ -1671,6 +1646,7 @@ tests:
       TEST_SKIPS: provisioning should mount multiple PV pointing to the same storage
         on the same node
     workflow: openshift-e2e-vsphere-serial-runc
+  timeout: 6h0m0s
 - as: e2e-vsphere-ovn-serial-cgroupsv1
   cron: 8 17 2 3 *
   steps:
@@ -1679,6 +1655,7 @@ tests:
       TEST_SKIPS: provisioning should mount multiple PV pointing to the same storage
         on the same node
     workflow: openshift-e2e-vsphere-serial-cgroupsv1
+  timeout: 6h0m0s
 - as: e2e-azure-ovn-serial-runc
   cron: 33 13 5 11 *
   steps:
@@ -1699,6 +1676,8 @@ tests:
   cron: 31 18 25 3 *
   steps:
     cluster_profile: openshift-org-gcp
+    env:
+      CONTROL_PLANE_NODE_TYPE: e2-custom-6-16384
     observers:
       enable:
       - observers-resource-watch
@@ -1707,6 +1686,8 @@ tests:
   cron: 20 21 21 3 *
   steps:
     cluster_profile: openshift-org-gcp
+    env:
+      CONTROL_PLANE_NODE_TYPE: e2-custom-6-16384
     observers:
       enable:
       - observers-resource-watch
@@ -1828,7 +1809,7 @@ tests:
 - as: e2e-rosa-sts-ovn
   cron: '@daily'
   steps:
-    cluster_profile: aws-perfscale-qe
+    cluster_profile: rosa-e2e-02
     observers:
       enable:
       - observers-resource-watch

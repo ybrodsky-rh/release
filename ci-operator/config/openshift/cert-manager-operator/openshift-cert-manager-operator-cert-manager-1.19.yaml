@@ -23,9 +23,15 @@ images:
   - dockerfile_path: images/ci/Dockerfile
     from: base-rhel9
     to: cert-manager-operator
-  - dockerfile_path: images/ci/operand.Dockerfile
+  - dockerfile_path: images/ci/certmanager.Dockerfile
     from: base-rhel9
     to: cert-manager
+  - dockerfile_path: images/ci/istiocsr.Dockerfile
+    from: base-rhel9
+    to: cert-manager-istio-csr
+  - dockerfile_path: images/ci/trustmanager.Dockerfile
+    from: base-rhel9
+    to: cert-manager-trust-manager
 operator:
   bundles:
   - as: cert-manager-operator-bundle
@@ -40,6 +46,10 @@ operator:
     with: pipeline:cert-manager
   - pullspec: quay.io/jetstack/cert-manager-cainjector:.*
     with: pipeline:cert-manager
+  - pullspec: quay.io/jetstack/cert-manager-istio-csr:.*
+    with: pipeline:cert-manager-istio-csr
+  - pullspec: quay.io/jetstack/trust-manager:.*
+    with: pipeline:cert-manager-trust-manager
 releases:
   latest:
     candidate:
@@ -75,6 +85,18 @@ tests:
       SCAN_IMAGE: cert-manager
     test:
     - ref: fips-check-image-scan
+- as: fips-image-scan-istio-csr
+  steps:
+    dependencies:
+      SCAN_IMAGE: cert-manager-istio-csr
+    test:
+    - ref: fips-check-image-scan
+- as: fips-image-scan-trust-manager
+  steps:
+    dependencies:
+      SCAN_IMAGE: cert-manager-trust-manager
+    test:
+    - ref: fips-check-image-scan
 - as: e2e-operator
   cluster_claim:
     architecture: amd64
@@ -86,6 +108,7 @@ tests:
   skip_if_only_changed: ^(docs/|deploy/|jsonnet/)|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
   steps:
     test:
+    - ref: merge-stage-registry-credentials
     - as: install
       cli: latest
       commands: |
@@ -129,7 +152,33 @@ tests:
       resources:
         requests:
           cpu: 100m
-    workflow: optional-operators-ci-operator-sdk-hypershift
+    workflow: optional-operators-ci-operator-sdk-hypershift-stage-registry
+- always_run: false
+  as: e2e-operator-consoleless
+  optional: true
+  steps:
+    cluster_profile: openshift-org-aws
+    dependencies:
+      OO_BUNDLE: cert-manager-operator-bundle
+    env:
+      ADDITIONAL_ENABLED_CAPABILITIES: marketplace CloudControllerManager CloudCredential
+        OperatorLifecycleManager Ingress MachineAPI ImageRegistry Storage
+      BASELINE_CAPABILITY_SET: None
+      OO_INSTALL_MODE: AllNamespaces
+      OO_INSTALL_NAMESPACE: cert-manager-operator
+      OO_SECURITY_CONTEXT: restricted
+    test:
+    - ref: merge-stage-registry-credentials
+    - ref: optional-operators-operator-sdk
+    - as: test
+      cli: latest
+      commands: |
+        E2E_GINKGO_LABEL_FILTER='"Platform: isSubsetOf {AWS,Generic} && CredentialsMode: isSubsetOf {Mint} && !TechPreview"' make test-e2e
+      from: src
+      resources:
+        requests:
+          cpu: 100m
+    workflow: openshift-e2e-aws-ovn
 - always_run: false
   as: e2e-operator-aws-proxy
   optional: true
@@ -142,6 +191,7 @@ tests:
       OO_INSTALL_NAMESPACE: cert-manager-operator
       OO_SECURITY_CONTEXT: restricted
     test:
+    - ref: merge-stage-registry-credentials
     - ref: optional-operators-operator-sdk
     - as: test
       cli: latest
@@ -164,6 +214,7 @@ tests:
       OO_INSTALL_NAMESPACE: cert-manager-operator
       OO_SECURITY_CONTEXT: restricted
     test:
+    - ref: merge-stage-registry-credentials
     - ref: optional-operators-operator-sdk
     - as: test
       cli: latest
@@ -186,6 +237,7 @@ tests:
       OO_INSTALL_NAMESPACE: cert-manager-operator
       OO_SECURITY_CONTEXT: restricted
     test:
+    - ref: merge-stage-registry-credentials
     - ref: optional-operators-operator-sdk
     - as: test
       cli: latest
@@ -208,6 +260,7 @@ tests:
       OO_INSTALL_NAMESPACE: cert-manager-operator
       OO_SECURITY_CONTEXT: restricted
     test:
+    - ref: merge-stage-registry-credentials
     - ref: optional-operators-operator-sdk
     - as: test
       cli: latest
@@ -230,6 +283,7 @@ tests:
       OO_INSTALL_NAMESPACE: cert-manager-operator
       OO_SECURITY_CONTEXT: restricted
     test:
+    - ref: merge-stage-registry-credentials
     - ref: optional-operators-operator-sdk
     - as: test
       cli: latest
@@ -252,6 +306,7 @@ tests:
       OO_INSTALL_NAMESPACE: cert-manager-operator
       OO_SECURITY_CONTEXT: restricted
     test:
+    - ref: merge-stage-registry-credentials
     - ref: optional-operators-operator-sdk
     - as: test
       cli: latest
@@ -274,6 +329,7 @@ tests:
       OO_INSTALL_NAMESPACE: cert-manager-operator
       OO_SECURITY_CONTEXT: restricted
     test:
+    - ref: merge-stage-registry-credentials
     - ref: optional-operators-operator-sdk
     - as: test
       cli: latest

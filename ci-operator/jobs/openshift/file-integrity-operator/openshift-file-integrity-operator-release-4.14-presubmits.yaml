@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/ci-index-file-integrity-operator-bundle
     decorate: true
     decoration_config:
@@ -57,11 +57,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )ci-index-file-integrity-operator-bundle,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -138,13 +138,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-bundle-aws
     decorate: true
     decoration_config:
@@ -221,13 +221,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-bundle-aws,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-bundle-aws|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-bundle-aws-upgrade
     decorate: true
     decoration_config:
@@ -304,13 +304,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-bundle-aws-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-bundle-aws-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/go-build
     decorate: true
     decoration_config:
@@ -374,7 +374,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -431,7 +431,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -495,7 +495,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build03
+    cluster: build05
     context: ci/prow/verify
     decorate: true
     decoration_config:

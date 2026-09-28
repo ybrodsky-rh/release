@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/bootstrap-unit
     decorate: true
     decoration_config:
@@ -72,7 +72,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/cluster-bootimages
     decorate: true
     decoration_config:
@@ -156,7 +156,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/e2e-alibabacloud-ovn
     decorate: true
     decoration_config:
@@ -241,7 +241,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-disruptive
     decorate: true
     decoration_config:
@@ -323,10 +323,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-disruptive,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -340,7 +342,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-machine-config-operator-release-4.14-e2e-aws-ovn
     rerun_command: /test e2e-aws-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     spec:
       containers:
       - args:
@@ -411,7 +412,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-ovn-fips
     decorate: true
     decoration_config:
@@ -496,7 +497,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-ovn-fips-op
     decorate: true
     decoration_config:
@@ -578,10 +579,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-fips-op,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -595,7 +598,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-machine-config-operator-release-4.14-e2e-aws-ovn-upgrade
     rerun_command: /test e2e-aws-ovn-upgrade
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     spec:
       containers:
       - args:
@@ -666,7 +668,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-ovn-workers-rhel8
     decorate: true
     decoration_config:
@@ -751,7 +753,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-proxy
     decorate: true
     decoration_config:
@@ -836,7 +838,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-serial
     decorate: true
     decoration_config:
@@ -921,7 +923,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-single-node
     decorate: true
     decoration_config:
@@ -1006,7 +1008,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-upgrade-single-node
     decorate: true
     decoration_config:
@@ -1091,7 +1093,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-aws-workers-rhel8
     decorate: true
     decoration_config:
@@ -1176,7 +1178,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/e2e-azure
     decorate: true
     decoration_config:
@@ -1261,7 +1263,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/e2e-azure-ovn-upgrade
     decorate: true
     decoration_config:
@@ -1346,7 +1348,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/e2e-azure-upgrade
     decorate: true
     decoration_config:
@@ -1428,10 +1430,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-upgrade,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-op
     decorate: true
     decoration_config:
@@ -1445,7 +1449,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-machine-config-operator-release-4.14-e2e-gcp-op
     rerun_command: /test e2e-gcp-op
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     spec:
       containers:
       - args:
@@ -1513,10 +1516,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-op,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-op-single-node
     decorate: true
     decoration_config:
@@ -1530,7 +1535,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-machine-config-operator-release-4.14-e2e-gcp-op-single-node
     rerun_command: /test e2e-gcp-op-single-node
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     spec:
       containers:
       - args:
@@ -1601,7 +1605,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn-rt-upgrade
     decorate: true
     decoration_config:
@@ -1686,7 +1690,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-rt
     decorate: true
     decoration_config:
@@ -1771,7 +1775,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-rt-op
     decorate: true
     decoration_config:
@@ -1856,7 +1860,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-single-node
     decorate: true
     decoration_config:
@@ -1941,7 +1945,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-upgrade
     decorate: true
     decoration_config:
@@ -2023,10 +2027,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-upgrade,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/e2e-hypershift
     decorate: true
     decoration_config:
@@ -2040,7 +2046,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-machine-config-operator-release-4.14-e2e-hypershift
     rerun_command: /test e2e-hypershift
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|LICENSE)$
     spec:
       containers:
       - args:
@@ -2452,10 +2457,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-metal-ipi-ovn-ipv6,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: .*/on-prem/.*|.*openstack.*
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-openstack
     decorate: true
     decoration_config:
@@ -2470,7 +2477,6 @@ presubmits:
     name: pull-ci-openshift-machine-config-operator-release-4.14-e2e-openstack
     optional: true
     rerun_command: /test e2e-openstack
-    run_if_changed: .*/on-prem/.*|.*openstack.*
     spec:
       containers:
       - args:
@@ -2541,7 +2547,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/e2e-openstack-dualstack-techpreview
     decorate: true
     decoration_config:
@@ -2626,7 +2632,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/e2e-openstack-externallb
     decorate: true
     decoration_config:
@@ -2711,7 +2717,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-openstack-parallel
     decorate: true
     decoration_config:
@@ -2796,7 +2802,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/e2e-ovirt
     decorate: true
     decoration_config:
@@ -2881,7 +2887,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/e2e-ovirt-upgrade
     decorate: true
     decoration_config:
@@ -2966,7 +2972,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build10
+    cluster: build12
     context: ci/prow/e2e-ovn-step-registry
     decorate: true
     decoration_config:
@@ -3476,7 +3482,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -3535,7 +3541,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -3600,7 +3606,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -3665,7 +3671,7 @@ presubmits:
     branches:
     - ^release-4\.14$
     - ^release-4\.14-
-    cluster: build11
+    cluster: build12
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

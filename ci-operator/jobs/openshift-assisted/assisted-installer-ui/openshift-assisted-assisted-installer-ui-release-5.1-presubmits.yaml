@@ -1,7 +1,7 @@
 presubmits:
   openshift-assisted/assisted-installer-ui:
   - agent: kubernetes
-    always_run: false
+    always_run: true
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
@@ -83,13 +83,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )(e2e-agent-compact-ipv4-iso-no-registry|remaining-required),?($|\s.*)
+    trigger: (?m)^/test( | .* )e2e-agent-compact-ipv4-iso-no-registry,?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build05
+    cluster: build08
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -107,7 +107,6 @@ presubmits:
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --report-credentials-file=/etc/report/credentials
         - --target=[images]
-        - --target=[release:latest]
         command:
         - ci-operator
         image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
@@ -146,7 +145,7 @@ presubmits:
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build05
+    cluster: build08
     context: ci/prow/lint
     decorate: true
     decoration_config:

@@ -1,11 +1,11 @@
 presubmits:
   openshift/cloud-provider-aws:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build03
+    cluster: build06
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -83,13 +83,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build03
+    cluster: build06
     context: ci/prow/e2e-aws-ovn-ccm
     decorate: true
     decoration_config:
@@ -167,13 +167,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-ccm,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-ccm|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build03
+    cluster: build06
     context: ci/prow/e2e-aws-ovn-ccm-install
     decorate: true
     decoration_config:
@@ -251,13 +251,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-ovn-ccm-install,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-ovn-ccm-install|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build03
+    cluster: build06
     context: ci/prow/e2e-aws-ovn-cgroupsv2
     decorate: true
     decoration_config:
@@ -400,7 +400,7 @@ presubmits:
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build03
+    cluster: build06
     context: ci/prow/openshift-e2e-aws-ovn-techpreview-upgrade
     decorate: true
     decoration_config:

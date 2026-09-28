@@ -10,11 +10,28 @@ log(){
     echo -e "\033[1m$(date "+%d-%m-%YT%H:%M:%S") " "${*}\033[0m" >&2
 }
 
+# For private clusters the API server is not reachable directly; a preceding
+# step (rosa-cluster-credentials-backplane) writes proxy-conf.sh so oc / e2e.test
+# traffic is routed to the backplane endpoint through the corp proxy. This is a
+# no-op for public clusters, which do not create the file.
+if [[ -s "${SHARED_DIR}/proxy-conf.sh" ]]; then
+  log "Private cluster detected, sourcing proxy configuration"
+  # shellcheck disable=SC1091
+  source "${SHARED_DIR}/proxy-conf.sh"
+fi
+
+# When a kubeconfig has been provisioned in SHARED_DIR (e.g. via backplane for
+# private clusters), hand it to the test binary directly.
+if [[ -s "${SHARED_DIR}/kubeconfig" ]]; then
+  export KUBECONFIG="${SHARED_DIR}/kubeconfig"
+  log "Using provisioned kubeconfig at ${KUBECONFIG}"
+fi
+
 # Configure AWS
 AWSCRED="${CLUSTER_PROFILE_DIR}/.awscred"
 if [[ -f "${AWSCRED}" ]]; then
   export AWS_SHARED_CREDENTIALS_FILE="${AWSCRED}"
-  export AWS_DEFAULT_REGION="${LEASED_RESOURCE}"
+  export AWS_DEFAULT_REGION="${REGION:-${LEASED_RESOURCE}}"
 else
   log "No AWS credentials found in cluster profile"
 fi
@@ -27,9 +44,12 @@ ROSA_TOKEN=$(cat "${CLUSTER_PROFILE_DIR}/ocm-token" 2>/dev/null || true)
 if [[ -n "${SSO_CLIENT_ID}" && -n "${SSO_CLIENT_SECRET}" ]]; then
   log "Logging into ${OCM_LOGIN_ENV} with SSO credentials"
   ocm login --url "${OCM_LOGIN_ENV}" --client-id "${SSO_CLIENT_ID}" --client-secret "${SSO_CLIENT_SECRET}"
+  export OCM_CLIENT_ID="${SSO_CLIENT_ID}"
+  export OCM_CLIENT_SECRET="${SSO_CLIENT_SECRET}"
 elif [[ -n "${ROSA_TOKEN}" ]]; then
   log "Logging into ${OCM_LOGIN_ENV} with offline token"
   ocm login --url "${OCM_LOGIN_ENV}" --token "${ROSA_TOKEN}"
+  export OCM_TOKEN="${ROSA_TOKEN}"
 else
   log "No OCM credentials found in cluster profile"
   exit 1
@@ -39,15 +59,13 @@ fi
 CLUSTER_ID=$(cat "${SHARED_DIR}/cluster-id")
 log "Testing cluster: ${CLUSTER_ID}"
 
-OCM_TOKEN=$(ocm token)
-export OCM_TOKEN
 export OCM_ENV="${OCM_LOGIN_ENV}"
 export CLUSTER_ID
-export AWS_REGION="${LEASED_RESOURCE}"
+export AWS_REGION="${REGION:-${LEASED_RESOURCE}}"
 
 # Try to get management cluster access via OCM API
 log "Attempting management cluster access..."
-MC_NAME=$(ocm get /api/clusters_mgmt/v1/clusters/"${CLUSTER_ID}"/hypershift 2>/dev/null | jq -r '.management_cluster // empty')
+MC_NAME=$(ocm get /api/clusters_mgmt/v1/clusters/"${CLUSTER_ID}"/hypershift 2>/dev/null | jq -r '.management_cluster // empty') || true
 if [[ -n "${MC_NAME}" ]]; then
   log "Management cluster name: ${MC_NAME}"
   MANAGEMENT_CLUSTER_ID=$(ocm get /api/clusters_mgmt/v1/clusters --parameter search="name='${MC_NAME}'" --parameter size=1 2>/dev/null | jq -r '.items[0].id // empty')

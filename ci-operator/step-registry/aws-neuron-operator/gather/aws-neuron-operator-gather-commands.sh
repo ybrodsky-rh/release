@@ -11,7 +11,7 @@ export PATH="${TOOLS_DIR}:${PATH}"
 
 if ! command -v oc &>/dev/null; then
     echo "oc not found, downloading OpenShift client..."
-    curl -sL https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz \
+    curl -sL https://openshift-mirror-list.ci-systems.workers.dev/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz \
         | tar xzf - -C "${TOOLS_DIR}" oc kubectl 2>/dev/null || true
 fi
 
@@ -34,6 +34,9 @@ oc get nodes -o json | jq '.items[].status.images[] | select(.names[] | test("ne
 oc describe nodes > "${DUMP_DIR}/nodes-describe.txt" 2>&1 || true
 oc get csv -A -o yaml > "${DUMP_DIR}/csvs.yaml" 2>&1 || true
 oc get subscriptions -A -o yaml > "${DUMP_DIR}/subscriptions.yaml" 2>&1 || true
+oc get deviceclasses.resource.k8s.io -o yaml > "${DUMP_DIR}/dra-deviceclasses.yaml" 2>&1 || true
+oc get resourceslices.resource.k8s.io -o yaml > "${DUMP_DIR}/dra-resourceslices.yaml" 2>&1 || true
+oc get resourceclaims.resource.k8s.io -A -o yaml > "${DUMP_DIR}/dra-resourceclaims.yaml" 2>&1 || true
 
 oc logs -n openshift-kmm -l app.kubernetes.io/component=kmm --tail=1000 > "${DUMP_DIR}/kmm-operator-logs.txt" 2>&1 || true
 

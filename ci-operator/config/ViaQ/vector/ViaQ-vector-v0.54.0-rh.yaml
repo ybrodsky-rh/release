@@ -4,15 +4,15 @@ base_images:
     namespace: ocp
     tag: "9"
   cluster-logging-operator:
-    name: 6.y
+    name: "6.6"
     namespace: logging
     tag: cluster-logging-operator
   cluster-logging-operator-e2e:
-    name: 6.y
+    name: "6.6"
     namespace: logging
     tag: cluster-logging-operator-e2e
   cluster-logging-operator-registry:
-    name: 6.y
+    name: "6.6"
     namespace: logging
     tag: cluster-logging-operator-registry
   log-file-metric-exporter:
@@ -23,10 +23,10 @@ base_images:
     name: 5.y
     namespace: logging
     tag: logging-eventrouter
-  ubi9-minimal:
-    name: ubi-minimal
-    namespace: ocp
-    tag: "9"
+  tls-scanner:
+    name: tls-scanner
+    namespace: tls-scanner
+    tag: tls-scanner-tool
 build_root:
   image_stream_tag:
     name: release
@@ -35,7 +35,6 @@ build_root:
 images:
   items:
   - dockerfile_path: Dockerfile
-    from: ubi9-minimal
     to: vector
   - dockerfile_path: Dockerfile.unit
     from: builder
@@ -106,6 +105,8 @@ tests:
         name: pipeline:logging-eventrouter
       - env: IMAGE_LOG_FILE_METRIC_EXPORTER
         name: pipeline:log-file-metric-exporter
+      - env: IMAGE_TLS_SCANNER
+        name: pipeline:tls-scanner
       from: pipeline:cluster-logging-operator-e2e
       resources:
         requests:

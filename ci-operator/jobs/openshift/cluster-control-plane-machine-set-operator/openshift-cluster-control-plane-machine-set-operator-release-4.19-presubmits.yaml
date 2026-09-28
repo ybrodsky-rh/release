@@ -2,10 +2,12 @@ presubmits:
   openshift/cluster-control-plane-machine-set-operator:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build01
     context: ci/prow/e2e-aws-operator
     decorate: true
     decoration_config:
@@ -19,7 +21,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-aws-operator
     rerun_command: /test e2e-aws-operator
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -86,11 +87,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-operator,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build01
     context: ci/prow/e2e-aws-operator-techpreview
     decorate: true
     decoration_config:
@@ -168,13 +169,15 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-operator-techpreview,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-operator-techpreview|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build01
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -188,7 +191,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-aws-ovn
     rerun_command: /test e2e-aws-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -256,10 +258,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build01
     context: ci/prow/e2e-aws-ovn-etcd-scaling
     decorate: true
     decoration_config:
@@ -273,7 +277,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-aws-ovn-etcd-scaling
     rerun_command: /test e2e-aws-ovn-etcd-scaling
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -341,10 +344,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-etcd-scaling,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build01
     context: ci/prow/e2e-aws-ovn-serial-1of2
     decorate: true
     decoration_config:
@@ -358,7 +363,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-aws-ovn-serial-1of2
     rerun_command: /test e2e-aws-ovn-serial-1of2
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -427,10 +431,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-serial-1of2,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build01
     context: ci/prow/e2e-aws-ovn-serial-2of2
     decorate: true
     decoration_config:
@@ -444,7 +450,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-aws-ovn-serial-2of2
     rerun_command: /test e2e-aws-ovn-serial-2of2
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -513,10 +518,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-serial-2of2,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build01
     context: ci/prow/e2e-aws-ovn-upgrade
     decorate: true
     decoration_config:
@@ -530,7 +537,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-aws-ovn-upgrade
     rerun_command: /test e2e-aws-ovn-upgrade
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -598,10 +604,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-upgrade,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: .*periodic.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build01
     context: ci/prow/e2e-aws-periodic-pre
     decorate: true
     decoration_config:
@@ -616,7 +624,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-aws-periodic-pre
     optional: true
     rerun_command: /test e2e-aws-periodic-pre
-    run_if_changed: .*periodic.*
     spec:
       containers:
       - args:
@@ -684,10 +691,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-periodic-pre,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: .*periodic.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build01
     context: ci/prow/e2e-aws-periodic-pre-techpreview
     decorate: true
     decoration_config:
@@ -702,7 +711,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-aws-periodic-pre-techpreview
     optional: true
     rerun_command: /test e2e-aws-periodic-pre-techpreview
-    run_if_changed: .*periodic.*
     spec:
       containers:
       - args:
@@ -770,10 +778,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-periodic-pre-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*azure.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build01
+    cluster: build02
     context: ci/prow/e2e-azure-operator
     decorate: true
     decoration_config:
@@ -788,7 +798,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-azure-operator
     optional: true
     rerun_command: /test e2e-azure-operator
-    run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*azure.*
     spec:
       containers:
       - args:
@@ -856,10 +865,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-operator,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*azure.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build01
+    cluster: build02
     context: ci/prow/e2e-azure-ovn-etcd-scaling
     decorate: true
     decoration_config:
@@ -874,7 +885,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-azure-ovn-etcd-scaling
     optional: true
     rerun_command: /test e2e-azure-ovn-etcd-scaling
-    run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*azure.*
     spec:
       containers:
       - args:
@@ -942,10 +952,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-ovn-etcd-scaling,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: .*periodic.*|.*azure.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build01
+    cluster: build02
     context: ci/prow/e2e-azure-periodic-pre
     decorate: true
     decoration_config:
@@ -960,7 +972,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-azure-periodic-pre
     optional: true
     rerun_command: /test e2e-azure-periodic-pre
-    run_if_changed: .*periodic.*|.*azure.*
     spec:
       containers:
       - args:
@@ -1028,10 +1039,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-periodic-pre,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: .*periodic.*|.*azure.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build01
+    cluster: build02
     context: ci/prow/e2e-azure-periodic-pre-techpreview
     decorate: true
     decoration_config:
@@ -1046,7 +1059,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-azure-periodic-pre-techpreview
     optional: true
     rerun_command: /test e2e-azure-periodic-pre-techpreview
-    run_if_changed: .*periodic.*|.*azure.*
     spec:
       containers:
       - args:
@@ -1114,10 +1126,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-periodic-pre-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*gcp.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-operator
     decorate: true
     decoration_config:
@@ -1132,7 +1146,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-gcp-operator
     optional: true
     rerun_command: /test e2e-gcp-operator
-    run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*gcp.*
     spec:
       containers:
       - args:
@@ -1200,10 +1213,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-operator,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*gcp.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-ovn-etcd-scaling
     decorate: true
     decoration_config:
@@ -1218,7 +1233,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-gcp-ovn-etcd-scaling
     optional: true
     rerun_command: /test e2e-gcp-ovn-etcd-scaling
-    run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*gcp.*
     spec:
       containers:
       - args:
@@ -1286,10 +1300,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-ovn-etcd-scaling,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: .*periodic.*|.*gcp.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-periodic-pre
     decorate: true
     decoration_config:
@@ -1304,7 +1320,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-gcp-periodic-pre
     optional: true
     rerun_command: /test e2e-gcp-periodic-pre
-    run_if_changed: .*periodic.*|.*gcp.*
     spec:
       containers:
       - args:
@@ -1372,10 +1387,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-periodic-pre,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: .*periodic.*|.*gcp.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-periodic-pre-techpreview
     decorate: true
     decoration_config:
@@ -1390,7 +1407,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-gcp-periodic-pre-techpreview
     optional: true
     rerun_command: /test e2e-gcp-periodic-pre-techpreview
-    run_if_changed: .*periodic.*|.*gcp.*
     spec:
       containers:
       - args:
@@ -1458,6 +1474,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-periodic-pre-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*nutanix.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -1477,7 +1495,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-nutanix-ovn
     optional: true
     rerun_command: /test e2e-nutanix-ovn
-    run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*nutanix.*
     spec:
       containers:
       - args:
@@ -1545,10 +1562,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-nutanix-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*openstack.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build01
     context: ci/prow/e2e-openstack-operator
     decorate: true
     decoration_config:
@@ -1563,7 +1582,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-openstack-operator
     optional: true
     rerun_command: /test e2e-openstack-operator
-    run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*openstack.*
     spec:
       containers:
       - args:
@@ -1631,10 +1649,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-openstack-operator,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: .*periodic.*|.*openstack.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build01
     context: ci/prow/e2e-openstack-periodic-pre
     decorate: true
     decoration_config:
@@ -1649,7 +1669,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-openstack-periodic-pre
     optional: true
     rerun_command: /test e2e-openstack-periodic-pre
-    run_if_changed: .*periodic.*|.*openstack.*
     spec:
       containers:
       - args:
@@ -1717,10 +1736,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-openstack-periodic-pre,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: .*periodic.*|.*openstack.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build01
     context: ci/prow/e2e-openstack-periodic-pre-techpreview
     decorate: true
     decoration_config:
@@ -1735,7 +1756,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-openstack-periodic-pre-techpreview
     optional: true
     rerun_command: /test e2e-openstack-periodic-pre-techpreview
-    run_if_changed: .*periodic.*|.*openstack.*
     spec:
       containers:
       - args:
@@ -1803,6 +1823,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-openstack-periodic-pre-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*vsphere.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -1821,7 +1843,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-vsphere-multi-vcenter-operator
     optional: true
     rerun_command: /test e2e-vsphere-multi-vcenter-operator
-    run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*vsphere.*
     spec:
       containers:
       - args:
@@ -1889,6 +1910,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-vsphere-multi-vcenter-operator,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*vsphere.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -1907,7 +1930,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-vsphere-multi-zone-operator
     optional: true
     rerun_command: /test e2e-vsphere-multi-zone-operator
-    run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*vsphere.*
     spec:
       containers:
       - args:
@@ -1975,6 +1997,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-vsphere-multi-zone-operator,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*vsphere.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -1993,7 +2017,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-vsphere-operator
     optional: true
     rerun_command: /test e2e-vsphere-operator
-    run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*vsphere.*
     spec:
       containers:
       - args:
@@ -2061,6 +2084,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-vsphere-operator,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: .*periodic.*|.*vsphere.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -2079,7 +2104,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-vsphere-operator-periodic-pre
     optional: true
     rerun_command: /test e2e-vsphere-operator-periodic-pre
-    run_if_changed: .*periodic.*|.*vsphere.*
     spec:
       containers:
       - args:
@@ -2147,6 +2171,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-vsphere-operator-periodic-pre,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: .*periodic.*|.*vsphere.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -2165,7 +2191,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-vsphere-operator-periodic-pre-techpreview
     optional: true
     rerun_command: /test e2e-vsphere-operator-periodic-pre-techpreview
-    run_if_changed: .*periodic.*|.*vsphere.*
     spec:
       containers:
       - args:
@@ -2233,6 +2258,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-vsphere-operator-periodic-pre-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*vsphere.*
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -2251,7 +2278,6 @@ presubmits:
     name: pull-ci-openshift-cluster-control-plane-machine-set-operator-release-4.19-e2e-vsphere-ovn-etcd-scaling
     optional: true
     rerun_command: /test e2e-vsphere-ovn-etcd-scaling
-    run_if_changed: pkg/machineproviders/providers/openshift/machine/v1beta1/.*|.*vsphere.*
     spec:
       containers:
       - args:
@@ -2322,7 +2348,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build01
+    cluster: build02
     context: ci/prow/fmt
     decorate: true
     decoration_config:
@@ -2387,7 +2413,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build01
+    cluster: build02
     context: ci/prow/generate
     decorate: true
     decoration_config:
@@ -2452,7 +2478,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build01
+    cluster: build02
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -2511,7 +2537,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build01
+    cluster: build02
     context: ci/prow/lint
     decorate: true
     decoration_config:
@@ -2576,7 +2602,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build01
+    cluster: build02
     context: ci/prow/periodics-images
     decorate: true
     decoration_config:
@@ -2636,7 +2662,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build03
+    cluster: build01
     context: ci/prow/regression-clusterinfra-aws-ipi-cpms-allcases
     decorate: true
     decoration_config:
@@ -2721,7 +2747,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build01
+    cluster: build02
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -2786,7 +2812,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build01
+    cluster: build02
     context: ci/prow/vendor
     decorate: true
     decoration_config:
@@ -2851,7 +2877,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build01
+    cluster: build02
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:
@@ -2933,7 +2959,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build01
+    cluster: build02
     context: ci/prow/vet
     decorate: true
     decoration_config:

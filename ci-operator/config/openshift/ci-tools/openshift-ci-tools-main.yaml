@@ -214,9 +214,7 @@ images:
         - destination_dir: .
           source_path: /go/bin/config-brancher
     to: config-brancher
-  - additional_architectures:
-    - arm64
-    context_dir: images/dptp-controller-manager
+  - context_dir: images/dptp-controller-manager
     from: os
     inputs:
       bin:
@@ -342,6 +340,16 @@ images:
         - destination_dir: .
           source_path: /go/bin/repo-brancher
     to: repo-brancher
+  - additional_architectures:
+    - arm64
+    context_dir: images/repo-brancher-controller/
+    from: root
+    inputs:
+      bin:
+        paths:
+        - destination_dir: .
+          source_path: /go/bin/repo-brancher-controller
+    to: repo-brancher-controller
   - additional_architectures:
     - arm64
     context_dir: images/determinize-ci-operator/
@@ -771,6 +779,10 @@ resources:
     requests:
       cpu: "1"
       memory: 1Gi
+  bin:
+    requests:
+      cpu: "1"
+      memory: 3Gi
   unit:
     requests:
       cpu: "4"

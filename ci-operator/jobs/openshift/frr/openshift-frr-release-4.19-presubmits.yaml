@@ -1,7 +1,7 @@
 presubmits:
   openshift/frr:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -83,13 +83,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )frrk8s-e2e-metal,?($|\s.*)
+    trigger: (?m)^/test( | .* )(frrk8s-e2e-metal|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build06
+    cluster: build13
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -142,7 +142,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )images,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
@@ -224,13 +224,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )metallb-e2e-metal,?($|\s.*)
+    trigger: (?m)^/test( | .* )(metallb-e2e-metal|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build06
+    cluster: build13
     context: ci/prow/security
     decorate: true
     decoration_config:
@@ -312,7 +312,7 @@ presubmits:
     branches:
     - ^release-4\.19$
     - ^release-4\.19-
-    cluster: build06
+    cluster: build13
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

@@ -22,6 +22,7 @@ external_plugins:
     events:
     - issue_comment
     - pull_request
+    - pull_request_review
     name: jira-lifecycle-plugin
 lgtm:
 - repos:
@@ -47,9 +48,8 @@ plugins:
     - wip
     - approve
 triggers:
-- org_invite:
-    prominent: {}
-  repos:
+- repos:
   - openshift-online/rosa-e2e
   trusted_apps:
   - openshift-merge-bot
+  - dependabot

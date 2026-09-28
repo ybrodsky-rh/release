@@ -32,6 +32,7 @@ external_plugins:
     events:
     - issue_comment
     - pull_request
+    - pull_request_review
     name: jira-lifecycle-plugin
   - endpoint: http://pipeline-controller
     events:
@@ -74,9 +75,10 @@ plugins:
     - yuks
     - approve
 triggers:
-- org_invite:
-    prominent: {}
-  repos:
+- repos:
   - openshift-online/aws-nuke-cf
   trusted_apps:
+  - dependabot
   - openshift-merge-bot
+  - red-hat-konflux-kflux-prd-rh02
+  - redhat-chai-bot

@@ -6,6 +6,93 @@ presubmits:
     - ^main$
     - ^main-
     cluster: build01
+    context: ci/prow/e2e-aws-ipi-ccm-operator-serial-disruptive-ote
+    decorate: true
+    decoration_config:
+      sparse_checkout_files:
+      - .ci-operator.yaml
+      - Dockerfile
+    labels:
+      ci-operator.openshift.io/cloud: aws
+      ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
+      ci.openshift.io/generator: prowgen
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-cluster-cloud-controller-manager-operator-main-e2e-aws-ipi-ccm-operator-serial-disruptive-ote
+    optional: true
+    rerun_command: /test e2e-aws-ipi-ccm-operator-serial-disruptive-ote
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/secrets/ci-pull-credentials
+        - --target=e2e-aws-ipi-ccm-operator-serial-disruptive-ote
+        command:
+        - ci-operator
+        env:
+        - name: HTTP_SERVER_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
+        imagePullPolicy: Always
+        name: ""
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /secrets/ci-pull-credentials
+          name: ci-pull-credentials
+          readOnly: true
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /secrets/manifest-tool
+          name: manifest-tool-local-pusher
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: ci-pull-credentials
+        secret:
+          secretName: ci-pull-credentials
+      - name: manifest-tool-local-pusher
+        secret:
+          secretName: manifest-tool-local-pusher
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )e2e-aws-ipi-ccm-operator-serial-disruptive-ote,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
+    branches:
+    - ^main$
+    - ^main-
+    cluster: build01
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -19,7 +106,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-cloud-controller-manager-operator-main-e2e-aws-ovn
     rerun_command: /test e2e-aws-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -172,6 +258,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^main$
     - ^main-
@@ -189,7 +277,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-cloud-controller-manager-operator-main-e2e-aws-ovn-upgrade
     rerun_command: /test e2e-aws-ovn-upgrade
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -260,7 +347,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build13
     context: ci/prow/e2e-azure-manual-oidc
     decorate: true
     decoration_config:
@@ -345,7 +432,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build13
     context: ci/prow/e2e-azure-ovn
     decorate: true
     decoration_config:
@@ -427,10 +514,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build13
     context: ci/prow/e2e-azure-ovn-upgrade
     decorate: true
     decoration_config:
@@ -443,7 +532,6 @@ presubmits:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-cloud-controller-manager-operator-main-e2e-azure-ovn-upgrade
-    optional: true
     rerun_command: /test e2e-azure-ovn-upgrade
     spec:
       containers:
@@ -515,7 +603,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-ovn
     decorate: true
     decoration_config:
@@ -600,7 +688,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e-gcp-ovn-upgrade
     decorate: true
     decoration_config:
@@ -682,10 +770,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-gcp-ovn-upgrade,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ibm
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build13
     context: ci/prow/e2e-ibmcloud-ovn
     decorate: true
     decoration_config:
@@ -700,7 +790,6 @@ presubmits:
     name: pull-ci-openshift-cluster-cloud-controller-manager-operator-main-e2e-ibmcloud-ovn
     optional: true
     rerun_command: /test e2e-ibmcloud-ovn
-    run_if_changed: ibm
     spec:
       containers:
       - args:
@@ -768,6 +857,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-ibmcloud-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: .*nutanix.*
     branches:
     - ^main$
     - ^main-
@@ -787,7 +878,6 @@ presubmits:
     name: pull-ci-openshift-cluster-cloud-controller-manager-operator-main-e2e-nutanix-ovn
     optional: true
     rerun_command: /test e2e-nutanix-ovn
-    run_if_changed: .*nutanix.*
     spec:
       containers:
       - args:
@@ -1028,7 +1118,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build13
     context: ci/prow/fmt
     decorate: true
     decoration_config:
@@ -1093,7 +1183,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build13
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -1151,7 +1241,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build13
     context: ci/prow/level0-clusterinfra-azure-ipi-proxy-tests
     decorate: true
     decoration_config:
@@ -1237,7 +1327,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build13
     context: ci/prow/lint
     decorate: true
     decoration_config:
@@ -1388,7 +1478,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build13
     context: ci/prow/okd-scos-images
     decorate: true
     decoration_config:
@@ -1442,6 +1532,91 @@ presubmits:
         secret:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )okd-scos-images,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
+    branches:
+    - ^main$
+    - ^main-
+    cluster: build01
+    context: ci/prow/regression-clusterinfra-aws-ipi-ccm
+    decorate: true
+    decoration_config:
+      sparse_checkout_files:
+      - .ci-operator.yaml
+      - Dockerfile
+    labels:
+      ci-operator.openshift.io/cloud: aws
+      ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
+      ci.openshift.io/generator: prowgen
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-cluster-cloud-controller-manager-operator-main-regression-clusterinfra-aws-ipi-ccm
+    optional: true
+    rerun_command: /test regression-clusterinfra-aws-ipi-ccm
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/secrets/ci-pull-credentials
+        - --target=regression-clusterinfra-aws-ipi-ccm
+        command:
+        - ci-operator
+        env:
+        - name: HTTP_SERVER_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        image: quay-proxy.ci.openshift.org/openshift/ci:ci_ci-operator_latest
+        imagePullPolicy: Always
+        name: ""
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /secrets/ci-pull-credentials
+          name: ci-pull-credentials
+          readOnly: true
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /secrets/manifest-tool
+          name: manifest-tool-local-pusher
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: ci-pull-credentials
+        secret:
+          secretName: ci-pull-credentials
+      - name: manifest-tool-local-pusher
+        secret:
+          secretName: manifest-tool-local-pusher
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )regression-clusterinfra-aws-ipi-ccm,?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -1533,7 +1708,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build13
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -1615,7 +1790,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build13
     context: ci/prow/vendor
     decorate: true
     decoration_config:
@@ -1680,7 +1855,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build13
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:
@@ -1762,7 +1937,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build05
+    cluster: build13
     context: ci/prow/vet
     decorate: true
     decoration_config:

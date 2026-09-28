@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build06
     context: ci/prow/ci-e2e
     decorate: true
     decoration_config:
@@ -19,11 +19,11 @@ presubmits:
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: aws-telco
       ci.openshift.io/generator: prowgen
-      job-release: "5.0"
+      job-release: "5.1"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-kni-numaresources-operator-main-ci-e2e
     rerun_command: /test ci-e2e
-    skip_if_only_changed: \.tekton/.*|.konflux/.*|renovate.json
+    skip_if_only_changed: ^docs/|^hack/.*\.md$|^(?:.*/)?(?:\.gitignore|\.tekton/.*|\.konflux/.*|\-konflux/.*|.*\.md|OWNERS|OWNERS_ALIASES|LICENSE|renovate\.json)$
     spec:
       containers:
       - args:
@@ -90,11 +90,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )ci-e2e,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build06
     context: ci/prow/ci-e2e-compact
     decorate: true
     decoration_config:
@@ -108,11 +108,12 @@ presubmits:
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: aws-telco
       ci.openshift.io/generator: prowgen
-      job-release: "5.0"
+      job-release: "5.1"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-kni-numaresources-operator-main-ci-e2e-compact
     optional: true
     rerun_command: /test ci-e2e-compact
+    skip_if_only_changed: ^docs/|^hack/.*\.md$|^(?:.*/)?(?:\.gitignore|\.tekton/.*|\.konflux/.*|\-konflux/.*|.*\.md|OWNERS|OWNERS_ALIASES|LICENSE|renovate\.json)$
     spec:
       containers:
       - args:
@@ -183,7 +184,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build06
     context: ci/prow/ci-e2e-install-hypershift
     decorate: true
     decoration_config:
@@ -197,11 +198,11 @@ presubmits:
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: aws-telco
       ci.openshift.io/generator: prowgen
-      job-release: "5.0"
+      job-release: "5.1"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-kni-numaresources-operator-main-ci-e2e-install-hypershift
     rerun_command: /test ci-e2e-install-hypershift
-    skip_if_only_changed: \.tekton/.*|.konflux/.*|renovate.json
+    skip_if_only_changed: ^docs/|^hack/.*\.md$|^(?:.*/)?(?:\.gitignore|\.tekton/.*|\.konflux/.*|\-konflux/.*|.*\.md|OWNERS|OWNERS_ALIASES|LICENSE|renovate\.json)$
     spec:
       containers:
       - args:
@@ -272,7 +273,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build07
     context: ci/prow/ci-index-tested-numaresources-operator-bundle
     decorate: true
     decoration_config:
@@ -284,7 +285,7 @@ presubmits:
       - bundle.Dockerfile
     labels:
       ci.openshift.io/generator: prowgen
-      job-release: "5.0"
+      job-release: "5.1"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-kni-numaresources-operator-main-ci-index-tested-numaresources-operator-bundle
     rerun_command: /test ci-index-tested-numaresources-operator-bundle
@@ -333,7 +334,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build06
     context: ci/prow/ci-install-e2e
     decorate: true
     decoration_config:
@@ -347,11 +348,11 @@ presubmits:
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: aws-telco
       ci.openshift.io/generator: prowgen
-      job-release: "5.0"
+      job-release: "5.1"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-kni-numaresources-operator-main-ci-install-e2e
     rerun_command: /test ci-install-e2e
-    skip_if_only_changed: \.tekton/.*|.konflux/.*|renovate.json
+    skip_if_only_changed: ^docs/|^hack/.*\.md$|^(?:.*/)?(?:\.gitignore|\.tekton/.*|\.konflux/.*|\-konflux/.*|.*\.md|OWNERS|OWNERS_ALIASES|LICENSE|renovate\.json)$
     spec:
       containers:
       - args:
@@ -418,11 +419,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )ci-install-e2e,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build06
     context: ci/prow/ci-install-e2e-compact
     decorate: true
     decoration_config:
@@ -436,11 +437,12 @@ presubmits:
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: aws-telco
       ci.openshift.io/generator: prowgen
-      job-release: "5.0"
+      job-release: "5.1"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-kni-numaresources-operator-main-ci-install-e2e-compact
     optional: true
     rerun_command: /test ci-install-e2e-compact
+    skip_if_only_changed: ^docs/|^hack/.*\.md$|^(?:.*/)?(?:\.gitignore|\.tekton/.*|\.konflux/.*|\-konflux/.*|.*\.md|OWNERS|OWNERS_ALIASES|LICENSE|renovate\.json)$
     spec:
       containers:
       - args:
@@ -511,7 +513,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build06
     context: ci/prow/ci-must-gather-e2e
     decorate: true
     decoration_config:
@@ -525,11 +527,11 @@ presubmits:
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: aws-telco
       ci.openshift.io/generator: prowgen
-      job-release: "5.0"
+      job-release: "5.1"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-kni-numaresources-operator-main-ci-must-gather-e2e
     rerun_command: /test ci-must-gather-e2e
-    skip_if_only_changed: \.tekton/.*|.konflux/.*|renovate.json
+    skip_if_only_changed: ^docs/|^hack/.*\.md$|^(?:.*/)?(?:\.gitignore|\.tekton/.*|\.konflux/.*|\-konflux/.*|.*\.md|OWNERS|OWNERS_ALIASES|LICENSE|renovate\.json)$
     spec:
       containers:
       - args:
@@ -600,7 +602,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build07
     context: ci/prow/ci-unit
     decorate: true
     decoration_config:
@@ -612,11 +614,11 @@ presubmits:
       - bundle.Dockerfile
     labels:
       ci.openshift.io/generator: prowgen
-      job-release: "5.0"
+      job-release: "5.1"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-kni-numaresources-operator-main-ci-unit
     rerun_command: /test ci-unit
-    skip_if_only_changed: \.tekton/.*|.konflux/.*|renovate.json
+    skip_if_only_changed: ^docs/|^hack/.*\.md$|^(?:.*/)?(?:\.gitignore|\.tekton/.*|\.konflux/.*|\-konflux/.*|.*\.md|OWNERS|OWNERS_ALIASES|LICENSE|renovate\.json)$
     spec:
       containers:
       - args:
@@ -670,7 +672,7 @@ presubmits:
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build07
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -682,7 +684,7 @@ presubmits:
       - bundle.Dockerfile
     labels:
       ci.openshift.io/generator: prowgen
-      job-release: "5.0"
+      job-release: "5.1"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-kni-numaresources-operator-main-images
     rerun_command: /test images
@@ -727,11 +729,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )images,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^main$
     - ^main-
-    cluster: build03
+    cluster: build07
     context: ci/prow/security
     decorate: true
     decoration_config:
@@ -743,11 +745,12 @@ presubmits:
       - bundle.Dockerfile
     labels:
       ci.openshift.io/generator: prowgen
-      job-release: "5.0"
+      job-release: "5.1"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-kni-numaresources-operator-main-security
     optional: true
     rerun_command: /test security
+    skip_if_only_changed: ^docs/|^hack/.*\.md$|^(?:.*/)?(?:\.gitignore|\.tekton/.*|\.konflux/.*|\-konflux/.*|.*\.md|OWNERS|OWNERS_ALIASES|LICENSE|renovate\.json)$
     spec:
       containers:
       - args:

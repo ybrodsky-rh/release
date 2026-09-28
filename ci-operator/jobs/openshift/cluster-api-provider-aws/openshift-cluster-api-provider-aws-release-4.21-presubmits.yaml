@@ -2,10 +2,12 @@ presubmits:
   openshift/cluster-api-provider-aws:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build11
+    cluster: build01
     context: ci/prow/e2e-aws-capi-techpreview
     decorate: true
     decoration_config:
@@ -20,7 +22,6 @@ presubmits:
     name: pull-ci-openshift-cluster-api-provider-aws-release-4.21-e2e-aws-capi-techpreview
     path_alias: sigs.k8s.io/cluster-api-provider-aws
     rerun_command: /test e2e-aws-capi-techpreview
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -88,10 +89,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-capi-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build11
+    cluster: build01
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -106,7 +109,6 @@ presubmits:
     name: pull-ci-openshift-cluster-api-provider-aws-release-4.21-e2e-aws-ovn
     path_alias: sigs.k8s.io/cluster-api-provider-aws
     rerun_command: /test e2e-aws-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -177,7 +179,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build11
+    cluster: build01
     context: ci/prow/e2e-aws-ovn-techpreview
     decorate: true
     decoration_config:
@@ -260,10 +262,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn-techpreview,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build11
+    cluster: build01
     context: ci/prow/e2e-aws-serial-1of2
     decorate: true
     decoration_config:
@@ -278,7 +282,6 @@ presubmits:
     name: pull-ci-openshift-cluster-api-provider-aws-release-4.21-e2e-aws-serial-1of2
     path_alias: sigs.k8s.io/cluster-api-provider-aws
     rerun_command: /test e2e-aws-serial-1of2
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -347,10 +350,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-serial-1of2,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build11
+    cluster: build01
     context: ci/prow/e2e-aws-serial-2of2
     decorate: true
     decoration_config:
@@ -365,7 +370,6 @@ presubmits:
     name: pull-ci-openshift-cluster-api-provider-aws-release-4.21-e2e-aws-serial-2of2
     path_alias: sigs.k8s.io/cluster-api-provider-aws
     rerun_command: /test e2e-aws-serial-2of2
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -434,10 +438,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-serial-2of2,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build11
+    cluster: build08
     context: ci/prow/e2e-hypershift
     decorate: true
     decoration_config:
@@ -452,7 +458,6 @@ presubmits:
     name: pull-ci-openshift-cluster-api-provider-aws-release-4.21-e2e-hypershift
     path_alias: sigs.k8s.io/cluster-api-provider-aws
     rerun_command: /test e2e-hypershift
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -523,7 +528,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build11
+    cluster: build08
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -582,7 +587,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build11
+    cluster: build01
     context: ci/prow/okd-scos-e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -668,7 +673,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build11
+    cluster: build08
     context: ci/prow/okd-scos-images
     decorate: true
     decoration_config:
@@ -727,7 +732,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build11
+    cluster: build01
     context: ci/prow/regression-clusterinfra-aws-ipi-techpreview-capi
     decorate: true
     decoration_config:
@@ -814,7 +819,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build11
+    cluster: build08
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -880,7 +885,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build11
+    cluster: build08
     context: ci/prow/verify-commits
     decorate: true
     decoration_config:
@@ -947,7 +952,7 @@ presubmits:
     branches:
     - ^release-4\.21$
     - ^release-4\.21-
-    cluster: build11
+    cluster: build08
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

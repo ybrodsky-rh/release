@@ -5,7 +5,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build05
     context: ci/prow/ci-bundle-vertical-pod-autoscaler-operator-bundle
     decorate: true
     decoration_config:
@@ -68,6 +68,8 @@ presubmits:
     trigger: (?m)^/test( | .* )ci-bundle-vertical-pod-autoscaler-operator-bundle,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|^\.github|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
@@ -90,7 +92,6 @@ presubmits:
     name: pull-ci-openshift-priv-vertical-pod-autoscaler-operator-release-4.18-e2e-aws-olm
     path_alias: github.com/openshift/vertical-pod-autoscaler-operator
     rerun_command: /test e2e-aws-olm
-    skip_if_only_changed: ^docs/|^\.github|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -162,6 +163,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-olm,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|^\.github|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
@@ -184,7 +187,6 @@ presubmits:
     name: pull-ci-openshift-priv-vertical-pod-autoscaler-operator-release-4.18-e2e-aws-operator
     path_alias: github.com/openshift/vertical-pod-autoscaler-operator
     rerun_command: /test e2e-aws-operator
-    skip_if_only_changed: ^docs/|^\.github|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -256,6 +258,8 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-operator,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|^\.github|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
@@ -278,7 +282,6 @@ presubmits:
     name: pull-ci-openshift-priv-vertical-pod-autoscaler-operator-release-4.18-e2e-aws-upgrade
     path_alias: github.com/openshift/vertical-pod-autoscaler-operator
     rerun_command: /test e2e-aws-upgrade
-    skip_if_only_changed: ^docs/|^\.github|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -353,7 +356,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build05
     context: ci/prow/gofmt
     decorate: true
     decoration_config:
@@ -428,7 +431,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build05
     context: ci/prow/govet
     decorate: true
     decoration_config:
@@ -503,7 +506,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build05
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -570,7 +573,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build05
     context: ci/prow/lint
     decorate: true
     decoration_config:
@@ -645,7 +648,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build05
     context: ci/prow/manifest-diff
     decorate: true
     decoration_config:
@@ -814,7 +817,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build05
     context: ci/prow/security
     decorate: true
     decoration_config:
@@ -907,7 +910,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build05
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -982,7 +985,7 @@ presubmits:
     branches:
     - ^release-4\.18$
     - ^release-4\.18-
-    cluster: build11
+    cluster: build05
     context: ci/prow/yamllint
     decorate: true
     decoration_config:

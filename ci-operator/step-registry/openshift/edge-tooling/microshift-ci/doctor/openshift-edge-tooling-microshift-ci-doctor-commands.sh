@@ -9,18 +9,20 @@ mkdir -p "${WORKDIR}"
 CLAUDE_HOME="/home/claude/.claude"
 mkdir -p "${CLAUDE_HOME}"
 
-CLAUDE_ANALYSIS_LOG="${WORKDIR}/claude-analysis.log"
-CLAUDE_BUG_CREATION_LOG="${WORKDIR}/claude-bug-creation.log"
-JIRA_MCP_LOG="${WORKDIR}/jira-mcp.log"
+MCP_JIRA_LOG="${WORKDIR}/mcp-jira.log"
 
 # The procedure to copy reports and session logs to artifacts, executed at exit
 atexit_handler() {
     if [[ -d "${WORKDIR:-}" ]]; then
         echo "Copying report files to the artifact directory..."
-        find "${WORKDIR}" -maxdepth 1 -name "*.html" -exec cp {} "${ARTIFACT_DIR}/" \; || true
-        find "${WORKDIR}" -maxdepth 1 -name "*.json" -exec cp {} "${ARTIFACT_DIR}/" \; || true
-        find "${WORKDIR}" -maxdepth 1 -name "*.txt"  -exec cp {} "${ARTIFACT_DIR}/" \; || true
-        find "${WORKDIR}" -maxdepth 1 -name "*.log"  -exec cp {} "${ARTIFACT_DIR}/" \; || true
+        # Sync report files: skip project/artifact/sos dirs, enter first-level subdirs only,
+        # copy html/json/txt/log files, ignore everything else, prune empty dirs
+        rsync -am --no-perms \
+            --exclude='microshift/' --exclude='artifacts/' --exclude='sos*/' \
+            --include='/*/' --exclude='*/' \
+            --include='*.html' --include='*.json' --include='*.txt' --include='*.log' \
+            --exclude='*' \
+            "${WORKDIR}/" "${ARTIFACT_DIR}/"
     fi
 
     # Archive the full Claude session directory (including subagent logs) for session continuation.
@@ -40,29 +42,6 @@ atexit_handler() {
         echo "ERROR: No HTML report was generated"
         return 1
     fi
-
-    # Check if the Claude sessions were completed successfully
-    for log_file in "${CLAUDE_ANALYSIS_LOG}" "${CLAUDE_BUG_CREATION_LOG}"; do
-        # If a session was terminated due to a timeout, report lack of
-        # subsequent session log files as a warning and continue not
-        # to mask the actual error
-        if [ ! -f "${log_file}" ]; then
-            echo "WARNING: Log file '${log_file}' not found"
-            continue
-        fi
-
-        local result_line
-        result_line="$(grep '"type":"result"' "${log_file}" | tail -1 || true)"
-        if [[ -z "${result_line}" ]]; then
-            echo "ERROR: No Claude result event found in '${log_file}'"
-            return 1
-        fi
-        if ! echo "$result_line" | grep -q '"subtype":"success"' ||
-           ! echo "$result_line" | grep -q '"is_error":false'; then
-            echo "ERROR: Claude session in '${log_file}' did not complete successfully"
-            return 1
-        fi
-    done
 }
 
 github_app_token() {
@@ -105,11 +84,12 @@ load_secrets() {
             return 1
         fi
 
-        GITHUB_TOKEN_USHIFT="$(github_app_token "${GITHUB_APP_JWT}" openshift/microshift)"
-        if [ -z "${GITHUB_TOKEN_USHIFT}" ] || [ "${GITHUB_TOKEN_USHIFT}" = "null" ]; then
+        GITHUB_TOKEN="$(github_app_token "${GITHUB_APP_JWT}" openshift/microshift)"
+        if [ -z "${GITHUB_TOKEN}" ] || [ "${GITHUB_TOKEN}" = "null" ]; then
             echo "ERROR: Failed to generate installation access token for openshift/microshift"
             return 1
         fi
+        export GITHUB_TOKEN
 
         echo "GitHub tokens generated."
     else
@@ -172,13 +152,10 @@ configure_claude() {
     "allow": [
       "Read(//tmp/**)",
       "Write(//tmp/**)",
-      "Bash(bash plugins/microshift-ci/scripts/*)",
-      "Bash(python3 plugins/microshift-ci/scripts/*)",
-      "Skill(microshift-ci:create-bugs)",
-      "Skill(microshift-ci:doctor)",
-      "Skill(microshift-ci:prow-job)",
-      "Skill(microshift-ci:test-job)",
-      "Skill(microshift-ci:test-scenario)"
+      "Bash(bash plugins/*/scripts/*)",
+      "Bash(python3 plugins/*/scripts/*)",
+      "Skill(microshift-ci:*)",
+      "mcp__jira__*"
     ]
   }
 }
@@ -197,7 +174,7 @@ EOF
             -e MCP_VERBOSE=true \
             --scope user \
             --transport stdio \
-            jira -- bash -c "uvx mcp-atlassian@0.21.0 2>>${JIRA_MCP_LOG}"
+            jira -- bash -c "uvx mcp-atlassian@0.21.0 2>>${MCP_JIRA_LOG}"
 
         echo "Waiting for JIRA MCP to become available..."
         wait_for_mcp_status "jira" "Connected"
@@ -229,46 +206,32 @@ SRC_DIR="${EDGE_TOOLING_DIR}"
 PLUGIN_DIR="${SRC_DIR}/plugins/microshift-ci"
 cd "${SRC_DIR}"
 
-# Configure the GitHub token for MicroShift repo operations
-{ set +x; export GITHUB_TOKEN="${GITHUB_TOKEN_USHIFT}"; set -x; }
-
-# Run analysis on all releases and open rebase PRs.
-# Time-box analysis and limit turns to avoid uncontrolled billable minutes.
-echo "Running Claude to analyze MicroShift CI jobs and pull requests..."
-timeout 3000 claude \
-    --model "${CLAUDE_MODEL}" \
-    --max-turns 100 \
-    --output-format stream-json \
-    --plugin-dir "${PLUGIN_DIR}" \
-    -p "/microshift-ci:doctor ${RELEASE_VERSIONS}" \
-    --verbose 2>&1 | tee "${CLAUDE_ANALYSIS_LOG}"
-echo "Analysis for MicroShift CI jobs and pull requests completed"
-
-# Run bug creation for failed jobs (dry-run mode).
-# Time-box bug creation and limit turns to avoid uncontrolled billable minutes.
-echo "Running Claude to create bugs for failed jobs..."
-timeout 600 claude \
-    --model "${CLAUDE_MODEL}" \
-    --max-turns 50 \
-    --output-format stream-json \
-    --plugin-dir "${PLUGIN_DIR}" \
-    -p "/microshift-ci:create-bugs ${RELEASE_VERSIONS}" \
-    --verbose 2>&1 | tee "${CLAUDE_BUG_CREATION_LOG}"
-echo "Bug creation for failed jobs completed"
-
-# Close duplicate rebase PRs before attempting to restart failed test jobs.
+# Close duplicate rebase PRs before running the analysis to prevent them
+# from being included in the analysis and bug creation.
 echo "Running automatic closing of duplicate rebase PRs..."
 "${PLUGIN_DIR}/scripts/prow-jobs-for-pull-requests.sh" \
+    --component microshift \
     --mode close-duplicates \
     --execute \
     --author 'microshift-rebase-script[bot]' \
     --filter 'NO-ISSUE: rebase-release'
 echo "Automatic closing of duplicate rebase PRs completed"
 
+# Run the deterministic doctor pipeline.
+echo "Running CI doctor pipeline..."
+python3 "${PLUGIN_DIR}/scripts/run-doctor.py" \
+    --releases "${RELEASE_VERSIONS}" \
+    --workdir "${WORKDIR}" \
+    --model "${CLAUDE_MODEL}" \
+    --pull-requests \
+    --repo openshift/microshift
+echo "CI doctor pipeline completed"
+
 # Now attempt to restart failed rebase PRs tests. If the restarted tests
 # complete successfully, the PR will be automatically merged.
 echo "Running automatic restart of failed rebase PRs tests..."
 "${PLUGIN_DIR}/scripts/prow-jobs-for-pull-requests.sh" \
+    --component microshift \
     --mode restart \
     --execute \
     --author 'microshift-rebase-script[bot]'

@@ -2,10 +2,12 @@ presubmits:
   openshift-priv/cluster-api-provider-azure:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build05
+    cluster: build12
     context: ci/prow/e2e-azure
     decorate: true
     decoration_config:
@@ -24,7 +26,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-api-provider-azure-release-4.22-e2e-azure
     path_alias: sigs.k8s.io/cluster-api-provider-azure
     rerun_command: /test e2e-azure
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -96,10 +97,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build05
+    cluster: build12
     context: ci/prow/e2e-azure-capi-techpreview
     decorate: true
     decoration_config:
@@ -118,7 +121,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-api-provider-azure-release-4.22-e2e-azure-capi-techpreview
     path_alias: sigs.k8s.io/cluster-api-provider-azure
     rerun_command: /test e2e-azure-capi-techpreview
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -193,7 +195,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build05
+    cluster: build12
     context: ci/prow/e2e-azure-manual-oidc
     decorate: true
     decoration_config:
@@ -284,10 +286,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-manual-oidc,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build05
+    cluster: build12
     context: ci/prow/e2e-azure-serial-1of2
     decorate: true
     decoration_config:
@@ -306,7 +310,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-api-provider-azure-release-4.22-e2e-azure-serial-1of2
     path_alias: sigs.k8s.io/cluster-api-provider-azure
     rerun_command: /test e2e-azure-serial-1of2
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -379,10 +382,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-azure-serial-1of2,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build05
+    cluster: build12
     context: ci/prow/e2e-azure-serial-2of2
     decorate: true
     decoration_config:
@@ -401,7 +406,6 @@ presubmits:
     name: pull-ci-openshift-priv-cluster-api-provider-azure-release-4.22-e2e-azure-serial-2of2
     path_alias: sigs.k8s.io/cluster-api-provider-azure
     rerun_command: /test e2e-azure-serial-2of2
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -477,7 +481,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build05
+    cluster: build12
     context: ci/prow/e2e-azure-techpreview
     decorate: true
     decoration_config:
@@ -662,11 +666,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-azurestack-ipi,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build05
+    cluster: build12
     context: ci/prow/hypershift-e2e-aks
     decorate: true
     decoration_config:
@@ -753,13 +757,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )hypershift-e2e-aks,?($|\s.*)
+    trigger: (?m)^/test( | .* )(hypershift-e2e-aks|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build05
+    cluster: build12
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -825,7 +829,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build05
+    cluster: build12
     context: ci/prow/regression-clusterinfra-azure-ipi-techpreview-capi
     decorate: true
     decoration_config:
@@ -920,7 +924,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build05
+    cluster: build12
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -994,7 +998,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build05
+    cluster: build12
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -1068,7 +1072,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build05
+    cluster: build12
     context: ci/prow/verify-commits
     decorate: true
     decoration_config:
@@ -1143,7 +1147,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build05
+    cluster: build12
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

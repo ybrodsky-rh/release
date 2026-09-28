@@ -2,6 +2,8 @@ presubmits:
   openshift/assisted-installer:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|^\.github/|\.md$|^(?:.*/)?(?:\.gitignore|.tekton/.*|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     branches:
     - ^v2\.43$
     - ^v2\.43-
@@ -23,7 +25,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-assisted-installer-v2.43-e2e-metal-assisted
     rerun_command: /test e2e-metal-assisted
-    skip_if_only_changed: ^docs/|^\.github/|\.md$|^(?:.*/)?(?:\.gitignore|.tekton/.*|OWNERS|OWNERS_ALIASES|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -628,7 +629,7 @@ presubmits:
     branches:
     - ^v2\.43$
     - ^v2\.43-
-    cluster: build05
+    cluster: build10
     context: ci/prow/e2e-oci-assisted
     decorate: true
     decoration_config:
@@ -804,7 +805,7 @@ presubmits:
     branches:
     - ^v2\.43$
     - ^v2\.43-
-    cluster: build05
+    cluster: build10
     context: ci/prow/format-check
     decorate: true
     decoration_config:
@@ -873,7 +874,7 @@ presubmits:
     branches:
     - ^v2\.43$
     - ^v2\.43-
-    cluster: build05
+    cluster: build10
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -933,7 +934,7 @@ presubmits:
     branches:
     - ^v2\.43$
     - ^v2\.43-
-    cluster: build05
+    cluster: build10
     context: ci/prow/lint
     decorate: true
     decoration_config:
@@ -1002,7 +1003,7 @@ presubmits:
     branches:
     - ^v2\.43$
     - ^v2\.43-
-    cluster: build05
+    cluster: build10
     context: ci/prow/unit-test
     decorate: true
     decoration_config:

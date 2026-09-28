@@ -2,10 +2,12 @@ presubmits:
   openshift/image-registry:
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build11
+    cluster: build08
     context: ci/prow/e2e-agnostic-image-registry
     decorate: true
     decoration_config:
@@ -19,7 +21,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-image-registry-release-4.12-e2e-agnostic-image-registry
     rerun_command: /test e2e-agnostic-image-registry
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -87,10 +88,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-agnostic-image-registry,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build09
+    cluster: build12
     context: ci/prow/e2e-aws-image-registry
     decorate: true
     decoration_config:
@@ -104,7 +107,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-image-registry-release-4.12-e2e-aws-image-registry
     rerun_command: /test e2e-aws-image-registry
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -172,10 +174,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-image-registry,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build09
+    cluster: build12
     context: ci/prow/e2e-aws-ovn
     decorate: true
     decoration_config:
@@ -189,7 +193,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-image-registry-release-4.12-e2e-aws-ovn
     rerun_command: /test e2e-aws-ovn
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -257,10 +260,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-ovn,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build09
+    cluster: build12
     context: ci/prow/e2e-aws-upgrade
     decorate: true
     decoration_config:
@@ -274,7 +279,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-image-registry-release-4.12-e2e-aws-upgrade
     rerun_command: /test e2e-aws-upgrade
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*/)?(?:\.gitignore|OWNERS|PROJECT|LICENSE)$
     spec:
       containers:
       - args:
@@ -342,10 +346,12 @@ presubmits:
     trigger: (?m)^/test( | .* )e2e-aws-upgrade,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_run_if_changed: ^(.*gcs.*|vendor/(cloud\.google\.com|google\.golang\.org)/.*)\.go$
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp
     decorate: true
     decoration_config:
@@ -360,7 +366,6 @@ presubmits:
     name: pull-ci-openshift-image-registry-release-4.12-e2e-gcp
     optional: true
     rerun_command: /test e2e-gcp
-    run_if_changed: ^(.*gcs.*|vendor/(cloud\.google\.com|google\.golang\.org)/.*)\.go$
     spec:
       containers:
       - args:
@@ -431,7 +436,7 @@ presubmits:
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build11
+    cluster: build08
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -490,7 +495,7 @@ presubmits:
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build11
+    cluster: build08
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -556,7 +561,7 @@ presubmits:
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build11
+    cluster: build08
     context: ci/prow/verify
     decorate: true
     decoration_config:

@@ -13,7 +13,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -81,7 +80,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -148,7 +146,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -221,7 +218,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )default-catalog-consistency,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
@@ -233,7 +230,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
@@ -305,9 +301,9 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-olmv1-ext,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-olmv1-ext|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
@@ -319,7 +315,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
@@ -391,9 +386,9 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws-techpreview-olmv1-ext,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws-techpreview-olmv1-ext|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
@@ -405,7 +400,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
@@ -480,11 +474,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-upgrade-ovn-single-node,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
-    cluster: build08
+    cluster: build04
     context: ci/prow/e2e-gcp-ovn-upgrade
     decorate: true
     decoration_config:
@@ -492,7 +486,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci-operator.openshift.io/cloud: gcp
       ci-operator.openshift.io/cloud-cluster-profile: openshift-org-gcp
@@ -564,7 +557,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
@@ -578,7 +571,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -627,6 +619,8 @@ presubmits:
     trigger: (?m)^/test( | .* )images,?($|\s.*)
   - agent: kubernetes
     always_run: false
+    annotations:
+      pipeline_skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|DOWNSTREAM_OWNERS|DOWNSTREAM_OWNERS_ALIASES|LICENSE|DCO|CODEOWNERS)|\.golangci\.yaml|\.goreleaser\.yml|\.markdownlint.yaml|^\.github|Tiltfile$
     branches:
     - ^release-4\.23$
     - ^release-4\.23-
@@ -638,7 +632,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
@@ -646,7 +639,6 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-operator-framework-operator-controller-release-4.23-openshift-e2e-aws
     rerun_command: /test openshift-e2e-aws
-    skip_if_only_changed: ^docs/|\.md$|^(?:.*\/)?(?:\.gitignore|DOWNSTREAM_OWNERS|DOWNSTREAM_OWNERS_ALIASES|LICENSE|DCO|CODEOWNERS)|\.golangci\.yaml|\.goreleaser\.yml|\.markdownlint.yaml|^\.github|Tiltfile$
     spec:
       containers:
       - args:
@@ -725,14 +717,12 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci-operator.openshift.io/cloud: aws
       ci-operator.openshift.io/cloud-cluster-profile: openshift-org-aws
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-operator-framework-operator-controller-release-4.23-openshift-e2e-aws-techpreview
-    optional: true
     rerun_command: /test openshift-e2e-aws-techpreview
     spec:
       containers:
@@ -798,7 +788,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )openshift-e2e-aws-techpreview,?($|\s.*)
+    trigger: (?m)^/test( | .* )(openshift-e2e-aws-techpreview|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -812,7 +802,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -897,7 +886,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -964,7 +952,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -1031,7 +1018,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -1098,7 +1084,6 @@ presubmits:
       - .ci-operator.yaml
       - openshift/catalogd.Dockerfile
       - openshift/operator-controller.Dockerfile
-      - openshift/registry.Dockerfile
     labels:
       ci.openshift.io/generator: prowgen
       pj-rehearse.openshift.io/can-be-rehearsed: "true"

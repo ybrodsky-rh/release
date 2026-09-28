@@ -76,11 +76,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )check-commits-count,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build03
+    cluster: build06
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -168,13 +168,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-aws,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-aws|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-5\.1$
     - ^release-5\.1-
-    cluster: build03
+    cluster: build06
     context: ci/prow/e2e-upgrade
     decorate: true
     decoration_config:
@@ -262,7 +262,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:

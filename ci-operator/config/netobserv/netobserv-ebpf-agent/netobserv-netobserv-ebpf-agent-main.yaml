@@ -1,4 +1,8 @@
 base_images:
+  e2etests:
+    name: e2etests
+    namespace: netobserv
+    tag: ci
   flowlogs-pipeline:
     name: flowlogs-pipeline
     namespace: netobserv
@@ -23,10 +27,6 @@ base_images:
     name: netobserv-web-console
     namespace: netobserv
     tag: ci
-  tests-private:
-    name: tests-private
-    namespace: ci
-    tag: "4.21"
 build_root:
   from_repository: true
 images:
@@ -42,7 +42,7 @@ releases:
     candidate:
       product: ocp
       stream: nightly
-      version: "4.22"
+      version: "5.0"
 resources:
   '*':
     limits:
@@ -51,7 +51,8 @@ resources:
       cpu: 100m
       memory: 200Mi
 tests:
-- as: qe-e2e-tests
+- always_run: false
+  as: qe-e2e-tests
   optional: true
   steps:
     cluster_profile: aws-qe
@@ -59,13 +60,10 @@ tests:
       PATCH_EBPFAGENT_IMAGE: pipeline:netobserv-ebpf-agent
     env:
       BASE_DOMAIN: qe.devcluster.openshift.com
-      TEST_FILTERS: NonPreRelease;Serial;Disruptive;~59746&
-      TEST_SCENARIOS: Network_Observability
-      TEST_TIMEOUT: "35"
     test:
     - ref: netobserv-install-operator
-    - ref: openshift-extended-test
-    - ref: openshift-e2e-test-qe-report
+    - ref: netobserv-ginkgo-tests
+    - ref: netobserv-evaluate-failures
     workflow: cucushift-installer-rehearse-aws-ipi
 - always_run: false
   as: ebpf-node-density-heavy-25nodes
@@ -95,7 +93,7 @@ tests:
       PODS_PER_NODE: "200"
       RUN_ORION: "true"
       SIZE_VARIANT: large
-      VERSION: "4.22"
+      VERSION: "5.0"
       WORKLOAD: node-density-heavy
       ZONES_COUNT: "3"
     post:

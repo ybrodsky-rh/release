@@ -1,11 +1,11 @@
 presubmits:
   openshift-priv/gcp-pd-csi-driver-operator:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp
     decorate: true
     decoration_config:
@@ -93,13 +93,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-csi
     decorate: true
     decoration_config:
@@ -187,13 +187,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-csi,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-csi|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-csi-c3
     decorate: true
     decoration_config:
@@ -288,7 +288,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-csi-extended
     decorate: true
     decoration_config:
@@ -383,7 +383,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-csi-image-snapshot
     decorate: true
     decoration_config:
@@ -474,11 +474,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-gcp-csi-image-snapshot,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-csi-manual-oidc
     decorate: true
     decoration_config:
@@ -573,7 +573,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-csi-n4
     decorate: true
     decoration_config:
@@ -664,11 +664,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-gcp-csi-n4,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build04
+    cluster: build08
     context: ci/prow/e2e-gcp-ovn-upgrade
     decorate: true
     decoration_config:
@@ -756,13 +756,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-gcp-ovn-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-gcp-ovn-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build04
+    cluster: build08
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -829,7 +829,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build04
+    cluster: build08
     context: ci/prow/security
     decorate: true
     decoration_config:
@@ -922,7 +922,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build04
+    cluster: build08
     context: ci/prow/test
     decorate: true
     decoration_config:
@@ -997,7 +997,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build04
+    cluster: build08
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -1072,7 +1072,7 @@ presubmits:
     branches:
     - ^release-4\.22$
     - ^release-4\.22-
-    cluster: build04
+    cluster: build08
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

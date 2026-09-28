@@ -1,11 +1,11 @@
 presubmits:
   openshift/insights-operator:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build04
+    cluster: build02
     context: ci/prow/e2e
     decorate: true
     decoration_config:
@@ -83,13 +83,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e|remaining-required),?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build06
+    cluster: build09
     context: ci/prow/e2e-agnostic-upgrade
     decorate: true
     decoration_config:
@@ -167,7 +167,7 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-agnostic-upgrade,?($|\s.*)
+    trigger: (?m)^/test( | .* )(e2e-agnostic-upgrade|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -259,7 +259,7 @@ presubmits:
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build06
+    cluster: build09
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -313,11 +313,11 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )images,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build04
+    cluster: build02
     context: ci/prow/insights-operator-e2e-tests
     decorate: true
     decoration_config:
@@ -395,13 +395,13 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )insights-operator-e2e-tests,?($|\s.*)
+    trigger: (?m)^/test( | .* )(insights-operator-e2e-tests|remaining-required),?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build06
+    cluster: build09
     context: ci/prow/lint
     decorate: true
     decoration_config:
@@ -466,7 +466,7 @@ presubmits:
     branches:
     - ^release-4\.12$
     - ^release-4\.12-
-    cluster: build06
+    cluster: build09
     context: ci/prow/unit
     decorate: true
     decoration_config:

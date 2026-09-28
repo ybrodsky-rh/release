@@ -22,6 +22,7 @@ external_plugins:
     events:
     - issue_comment
     - pull_request
+    - pull_request_review
     name: jira-lifecycle-plugin
 plugins:
   openshift-psap/forge:
@@ -50,9 +51,7 @@ plugins:
     - wip
     - yuks
 triggers:
-- org_invite:
-    prominent: {}
-  repos:
+- repos:
   - openshift-psap/forge
   trusted_apps:
   - openshift-merge-bot
