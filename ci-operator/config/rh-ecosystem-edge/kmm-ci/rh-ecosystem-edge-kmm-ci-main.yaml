@@ -101,6 +101,32 @@ tests:
     env:
       KMM_CHANNEL: release-2.7
     workflow: rh-ecosystem-edge-kmm-ci-qe
+- as: kmm-qe-longrun
+  cluster_claim:
+    architecture: amd64
+    cloud: aws
+    owner: rh-ecosystem-edge
+    product: ocp
+    timeout: 1h0m0s
+    version: "4.21"
+  cron: 0 10 * * 3
+  reporter_config:
+    channel: '#kmm-nfd-gpu-ci'
+    job_states_to_report:
+    - success
+    - failure
+    - error
+    report_template: '{{if eq .Status.State "success"}} :slack-green: Job *{{.Spec.Job}}*
+      ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs> {{else}} :failed:
+      Job *{{.Spec.Job}}* ended with *{{.Status.State}}*. <{{.Status.URL}}|View logs>
+      {{end}}'
+  steps:
+    env:
+      ECO_TEST_LABELS: module && kmm-longrun
+      ECO_TEST_TIMEOUT: 3h30m
+      KMM_CHANNEL: release-2.7
+    workflow: rh-ecosystem-edge-kmm-ci-qe
+  timeout: 4h0m0s
 zz_generated_metadata:
   branch: main
   org: rh-ecosystem-edge
